@@ -1,0 +1,13 @@
+{
+  "id": "P020",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "I already get drafts from ChatGPT with a saved brief per client, and I rewrite most of them anyway. Nothing here shows me that pasting 5 to 10 posts gives a voice clients approve without edits, so I would not pay on faith.",
+  "objection": "Voice-learning from a handful of posts sounds like what I already do with a saved prompt. The approval link and CSV export are nice, but they are not what costs me time. My time goes on rewriting drafts that miss the client's voice.",
+  "would_change_my_mind": "A free trial on two of my real clients where the batch comes out and the clients approve most posts with no edits from me. At that point 15 a month would be an easy yes.",
+  "price_too_cheap": 5,
+  "price_cheap": 12,
+  "price_expensive": 25,
+  "price_too_expensive": 45
+}

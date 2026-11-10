@@ -1,0 +1,83 @@
+{
+  "business": "Coast (AI content workspace for social media agencies) - one 'day' here = one month; units = paying subscribers; amounts are EUR (the tool prints $)",
+  "unit": "subscriber-month",
+  "price": 27.2,
+  "variable": [
+    {
+      "label": "AI model usage per subscriber-month (ESTIMATE: ~200 requests x ~EUR 0.02)",
+      "cost": 4.0
+    },
+    {
+      "label": "Card / merchant-of-record fees (ESTIMATE ~1.5% + EUR 0.25 on EUR 27.20; a merchant of record like Paddle costs more, ~5%)",
+      "cost": 0.66
+    },
+    {
+      "label": "Marginal hosting/database per subscriber (ESTIMATE)",
+      "cost": 0.3
+    }
+  ],
+  "fixed_monthly": [
+    {
+      "label": "App hosting / Bolt plan (ESTIMATE)",
+      "cost": 25
+    },
+    {
+      "label": "Database/auth plan, e.g. Supabase Pro (ESTIMATE)",
+      "cost": 25
+    },
+    {
+      "label": "Domain + business email (ESTIMATE)",
+      "cost": 10
+    },
+    {
+      "label": "Other SaaS tools (ESTIMATE)",
+      "cost": 20
+    },
+    {
+      "label": "Always-on marketing budget (ASSUMPTION - founder to set)",
+      "cost": 300
+    },
+    {
+      "label": "Founder salary (NOT INCLUDED - unknown; set to 0)",
+      "cost": 0
+    }
+  ],
+  "startup": [
+    {
+      "label": "Company registration + accountant setup (ESTIMATE)",
+      "cost": 300
+    },
+    {
+      "label": "EU trademark, 1 class (EUIPO e-filing fee, verify)",
+      "cost": 850
+    },
+    {
+      "label": "Privacy policy / terms / DPA review (ESTIMATE)",
+      "cost": 400
+    },
+    {
+      "label": "Domain, brand assets (ESTIMATE)",
+      "cost": 100
+    },
+    {
+      "label": "Launch ads + pilot incentives (ASSUMPTION)",
+      "cost": 800
+    }
+  ],
+  "days_per_month": 1,
+  "plan_per_day": 40,
+  "ramp_per_day": [
+    2,
+    4,
+    6,
+    9,
+    12,
+    15,
+    19,
+    23,
+    27,
+    31,
+    36,
+    40
+  ]
+}

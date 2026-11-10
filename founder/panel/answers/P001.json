@@ -1,0 +1,13 @@
+{
+  "id": "P001",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "quality",
+  "reason": "AI captions still sound generic and I end up rewriting them, and 5 to 10 pasted posts doesn't convince me it'll nail 20+ different voices. I'd maybe poke at the free trial, but I wouldn't pay until it proved it saves me real time.",
+  "objection": "I have 20+ clients, so the 19 founding Studio deal (15 clients) doesn't even cover me and I'd need the 59 Agency plan. For that I need proof the output needs almost no rewriting, otherwise it's just another subscription I cancel in a month.",
+  "would_change_my_mind": "Seeing it produce a week of captions for two of my real clients during the trial that I'd send with under a few minutes of edits, plus a founding price that covers 25+ clients.",
+  "price_too_cheap": 8,
+  "price_cheap": 19,
+  "price_expensive": 45,
+  "price_too_expensive": 80
+}

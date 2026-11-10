@@ -1,0 +1,13 @@
+{
+  "id": "P014",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "I'd sign up for the 2-day trial because I sign up for everything, but I already get this from ChatGPT with a saved brief per client, and I'm not paying 49 a month for the same thing in a different box. No publishing and no client approvals means I still copy-paste into my scheduler and send screenshots over WhatsApp anyway.",
+  "objection": "It's basically ChatGPT with a saved brief per client, and I already do that. The parts that would actually change my week, publishing and client approvals, are 'coming later'.",
+  "would_change_my_mind": "Client approvals working properly, so clients approve inside it instead of WhatsApp screenshots, plus direct publishing to my scheduler.",
+  "price_too_cheap": 5,
+  "price_cheap": 12,
+  "price_expensive": 29,
+  "price_too_expensive": 49
+}

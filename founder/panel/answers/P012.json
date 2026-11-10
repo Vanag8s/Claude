@@ -1,0 +1,13 @@
+{
+  "id": "P012",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "I already have a saved prompt per client in Claude and my clients already approve over WhatsApp screenshots, which works. I might click the free trial, but I would not pay for another tool on top of my scheduler without seeing it beat what I have.",
+  "objection": "Another subscription on top of my scheduler, for something my AI assistant already does with a saved prompt per client. The only new part is the approval link, and I am not sure my clients would bother opening it instead of just replying on WhatsApp.",
+  "would_change_my_mind": "A trial on two of my real clients where the drafts clearly sound more like them than my current Claude prompts, and the clients actually use the approval link without me chasing them. Then 19 a month would be an easy yes.",
+  "price_too_cheap": 7,
+  "price_cheap": 15,
+  "price_expensive": 35,
+  "price_too_expensive": 55
+}

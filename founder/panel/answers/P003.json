@@ -1,0 +1,13 @@
+{
+  "id": "P003",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "I already get captions from ChatGPT with a saved brief per client and I'm not going to rebuild 12 client voices in a new tool for something I mostly get already. The approval link is nice, but my clients already approve over WhatsApp and I'd rather not add another thing to my Monday.",
+  "objection": "I already get this from ChatGPT with a saved brief per client, so I'd be paying 19 a month on top of my 20 for the same captions plus a nicer approval link.",
+  "would_change_my_mind": "If the approval link plus the CSV export visibly cut my Sunday evening from hours to under an hour on my real clients during the free trial, and the voice matched without me tweaking every post.",
+  "price_too_cheap": 5,
+  "price_cheap": 15,
+  "price_expensive": 40,
+  "price_too_expensive": 70
+}

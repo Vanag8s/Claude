@@ -1,0 +1,13 @@
+{
+  "id": "P004",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "quality",
+  "reason": "I'd probably sign up for the free trial because it's no card, but I doubt I'd pay after. Every AI tool says it learns the voice and the captions still come out generic, and I end up rewriting them anyway.",
+  "objection": "Five to ten past posts is not going to make it sound like a client's real voice, and if I'm rewriting everything I'm paying 15 a month to save no time. I already pay for a scheduler and Canva.",
+  "would_change_my_mind": "If in the trial a client approved a full week of captions with almost no edits from me, and I could see it was clearly better than what I get from the free AI tools.",
+  "price_too_cheap": 5,
+  "price_cheap": 9,
+  "price_expensive": 19,
+  "price_too_expensive": 32
+}

@@ -1,0 +1,13 @@
+{
+  "id": "P002",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "I already live in my scheduler and this doesn't plug into it, so I'd be copy-pasting text between two tools for every post. Another subscription on top of what I pay already, on $41k a year, isn't happening.",
+  "objection": "It doesn't publish or connect to Metricool/Buffer, and approvals aren't there yet, so it adds a step instead of removing one. My clients approve over WhatsApp anyway and I'd still be doing that by hand.",
+  "would_change_my_mind": "A direct integration that pushes saved captions into my scheduler (Metricool or Buffer) as drafts, so I don't copy and paste.",
+  "price_too_cheap": 8,
+  "price_cheap": 15,
+  "price_expensive": 29,
+  "price_too_expensive": 45
+}

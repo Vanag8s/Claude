@@ -1,0 +1,13 @@
+{
+  "id": "P018",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "I write everything by hand and I don't put AI copy in front of clients. Another subscription on top of my scheduler, for something I wouldn't use for the real posts anyway.",
+  "objection": "AI learning a client's voice from 5 to 10 posts will sound close but generic, and my clients pay me because it's me writing. If one of them notices, I lose the client over a 15 euro tool.",
+  "would_change_my_mind": "Seeing it write a week of posts for one of my real clients that I'd send without rewriting, and a client approving it blind. Even then, the approval link alone, without the AI, would be what I'd pay for.",
+  "price_too_cheap": 5,
+  "price_cheap": 9,
+  "price_expensive": 19,
+  "price_too_expensive": 29
+}

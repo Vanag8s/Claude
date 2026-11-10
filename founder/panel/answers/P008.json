@@ -1,0 +1,13 @@
+{
+  "id": "P008",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "need",
+  "reason": "I already pay for a scheduler and Canva, and this doesn't publish or do approvals inside my scheduler, so it's one more tab and one more subscription I'd have to justify every month. The CSV export and approval link are nice, but I can't see it getting used weekly across 20+ clients.",
+  "objection": "It's another tool in the chain, not a replacement for anything I pay for. If I'm not opening it every week I'd cancel it at the monthly review, and I don't believe a few pasted posts will get 20+ clients' voices right without me rewriting half of it.",
+  "would_change_my_mind": "Proof that it replaces something I already pay for (e.g. my scheduler's approval step or a writing tool) and cuts my Monday batch time by hours across 20+ clients, shown on my own clients during the free trial.",
+  "price_too_cheap": 5,
+  "price_cheap": 19,
+  "price_expensive": 45,
+  "price_too_expensive": 80
+}

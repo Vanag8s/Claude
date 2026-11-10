@@ -1,0 +1,13 @@
+{
+  "id": "P015",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "quality",
+  "reason": "I rewrite most AI drafts, and nothing here shows me the output is good enough for clients to approve without edits. I'd try the free trial maybe, but I wouldn't pay on a promise.",
+  "objection": "Who is behind this? It looks like a side project, and I have no proof the voice-matching actually gets posts approved untouched. If clients still ask for edits, I'm paying 19 a month to rewrite things anyway.",
+  "would_change_my_mind": "Real before/after examples from freelancers like me showing client-approved posts with no edits, or the trial producing a full week for one of my real clients that gets approved as-is.",
+  "price_too_cheap": 8,
+  "price_cheap": 15,
+  "price_expensive": 35,
+  "price_too_expensive": 60
+}

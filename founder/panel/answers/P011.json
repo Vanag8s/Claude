@@ -1,0 +1,13 @@
+{
+  "id": "P011",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "I already pay about 20 a month for ChatGPT/Claude with a project per client, and it works. This looks like a side project, and I would not move 20+ client voices, half of them in Lithuanian, onto a tool I cannot judge in a normal week.",
+  "objection": "Who is really behind this, and will it still exist in six months? And will its Lithuanian hold up, because my own prompts already cover English fine.",
+  "would_change_my_mind": "A real Lithuanian-language sample made from one of my clients' own posts that is clearly better than my Claude project, plus a few named agencies using it.",
+  "price_too_cheap": 9,
+  "price_cheap": 25,
+  "price_expensive": 59,
+  "price_too_expensive": 110
+}

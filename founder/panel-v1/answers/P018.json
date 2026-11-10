@@ -1,0 +1,13 @@
+{
+  "id": "P018",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "I write everything by hand for my clients and I don't trust AI copy for them. This is another subscription on top of my scheduler, and it doesn't even publish, so I'd still be copy-pasting.",
+  "objection": "I don't want AI-written captions going out under my clients' names, and I'd be paying for a tool that doesn't replace my scheduler, just sits next to it.",
+  "would_change_my_mind": "Proof on my own clients during a longer trial that it really sounds like each of them, plus publishing straight to my scheduler so it replaces a step instead of adding one.",
+  "price_too_cheap": 8,
+  "price_cheap": 15,
+  "price_expensive": 35,
+  "price_too_expensive": 60
+}

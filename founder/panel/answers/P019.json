@@ -1,0 +1,13 @@
+{
+  "id": "P019",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "quality",
+  "reason": "I might poke at the free trial, but I wouldn't pay. Half my clients post in Lithuanian, and I don't believe an AI that learns a voice from 5 posts gets Lithuanian right, since it usually sounds translated. It also looks like a one-person side project, and I don't want my Monday batch depending on that.",
+  "objection": "Lithuanian captions that sound stiff or wrong, and one guy behind it. If it vanishes or the voice is off, I've already told clients it's their approval link and I look bad.",
+  "would_change_my_mind": "A real test on my own Lithuanian client where the output needs almost no editing, plus a direct integration with my scheduler (Metricool/Buffer) instead of a CSV and some proof the founder has been around a while.",
+  "price_too_cheap": 5,
+  "price_cheap": 12,
+  "price_expensive": 35,
+  "price_too_expensive": 60
+}

@@ -1,0 +1,13 @@
+{
+  "id": "P001",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "need",
+  "reason": "I have 20+ clients and a team, so I'd be on the 99 Agency plan, and there are no team seats and no approvals yet. It doesn't publish either, so I'd still copy everything into my scheduler. I'd be paying 99 a month for a chat box.",
+  "objection": "AI captions still sound generic and I end up rewriting them. Saving a tone profile once doesn't convince me it's any better than ChatGPT with a pasted brief, which I already have. I'd pay 99 for a tool I might not use every week.",
+  "would_change_my_mind": "Team seats and client approvals actually shipped, plus a trial with 20 clients where I could see the captions needing almost no rewriting on my hardest client.",
+  "price_too_cheap": 9,
+  "price_cheap": 25,
+  "price_expensive": 59,
+  "price_too_expensive": 99
+}

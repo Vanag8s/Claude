@@ -1,0 +1,13 @@
+{
+  "id": "P005",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "I'd probably sign up for the 14 days since there's no card, but I'm a trial hopper and I rarely pay after the first month. Sunday-evening captions do hurt, but it's another subscription on top of my scheduler and I already have AI tools I stopped paying for.",
+  "objection": "Another subscription on top of my scheduler. I'd have to paste 5-10 posts per client for 8-20 clients and then check that the voice is actually right before I'd trust it. That setup eats the time it's supposed to save, and my clients may not bother with an approval link anyway.",
+  "would_change_my_mind": "If the free trial showed me a full week of captions for 3 of my real clients that needed almost no editing and the client approved them from WhatsApp, and the plan replaced a tool I already pay for instead of adding one.",
+  "price_too_cheap": 7,
+  "price_cheap": 15,
+  "price_expensive": 29,
+  "price_too_expensive": 49
+}

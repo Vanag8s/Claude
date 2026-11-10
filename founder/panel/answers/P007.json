@@ -1,0 +1,13 @@
+{
+  "id": "P007",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "I already pay about 20 a month for Claude with a project per client and it does the voice thing fine. Coast doesn't publish, so it's one more tab between my AI and my scheduler.",
+  "objection": "It doesn't publish or do approvals inside my scheduler, so I'd be adding a CSV step and another tool to a workflow that already works. I don't believe its voice beats my saved prompts enough to justify that.",
+  "would_change_my_mind": "Seeing it match a client's voice clearly better than my Claude project on two of my real clients in the trial, and the approval link plus CSV import into my scheduler working with no manual fixing.",
+  "price_too_cheap": 5,
+  "price_cheap": 12,
+  "price_expensive": 35,
+  "price_too_expensive": 60
+}

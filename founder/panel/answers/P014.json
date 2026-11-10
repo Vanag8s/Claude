@@ -1,0 +1,13 @@
+{
+  "id": "P014",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "I'd sign up for the 14 days because it's free and no card, but I already get this from ChatGPT with a saved brief per client. At $35k a year I'm not adding another subscription for something I can nearly replicate.",
+  "objection": "ChatGPT with a saved brief per client already does the voice part. The approval link and CSV export are nice but not worth 19 to 29 a month when my clients just reply on WhatsApp anyway.",
+  "would_change_my_mind": "Proof in the trial that clients actually approve through the link instead of just replying on WhatsApp, and that the voice is clearly better than my ChatGPT briefs. Or a much cheaper Solo plan that also covers 8 to 10 clients.",
+  "price_too_cheap": 5,
+  "price_cheap": 10,
+  "price_expensive": 25,
+  "price_too_expensive": 40
+}

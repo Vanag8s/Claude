@@ -1,0 +1,13 @@
+{
+  "id": "P010",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "I write everything by hand and I don't hand client voice to an AI. Another subscription on top of my scheduler, and it doesn't even publish, so I'd still be copy-pasting.",
+  "objection": "My clients pay me for my own writing. If it sounds like AI, I lose them, and saving a tone profile once won't make me trust it with their brand.",
+  "would_change_my_mind": "Seeing real output in a client's voice that I couldn't tell from my own writing, plus approvals and publishing built in so it replaces something I already pay for.",
+  "price_too_cheap": 8,
+  "price_cheap": 19,
+  "price_expensive": 49,
+  "price_too_expensive": 89
+}

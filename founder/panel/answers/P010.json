@@ -1,0 +1,13 @@
+{
+  "id": "P010",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "I write every client's posts by hand because my clients pay for my voice, not a machine's, and I'd be adding another subscription on top of my scheduler. The approval link is nice, but I already get sign-off in WhatsApp and that costs me nothing.",
+  "objection": "It's AI writing captions in my clients' names. If one client notices it doesn't sound like them, that's my reputation, and a refunded month doesn't fix that. I'd also be babysitting 5 to 10 pasted posts per client just to find out.",
+  "would_change_my_mind": "Seeing it nail the voice of two of my own clients in the free trial, with me only editing lightly, plus an approval flow that replaces my chasing clients and doesn't add a second tool.",
+  "price_too_cheap": 8,
+  "price_cheap": 15,
+  "price_expensive": 35,
+  "price_too_expensive": 60
+}

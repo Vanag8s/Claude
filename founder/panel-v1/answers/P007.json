@@ -1,0 +1,13 @@
+{
+  "id": "P007",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "I already pay about 20 a month for ChatGPT/Claude and have a project per client with the tone saved. Coast doesn't publish or do approvals, so it's one more tab between my brief and my scheduler, and it doesn't replace anything I use.",
+  "objection": "It's one more tab. I'd still copy everything into my scheduler and chase client approvals elsewhere, so I'd be paying 49 on top of what I already pay for what is basically my saved prompts per client.",
+  "would_change_my_mind": "Publishing or scheduling straight to the networks plus client approvals working today (not 'coming later'), so it replaces my scheduler and not just my AI chat.",
+  "price_too_cheap": 8,
+  "price_cheap": 19,
+  "price_expensive": 49,
+  "price_too_expensive": 89
+}

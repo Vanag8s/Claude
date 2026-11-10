@@ -1,0 +1,13 @@
+{
+  "id": "P011",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "I already have a Claude project per client for about 20 a month, and it works in both Lithuanian and English. Coast is mostly the same chat with a calendar added, and it has no publishing, no approvals and no team seats, so it does not replace anything I use.",
+  "objection": "Who is behind this? It looks like a side project. I would be moving 20+ client voices into it, and it might be gone in six months. A 2-day trial is also too short to test it on real clients, and I see nothing about how well it handles Lithuanian.",
+  "would_change_my_mind": "Proof that it writes good Lithuanian, a real company behind it with a track record, and team seats plus client approvals actually shipped. A longer trial on my own clients would also help.",
+  "price_too_cheap": 9,
+  "price_cheap": 25,
+  "price_expensive": 60,
+  "price_too_expensive": 110
+}

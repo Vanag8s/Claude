@@ -1,0 +1,13 @@
+{
+  "id": "P005",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "I'd sign up for the free trial because I do that with every AI tool, but 2 days is nothing and I'd be back on ChatGPT with my own saved prompts by Sunday. I already pay for a scheduler and I'm not adding another subscription that doesn't even publish.",
+  "objection": "It doesn't publish, so I still copy-paste everything into my scheduler. That's one more tool and one more bill for a step I can already do with a free chatbot.",
+  "would_change_my_mind": "If it pushed captions straight into my scheduler, or replaced the scheduler, and the free trial lasted long enough to run a full week of client captions.",
+  "price_too_cheap": 7,
+  "price_cheap": 15,
+  "price_expensive": 29,
+  "price_too_expensive": 49
+}

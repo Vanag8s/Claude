@@ -1,0 +1,13 @@
+{
+  "id": "P006",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "quality",
+  "reason": "I only pay for tools whose drafts my clients approve without edits, and I've never seen an AI learn a voice from 5 to 10 posts well enough for that. I'd also have to paste client posts into a tool I don't know, and I'm not doing that on a promise.",
+  "objection": "I don't want client data in a tool I don't know, and I doubt the voice will be good enough that I'm not rewriting everything anyway.",
+  "would_change_my_mind": "Seeing a sample week for one of my real clients where the client approved nearly every post with no edits, or a trusted agency owner I know vouching for it.",
+  "price_too_cheap": 8,
+  "price_cheap": 15,
+  "price_expensive": 35,
+  "price_too_expensive": 60
+}

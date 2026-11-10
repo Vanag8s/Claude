@@ -1,0 +1,13 @@
+{
+  "id": "P013",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "I already pay about 20 a month for an AI assistant with a saved project per client, plus my scheduler, and on 27k a year another subscription is hard to justify. The client approval link is nice, but I'd try the free trial and probably not pay.",
+  "objection": "Another subscription on top of my scheduler, for something my ChatGPT/Claude projects already do for captions. I'm not convinced the voice would be any better than what I already have.",
+  "would_change_my_mind": "Proof that the approval link saves me real chasing time with clients, and a price low enough (around 10) that it replaces my AI subscription rather than adding to it.",
+  "price_too_cheap": 5,
+  "price_cheap": 9,
+  "price_expensive": 19,
+  "price_too_expensive": 30
+}

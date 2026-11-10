@@ -1,0 +1,13 @@
+{
+  "id": "P020",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "habit",
+  "reason": "I already get this from ChatGPT with a saved brief per client, and I rewrite most AI drafts anyway. Nothing here tells me the output would be approved without edits, so I would not pay on top of what I have.",
+  "objection": "It looks like ChatGPT with a client folder around it. I would have to trust that the voice is better than my own saved briefs, and a 2-day trial with 3 clients is too short to prove that when my clients take days to approve anything.",
+  "would_change_my_mind": "Seeing real captions in a client's voice that I could send with no edits, plus a longer trial with my real clients, and approvals working so I could send drafts straight to the client.",
+  "price_too_cheap": 8,
+  "price_cheap": 15,
+  "price_expensive": 35,
+  "price_too_expensive": 60
+}

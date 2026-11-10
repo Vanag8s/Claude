@@ -1,0 +1,13 @@
+{
+  "id": "P015",
+  "buys": false,
+  "purchases_first_month": 0,
+  "reason_code": "trust",
+  "reason": "I'd maybe poke at the trial, but I rewrite most AI drafts and I have no proof Coast's captions get approved without edits. No publishing and no client approvals means it's one more tab I copy-paste out of, and I don't know who's behind it.",
+  "objection": "Who is behind this? It looks like a side project, and I've seen no evidence the output sounds like my clients' brands well enough that I'd stop rewriting it. Two days of trial isn't enough to test that across clients.",
+  "would_change_my_mind": "A longer trial (a couple of weeks) where I can run 3 real clients through it and see drafts clients approve unedited, plus a clear team/company behind it and publishing or scheduler integration.",
+  "price_too_cheap": 9,
+  "price_cheap": 19,
+  "price_expensive": 49,
+  "price_too_expensive": 80
+}

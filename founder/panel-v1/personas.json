@@ -1,0 +1,222 @@
+[
+ {
+  "id": "P001",
+  "name": "Finn",
+  "age": 39,
+  "segment": "Owner or lead at a 6-10 person agency, 20+ clients",
+  "income": 113000,
+  "behaviour": "Cost cutter",
+  "behaviour_how": "Margins are thin; every subscription is reviewed monthly and cancelled if not used weekly.",
+  "objection": "AI captions still sound generic and I end up rewriting them",
+  "habit": "a new client brief arrives as a messy Google Doc"
+ },
+ {
+  "id": "P002",
+  "name": "Callum",
+  "age": 32,
+  "segment": "Solo freelancer managing 3-8 clients",
+  "income": 41000,
+  "behaviour": "Tool-stack loyalist",
+  "behaviour_how": "Lives in a scheduler (Metricool, Buffer, SocialBee, Planable) and only adds tools that plug into it.",
+  "objection": "Another subscription on top of my scheduler",
+  "habit": "your clients approve posts over WhatsApp or email screenshots"
+ },
+ {
+  "id": "P003",
+  "name": "Lina",
+  "age": 34,
+  "segment": "Owner of a 2-5 person agency, 8-20 clients",
+  "income": 69000,
+  "behaviour": "Already uses ChatGPT or Claude daily",
+  "behaviour_how": "Has a saved prompt or a project per client in a general AI assistant and pays about 20 a month for it.",
+  "objection": "I already get this from ChatGPT with a saved brief per client",
+  "habit": "you lose most of Sunday evening writing captions"
+ },
+ {
+  "id": "P004",
+  "name": "Hana",
+  "age": 33,
+  "segment": "Solo freelancer managing 3-8 clients",
+  "income": 31000,
+  "behaviour": "Trial hopper",
+  "behaviour_how": "Signs up for every new AI tool, rarely pays past the first month.",
+  "objection": "AI captions still sound generic and I end up rewriting them",
+  "habit": "you already pay for a scheduler and Canva"
+ },
+ {
+  "id": "P005",
+  "name": "Aisha",
+  "age": 32,
+  "segment": "Owner of a 2-5 person agency, 8-20 clients",
+  "income": 46000,
+  "behaviour": "Trial hopper",
+  "behaviour_how": "Signs up for every new AI tool, rarely pays past the first month.",
+  "objection": "Another subscription on top of my scheduler",
+  "habit": "you lose most of Sunday evening writing captions"
+ },
+ {
+  "id": "P006",
+  "name": "Sana",
+  "age": 25,
+  "segment": "Owner of a 2-5 person agency, 8-20 clients",
+  "income": 39000,
+  "behaviour": "Quality-first",
+  "behaviour_how": "Rewrites most AI drafts; only pays for tools whose output clients approve without edits.",
+  "objection": "I don't want client data in a tool I don't know",
+  "habit": "you plan the week's posts for every client on Monday mornings"
+ },
+ {
+  "id": "P007",
+  "name": "Ezra",
+  "age": 40,
+  "segment": "Owner of a 2-5 person agency, 8-20 clients",
+  "income": 69000,
+  "behaviour": "Already uses ChatGPT or Claude daily",
+  "behaviour_how": "Has a saved prompt or a project per client in a general AI assistant and pays about 20 a month for it.",
+  "objection": "It doesn't publish or do approvals, so it's one more tab",
+  "habit": "a new client brief arrives as a messy Google Doc"
+ },
+ {
+  "id": "P008",
+  "name": "Owen",
+  "age": 38,
+  "segment": "Owner or lead at a 6-10 person agency, 20+ clients",
+  "income": 126000,
+  "behaviour": "Cost cutter",
+  "behaviour_how": "Margins are thin; every subscription is reviewed monthly and cancelled if not used weekly.",
+  "objection": "It doesn't publish or do approvals, so it's one more tab",
+  "habit": "you already pay for a scheduler and Canva"
+ },
+ {
+  "id": "P009",
+  "name": "Jordan",
+  "age": 39,
+  "segment": "Solo freelancer managing 3-8 clients",
+  "income": 42000,
+  "behaviour": "Already uses ChatGPT or Claude daily",
+  "behaviour_how": "Has a saved prompt or a project per client in a general AI assistant and pays about 20 a month for it.",
+  "objection": "Will it write well in Lithuanian or other non-English languages?",
+  "habit": "your clients approve posts over WhatsApp or email screenshots"
+ },
+ {
+  "id": "P010",
+  "name": "Farah",
+  "age": 40,
+  "segment": "Owner of a 2-5 person agency, 8-20 clients",
+  "income": 69000,
+  "behaviour": "Writes everything by hand",
+  "behaviour_how": "Distrusts AI copy for clients and uses it only for brainstorming, if at all.",
+  "objection": "Another subscription on top of my scheduler",
+  "habit": "a new client brief arrives as a messy Google Doc"
+ },
+ {
+  "id": "P011",
+  "name": "Rosa",
+  "age": 32,
+  "segment": "Owner or lead at a 6-10 person agency, 20+ clients",
+  "income": 88000,
+  "behaviour": "Already uses ChatGPT or Claude daily",
+  "behaviour_how": "Has a saved prompt or a project per client in a general AI assistant and pays about 20 a month for it.",
+  "objection": "Who is behind this? It looks like a side project",
+  "habit": "half your clients post in Lithuanian, half in English"
+ },
+ {
+  "id": "P012",
+  "name": "Sara",
+  "age": 39,
+  "segment": "Owner of a 2-5 person agency, 8-20 clients",
+  "income": 55000,
+  "behaviour": "Already uses ChatGPT or Claude daily",
+  "behaviour_how": "Has a saved prompt or a project per client in a general AI assistant and pays about 20 a month for it.",
+  "objection": "Another subscription on top of my scheduler",
+  "habit": "your clients approve posts over WhatsApp or email screenshots"
+ },
+ {
+  "id": "P013",
+  "name": "Sienna",
+  "age": 25,
+  "segment": "Solo freelancer managing 3-8 clients",
+  "income": 27000,
+  "behaviour": "Already uses ChatGPT or Claude daily",
+  "behaviour_how": "Has a saved prompt or a project per client in a general AI assistant and pays about 20 a month for it.",
+  "objection": "Another subscription on top of my scheduler",
+  "habit": "you lose most of Sunday evening writing captions"
+ },
+ {
+  "id": "P014",
+  "name": "Luca",
+  "age": 30,
+  "segment": "Owner of a 2-5 person agency, 8-20 clients",
+  "income": 35000,
+  "behaviour": "Trial hopper",
+  "behaviour_how": "Signs up for every new AI tool, rarely pays past the first month.",
+  "objection": "I already get this from ChatGPT with a saved brief per client",
+  "habit": "your clients approve posts over WhatsApp or email screenshots"
+ },
+ {
+  "id": "P015",
+  "name": "Oscar",
+  "age": 25,
+  "segment": "Solo freelancer managing 3-8 clients",
+  "income": 42000,
+  "behaviour": "Quality-first",
+  "behaviour_how": "Rewrites most AI drafts; only pays for tools whose output clients approve without edits.",
+  "objection": "Who is behind this? It looks like a side project",
+  "habit": "you plan the week's posts for every client on Monday mornings"
+ },
+ {
+  "id": "P016",
+  "name": "Rohan",
+  "age": 39,
+  "segment": "Owner or lead at a 6-10 person agency, 20+ clients",
+  "income": 77000,
+  "behaviour": "Tool-stack loyalist",
+  "behaviour_how": "Lives in a scheduler (Metricool, Buffer, SocialBee, Planable) and only adds tools that plug into it.",
+  "objection": "I don't want client data in a tool I don't know",
+  "habit": "your clients approve posts over WhatsApp or email screenshots"
+ },
+ {
+  "id": "P017",
+  "name": "Maya",
+  "age": 40,
+  "segment": "Solo freelancer managing 3-8 clients",
+  "income": 22000,
+  "behaviour": "Cost cutter",
+  "behaviour_how": "Margins are thin; every subscription is reviewed monthly and cancelled if not used weekly.",
+  "objection": "I don't want client data in a tool I don't know",
+  "habit": "your clients approve posts over WhatsApp or email screenshots"
+ },
+ {
+  "id": "P018",
+  "name": "Pablo",
+  "age": 38,
+  "segment": "Solo freelancer managing 3-8 clients",
+  "income": 40000,
+  "behaviour": "Writes everything by hand",
+  "behaviour_how": "Distrusts AI copy for clients and uses it only for brainstorming, if at all.",
+  "objection": "Another subscription on top of my scheduler",
+  "habit": "you plan the week's posts for every client on Monday mornings"
+ },
+ {
+  "id": "P019",
+  "name": "Marco",
+  "age": 26,
+  "segment": "Solo freelancer managing 3-8 clients",
+  "income": 36000,
+  "behaviour": "Tool-stack loyalist",
+  "behaviour_how": "Lives in a scheduler (Metricool, Buffer, SocialBee, Planable) and only adds tools that plug into it.",
+  "objection": "Who is behind this? It looks like a side project",
+  "habit": "half your clients post in Lithuanian, half in English"
+ },
+ {
+  "id": "P020",
+  "name": "Jasper",
+  "age": 36,
+  "segment": "Solo freelancer managing 3-8 clients",
+  "income": 31000,
+  "behaviour": "Quality-first",
+  "behaviour_how": "Rewrites most AI drafts; only pays for tools whose output clients approve without edits.",
+  "objection": "I already get this from ChatGPT with a saved brief per client",
+  "habit": "a new client brief arrives as a messy Google Doc"
+ }
+]
