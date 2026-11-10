@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coast — on-brand social content for every client, approved in one link</title>
+  <meta name="description" content="Coast writes a week of on-brand posts for every client — in English or Lithuanian — and gets them approved with one link. For freelancers and small social media agencies.">
+  <meta name="theme-color" content="#0f2a3d">
+  <meta property="og:title" content="Coast — Coast through Monday">
+  <meta property="og:description" content="A week of on-brand posts for every client, in their own voice, approved with one link.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <!--
+    BEFORE YOU PUBLISH — check these against reality (see site/README.md):
+    1. APP_URL in main.js points at your live app.
+    2. Every line marked data-verify is TRUE for your product (EU storage, no training on client data, etc.).
+    3. Features marked "Founding beta" are actually available to founding members, or keep the badge.
+    4. Add your real name/photo in the trust section, and a real company line in the footer.
+  -->
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M7 7l10 10M17 7L7 17"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-voice" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
+  <symbol id="i-export" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 3v12M7 10l5 5 5-5M5 21h14"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path fill="none" stroke="currentColor" stroke-width="1.8" d="M3 12h18M12 3c3 3.5 3 14.5 0 18M12 3c-3 3.5-3 14.5 0 18"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path fill="none" stroke="currentColor" stroke-width="1.8" d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></symbol>
+  <symbol id="i-eu" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><g fill="currentColor"><circle cx="12" cy="6.5" r="1"/><circle cx="12" cy="17.5" r="1"/><circle cx="6.5" cy="12" r="1"/><circle cx="17.5" cy="12" r="1"/><circle cx="8.1" cy="8.1" r="1"/><circle cx="15.9" cy="15.9" r="1"/><circle cx="15.9" cy="8.1" r="1"/><circle cx="8.1" cy="15.9" r="1"/></g></symbol>
+  <symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M4 20c1.5-4 4.5-6 8-6s6.5 2 8 6"/></symbol>
+  <symbol id="logo" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#1f7a7a"/><path d="M8 17c3-3 6-3 9 0s6 3 9 0 6-3 6 0M8 23c3-3 6-3 9 0s6 3 9 0 6-3 6 0" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"/></symbol>
+</svg>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="logo" href="#top" aria-label="Coast home"><svg class="logo-mark"><use href="#logo"/></svg>Coast</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#how" data-i18n="nav.how">How it works</a></li>
+      <li><a href="#features" data-i18n="nav.features">Features</a></li>
+      <li><a href="#trust" data-i18n="nav.trust">Trust</a></li>
+      <li><a href="#pricing" data-i18n="nav.pricing">Pricing</a></li>
+      <li><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
+    </ul>
+    <div class="nav-actions">
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-lang="en" aria-pressed="true"><span>EN</span></button>
+        <button type="button" data-lang="lt" aria-pressed="false"><span>LT</span></button>
+      </div>
+      <a class="btn btn-sm signin" data-app href="#" data-i18n="nav.signin">Sign in</a>
+      <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
+        <svg width="26" height="26" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="hero" aria-labelledby="heroTitle">
+  <div class="hero-sky" aria-hidden="true">
+    <canvas class="stars" id="stars"></canvas>
+    <div class="sun" id="sun"></div>
+    <canvas id="sea"></canvas>
+    <div class="dunes" id="dunes">
+      <svg viewBox="0 0 1440 260" preserveAspectRatio="none">
+        <defs>
+          <linearGradient id="d1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8c99a"/><stop offset="1" stop-color="#d9b37e"/></linearGradient>
+          <linearGradient id="d2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3e3c6"/><stop offset="1" stop-color="#f3ede2"/></linearGradient>
+        </defs>
+        <path data-depth="0.15" fill="url(#d1)" d="M0 150 C 220 90 380 70 560 110 S 900 190 1100 120 S 1360 60 1440 90 V260 H0z"/>
+        <path data-depth="0.3" fill="url(#d2)" d="M0 210 C 260 150 460 170 700 200 S 1100 240 1440 170 V260 H0z"/>
+        <path data-depth="0.3" fill="#fbf8f2" d="M0 245 C 400 225 900 255 1440 232 V260 H0z"/>
+      </svg>
+    </div>
+  </div>
+
+  <div class="wrap hero-content">
+    <span class="pill fade-up" style="animation-delay:.2s"><span class="dot"></span><span data-i18n="hero.pill">For freelancers &amp; agencies running many brands</span></span>
+    <h1 id="heroTitle" data-split data-i18n-html="hero.title">Coast through <em>Monday.</em></h1>
+    <p class="lead fade-up" style="animation-delay:1s" data-i18n="hero.lead">Write a week of on-brand posts for every client — in their own voice, in English or Lithuanian — and get them approved with one link your client opens on their phone.</p>
+    <div class="hero-ctas fade-up" style="animation-delay:1.2s">
+      <a class="btn btn-light magnetic" data-app href="#"><span data-i18n="cta.trial">Start your 14-day trial</span><svg class="arrow" width="18" height="18"><use href="#i-arrow"/></svg></a>
+      <a class="btn btn-ghost magnetic" href="#how" data-i18n="cta.watch">Watch it work</a>
+    </div>
+    <p class="hero-note fade-up" style="animation-delay:1.4s" data-i18n="hero.note">No card needed · Cancel anytime · Plans from €15/month</p>
+  </div>
+  <a class="scroll-cue" href="#how" aria-label="Scroll down"></a>
+</section>
+
+<!-- ============ MARQUEE ============ -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Instagram</span><span>TikTok</span><span>LinkedIn</span><span>Facebook</span><span>Reels scripts</span><span>Carousels</span><span>Stories</span><span>English</span><span>Lietuvių</span>
+    <span>Instagram</span><span>TikTok</span><span>LinkedIn</span><span>Facebook</span><span>Reels scripts</span><span>Carousels</span><span>Stories</span><span>English</span><span>Lietuvių</span>
+  </div>
+</div>
+
+<!-- ============ PROBLEM ============ -->
+<section class="section" aria-labelledby="problemTitle">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-i18n="problem.eyebrow">The Sunday-night problem</span>
+      <h2 id="problemTitle" data-i18n="problem.title">A chat window isn't a content workflow.</h2>
+      <p class="lead" data-i18n="problem.lead">You can get captions from any AI. The hours go everywhere else: re-explaining each client, fixing a voice that's almost right, and chasing approvals over WhatsApp.</p>
+    </div>
+    <div class="contrast">
+      <div class="contrast-card before reveal">
+        <h3 data-i18n="problem.beforeTitle">Today</h3>
+        <ul>
+          <li><svg><use href="#i-x"/></svg><span data-i18n="problem.b1">Pasting each client's brief into a chat, every week</span></li>
+          <li><svg><use href="#i-x"/></svg><span data-i18n="problem.b2">Captions that sound like AI, not like the client</span></li>
+          <li><svg><use href="#i-x"/></svg><span data-i18n="problem.b3">Screenshots on WhatsApp, "is this OK?", waiting</span></li>
+          <li><svg><use href="#i-x"/></svg><span data-i18n="problem.b4">Copy-pasting post by post into your scheduler</span></li>
+        </ul>
+      </div>
+      <div class="contrast-card after reveal" style="--d:.12s">
+        <h3 data-i18n="problem.afterTitle">With Coast</h3>
+        <ul>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="problem.a1">Every client's voice saved once, learned from their real posts</span></li>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="problem.a2">A whole week per client from one plain-language brief</span></li>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="problem.a3">One approval link — the client taps ✓ on their phone</span></li>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="problem.a4">The approved week exported for your scheduler in one click</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCROLL DEMO ============ -->
+<section class="section demo" id="how" aria-labelledby="howTitle" style="padding-bottom:0">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="eyebrow" data-i18n="how.eyebrow">How it works</span>
+      <h2 id="howTitle" data-i18n="how.title">From messy brief to approved week.</h2>
+    </div>
+  </div>
+  <div class="demo-scroller" id="demoScroller">
+    <div class="wrap demo-stage">
+      <div class="demo-steps" id="demoSteps">
+        <div class="progress"><i id="demoProgress"></i></div>
+        <button class="demo-step active" data-step="0">
+          <span class="num">01</span>
+          <h3 data-i18n="how.s1t">Teach it the voice</h3>
+          <p data-i18n="how.s1p">Add a client: tone, audience, words to use and avoid — plus a few of their best past posts.</p>
+        </button>
+        <button class="demo-step" data-step="1">
+          <span class="num">02</span>
+          <h3 data-i18n="how.s2t">Brief it like a colleague</h3>
+          <p data-i18n="how.s2p">"A week of posts for the café, autumn menu, warm and local." Captions, ideas and Reels scripts arrive in that client's voice.</p>
+        </button>
+        <button class="demo-step" data-step="2">
+          <span class="num">03</span>
+          <h3><span data-i18n="how.s3t">Send one approval link</span><span class="badge" data-i18n="badge.beta">Founding beta</span></h3>
+          <p data-i18n="how.s3p">Your client opens it from WhatsApp or email — no login — and approves or comments on each post.</p>
+        </button>
+        <button class="demo-step" data-step="3">
+          <span class="num">04</span>
+          <h3><span data-i18n="how.s4t">Export to your scheduler</span><span class="badge" data-i18n="badge.beta">Founding beta</span></h3>
+          <p data-i18n="how.s4p">The approved week goes out as a CSV for bulk upload, and lands on Coast's calendar too.</p>
+        </button>
+      </div>
+
+      <div class="screen" aria-hidden="true">
+        <div class="screen-bar"><i></i><i></i><i></i><b>coast · Kavinė Kopa</b></div>
+
+        <div class="scene active" data-scene="0">
+          <div class="client-tag"><span class="avatar">K</span><span>Kavinė Kopa <span class="muted" data-i18n="demo.example">· example client</span></span></div>
+          <div class="posts">
+            <div class="post" data-i18n="demo.p1">"Rytas prasideda nuo kvapo. Šviežiai keptos bandelės laukia nuo 7:30 ☕"</div>
+            <div class="post" data-i18n="demo.p2">"Rain outside, cinnamon inside. Your corner table is free."</div>
+            <div class="post" data-i18n="demo.p3">"Smėlis, vėjas ir puodelis kakavos. Taip atrodo ruduo Nidoje."</div>
+          </div>
+          <div class="voice-meter">
+            <div class="row"><span data-i18n="demo.warmth">Warmth</span><span>92%</span></div>
+            <div class="bar"><i style="--w:92%"></i></div>
+            <div class="row"><span data-i18n="demo.local">Local feel</span><span>85%</span></div>
+            <div class="bar"><i style="--w:85%"></i></div>
+            <div class="chips"><span class="chip" data-i18n="demo.c1">short sentences</span><span class="chip" data-i18n="demo.c2">sensory words</span><span class="chip" data-i18n="demo.c3">1 emoji max</span><span class="chip" data-i18n="demo.c4">never "amazing"</span></div>
+          </div>
+        </div>
+
+        <div class="scene" data-scene="1">
+          <div class="chat">
+            <div class="msg me" data-i18n="demo.ask">A week of posts for Kopa — autumn menu, warm and local. Mix LT and EN.</div>
+            <div class="msg ai"><span class="typed" id="typed"></span></div>
+            <div class="caption-list" id="captionList">
+              <div class="caption"><b>Mon</b><span data-i18n="demo.cap1">Moliūgų sriuba grįžo. Ir šįkart — su skrebučiais iš mūsų krosnies.</span></div>
+              <div class="caption"><b>Wed</b><span data-i18n="demo.cap2">Reel: 15s — steam rising from a cup, dunes through the window. Hook: "This is what 8am smells like here."</span></div>
+              <div class="caption"><b>Fri</b><span data-i18n="demo.cap3">Savaitgalis Nidoje? Užsukite pirmi — šilčiausias kampas laukia jūsų.</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="scene" data-scene="2">
+          <div class="approve-wrap">
+            <div class="approve-copy">
+              <span class="wa">💬 <span data-i18n="demo.wa">coast.link/kopa-week-46</span></span>
+              <p data-i18n="demo.approveCopy">Your client taps through the week and approves each post. Comments come back to you, attached to the right post.</p>
+            </div>
+            <div class="phone">
+              <div class="phone-screen" id="phoneList">
+                <h4 data-i18n="demo.phoneTitle">Kopa · week 46</h4>
+                <div class="ap"><span data-i18n="demo.ap1">Mon · Moliūgų sriuba</span><span class="ok">✓</span></div>
+                <div class="ap"><span data-i18n="demo.ap2">Wed · Reel: 8am</span><span class="ok">✓</span></div>
+                <div class="ap"><span data-i18n="demo.ap3">Fri · Savaitgalis</span><span class="ok">✓</span></div>
+                <div class="ap"><span data-i18n="demo.ap4">Sun · Story poll</span><span class="ok">✓</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="scene" data-scene="3">
+          <div class="export">
+            <div class="files">
+              <div class="file">kopa-w46.csv<small data-i18n="demo.posts4">4 approved posts</small></div>
+              <div class="lane"></div>
+              <div class="sched" data-i18n="demo.scheduler">Your scheduler</div>
+            </div>
+            <p data-i18n="demo.exportCopy">Bulk-upload into the scheduler you already use. Coast doesn't replace it — it fills it.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURES ============ -->
+<section class="section" id="features" aria-labelledby="featTitle">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow" data-i18n="feat.eyebrow">Built for many brands</span>
+      <h2 id="featTitle" data-i18n="feat.title">Everything a multi-client week needs. Nothing it doesn't.</h2>
+    </div>
+    <div class="features">
+      <article class="feature reveal tilt"><div class="icon"><svg><use href="#i-voice"/></svg></div><h3 data-i18n="feat.f1t">A voice per client</h3><p data-i18n="feat.f1p">Tone, audience, words to use and avoid — saved once and applied to every request, so a dental clinic never sounds like a streetwear label.</p></article>
+      <article class="feature reveal tilt" style="--d:.08s"><div class="icon"><svg><use href="#i-globe"/></svg></div><h3 data-i18n="feat.f2t">English and Lithuanian</h3><p data-i18n="feat.f2p">Write natively in either language, or mix them in one week. No "translated" feel.</p></article>
+      <article class="feature reveal tilt" style="--d:.16s"><div class="icon"><svg><use href="#i-link"/></svg></div><h3><span data-i18n="feat.f3t">Client approvals</span> <span class="badge" data-i18n="badge.beta">Founding beta</span></h3><p data-i18n="feat.f3p">One link per week. Clients approve or comment on their phone. No accounts, no screenshots.</p></article>
+      <article class="feature reveal tilt"><div class="icon"><svg><use href="#i-cal"/></svg></div><h3 data-i18n="feat.f4t">A calendar per client</h3><p data-i18n="feat.f4p">See each brand's month at a glance. Mark drafts, approved and published.</p></article>
+      <article class="feature reveal tilt" style="--d:.08s"><div class="icon"><svg><use href="#i-export"/></svg></div><h3><span data-i18n="feat.f5t">Scheduler export</span> <span class="badge" data-i18n="badge.beta">Founding beta</span></h3><p data-i18n="feat.f5p">Approved posts as a CSV for bulk upload into the scheduler you already pay for.</p></article>
+      <article class="feature reveal tilt" style="--d:.16s"><div class="icon"><svg><use href="#i-layers"/></svg></div><h3 data-i18n="feat.f6t">Flat price, fair use</h3><p data-i18n="feat.f6p">No credits running out mid-month. Generous fair use of about 1,500 AI requests per account.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRUST ============ -->
+<section class="section trust" id="trust" aria-labelledby="trustTitle">
+  <div class="wrap trust-grid">
+    <div>
+      <div class="section-head reveal">
+        <span class="eyebrow" style="color:#7fe3d3" data-i18n="trust.eyebrow">Who's behind Coast</span>
+        <h2 id="trustTitle" data-i18n="trust.title">Built by a real person, on the Baltic coast.</h2>
+        <p class="lead" data-i18n="trust.lead">Coast is an independent product made in Nida, Lithuania. You can write to the founder directly — and you'll get an answer from them, not a bot.</p>
+      </div>
+      <div class="trust-list">
+        <div class="trust-item reveal"><svg><use href="#i-lock"/></svg><div><h3 data-i18n="trust.t1">Your clients stay private</h3><p data-i18n="trust.t1p">Row-level security means only your account can reach your clients and content.</p></div></div>
+        <div class="trust-item reveal" style="--d:.08s" data-verify><svg><use href="#i-eu"/></svg><div><h3 data-i18n="trust.t2">EU data, no training</h3><p data-i18n="trust.t2p">Client data is stored in the EU and is not used to train AI models. A DPA is available on request.</p></div></div>
+        <div class="trust-item reveal" style="--d:.16s"><svg><use href="#i-person"/></svg><div><h3 data-i18n="trust.t3">Talk to the founder</h3><p data-i18n="trust.t3p">Founding members get their first three client voices set up personally.</p></div></div>
+      </div>
+    </div>
+    <div class="nida reveal" aria-hidden="true">
+      <span class="caption-tag">Nida, LT · 55.30° N</span>
+      <svg viewBox="0 0 600 340" preserveAspectRatio="none">
+        <path fill="#e8c99a" d="M0 170 C 120 100 220 80 330 120 S 520 200 600 140 V340 H0z"/>
+        <path fill="#f3e3c6" d="M0 250 C 160 200 300 220 420 250 S 560 280 600 240 V340 H0z"/>
+        <path fill="#fbf8f2" d="M0 310 C 200 290 400 320 600 300 V340 H0z"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRICING ============ -->
+<section class="section" id="pricing" aria-labelledby="priceTitle">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="eyebrow" data-i18n="price.eyebrow">Pricing</span>
+      <h2 id="priceTitle" data-i18n="price.title">Simple plans. Try it on real clients first.</h2>
+      <p class="lead" data-i18n="price.lead">14 days free, no card. Then pick the plan that fits your client list.</p>
+      <div class="billing" role="group" aria-label="Billing period">
+        <button type="button" data-billing="month" aria-pressed="true" data-i18n="price.monthly">Monthly</button>
+        <button type="button" data-billing="year" aria-pressed="false"><span data-i18n="price.yearly">Yearly</span><span class="save" data-i18n="price.save">2 months free</span></button>
+      </div>
+    </div>
+
+    <div class="founding reveal">
+      <div><strong data-i18n="price.foundT">Founding members: Studio for €19/month</strong><p data-i18n="price.foundP">For the first 50 accounts only. Price locked for 12 months, plus a personal voice setup for your first 3 clients.</p></div>
+      <a class="btn btn-teal" data-app href="#" data-i18n="price.foundCta">Claim a founding spot</a>
+    </div>
+
+    <div class="plans">
+      <article class="plan reveal">
+        <div><h3>Solo</h3><p class="muted" data-i18n="price.soloFor">For freelancers getting started</p></div>
+        <div class="price"><span class="amt" data-price-month="15" data-price-year="150">€15</span><span class="muted per" data-i18n="price.per">/month</span></div>
+        <ul>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="price.c5">Up to 5 clients</span></li>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="price.voices">Voice profile per client</span></li>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="price.lang">English + Lithuanian</span></li>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="price.cal">Content calendar</span></li>
+        </ul>
+        <a class="btn btn-ghost" data-app href="#" data-i18n="price.start">Start free trial</a>
+      </article>
+      <article class="plan popular reveal" style="--d:.08s">
+        <span class="tag" data-i18n="price.popular">Most popular</span>
+        <div><h3>Studio</h3><p class="muted" data-i18n="price.studioFor">For busy freelancers and small teams</p></div>
+        <div class="price"><span class="amt" data-price-month="29" data-price-year="290">€29</span><span class="muted per" data-i18n="price.per">/month</span></div>
+        <ul>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="price.c15">Up to 15 clients</span></li>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="price.everything">Everything in Solo</span></li>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="price.approvals">Client approval links</span></li>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="price.export">Scheduler CSV export</span></li>
+        </ul>
+        <a class="btn" data-app href="#" data-i18n="price.start">Start free trial</a>
+      </article>
+      <article class="plan reveal" style="--d:.16s">
+        <div><h3>Agency</h3><p class="muted" data-i18n="price.agencyFor">For teams with many brands</p></div>
+        <div class="price"><span class="amt" data-price-month="59" data-price-year="590">€59</span><span class="muted per" data-i18n="price.per">/month</span></div>
+        <ul>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="price.unlimited">Unlimited clients</span></li>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="price.everythingS">Everything in Studio</span></li>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="price.seats">3 team seats</span></li>
+          <li><svg><use href="#i-check"/></svg><span data-i18n="price.priority">Priority support</span></li>
+        </ul>
+        <a class="btn btn-ghost" data-app href="#" data-i18n="price.start">Start free trial</a>
+      </article>
+    </div>
+
+    <div class="guarantee reveal">
+      <svg class="seal" viewBox="0 0 100 100" aria-hidden="true">
+        <defs><path id="circ" d="M50 50 m-38 0 a38 38 0 1 1 76 0 a38 38 0 1 1 -76 0"/></defs>
+        <circle cx="50" cy="50" r="48" fill="#0f2a3d"/>
+        <text font-size="10.5" font-weight="700" fill="#f3ede2" letter-spacing="2.2"><textPath href="#circ">VOICE GUARANTEE · VOICE GUARANTEE ·</textPath></text>
+        <path d="M37 51l9 9 18-20" fill="none" stroke="#7fe3d3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div><h3 data-i18n="price.guarT">The voice guarantee</h3><p class="muted" data-i18n="price.guarP">If a client rejects the voice in your first paid month, we refund that month. No forms, just reply to your receipt.</p></div>
+    </div>
+    <p class="fineprint" data-i18n="price.fine">Prices exclude VAT where applicable. Fair use: about 1,500 AI requests per account each month.</p>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section" id="faq" aria-labelledby="faqTitle" style="padding-top:0">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="eyebrow" data-i18n="faq.eyebrow">FAQ</span>
+      <h2 id="faqTitle" data-i18n="faq.title">Questions agencies ask first.</h2>
+    </div>
+    <div class="faq">
+      <details class="reveal"><summary data-i18n="faq.q1">I already use ChatGPT or Claude. Why Coast?</summary><p data-i18n="faq.a1">Keep them for brainstorming. Coast is the workflow around the writing: a saved voice and calendar per client, a week per brief, an approval link for the client and an export for your scheduler. It's the part a chat window leaves to you.</p></details>
+      <details class="reveal"><summary data-i18n="faq.q2">Does Coast publish to Instagram or TikTok?</summary><p data-i18n="faq.a2">No — on purpose. You keep the scheduler you already trust. Coast fills it with approved posts via CSV export.</p></details>
+      <details class="reveal"><summary data-i18n="faq.q3">How good is it in Lithuanian?</summary><p data-i18n="faq.a3">Coast writes natively in Lithuanian and English. Judge it on your own clients: the 14-day trial is long enough to run two real Monday batches.</p></details>
+      <details class="reveal"><summary data-i18n="faq.q4">Do my clients need an account to approve?</summary><p data-i18n="faq.a4">No. They open the link on their phone, tap approve or leave a comment on each post.</p></details>
+      <details class="reveal"><summary data-i18n="faq.q5">What happens to my content if I leave?</summary><p data-i18n="faq.a5">Export everything as CSV before you go. After you close your account, your data is deleted.</p></details>
+      <details class="reveal"><summary data-i18n="faq.q6">Can I cancel anytime?</summary><p data-i18n="faq.a6">Yes. Monthly plans stop at the end of the period; there's nothing to negotiate.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="section final" aria-labelledby="finalTitle">
+  <div class="sun" aria-hidden="true"></div>
+  <div class="wrap reveal">
+    <h2 id="finalTitle" data-i18n="final.title">Spend Monday on the beach, not the blank page.</h2>
+    <p class="lead" data-i18n="final.lead">Set up your first client in five minutes. Run a real week through Coast before you pay anything.</p>
+    <div class="ctas">
+      <a class="btn btn-light magnetic" data-app href="#"><span data-i18n="cta.trial">Start your 14-day trial</span><svg class="arrow" width="18" height="18"><use href="#i-arrow"/></svg></a>
+      <a class="btn btn-ghost magnetic" href="mailto:coastagencyai@gmail.com?subject=Coast%20founding%20pilot" data-mail data-i18n="final.pilot">Ask about the founding pilot</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a class="logo" href="#top"><svg class="logo-mark"><use href="#logo"/></svg>Coast</a>
+        <p data-i18n="foot.about">On-brand social content for every client, approved in one link. Made in Nida, Lithuania.</p>
+      </div>
+      <div><h4 data-i18n="foot.product">Product</h4><ul><li><a href="#how" data-i18n="nav.how">How it works</a></li><li><a href="#features" data-i18n="nav.features">Features</a></li><li><a href="#pricing" data-i18n="nav.pricing">Pricing</a></li></ul></div>
+      <div><h4 data-i18n="foot.company">Company</h4><ul><li><a href="#trust" data-i18n="nav.trust">Trust</a></li><li><a href="#faq" data-i18n="nav.faq">FAQ</a></li><li><a data-mail href="mailto:coastagencyai@gmail.com" data-i18n="foot.contact">Contact</a></li></ul></div>
+      <div><h4 data-i18n="foot.legal">Legal</h4><ul><li><a href="#" data-legal="privacy" data-i18n="foot.privacy">Privacy policy</a></li><li><a href="#" data-legal="terms" data-i18n="foot.terms">Terms of service</a></li><li><a href="#" data-legal="dpa" data-i18n="foot.dpa">Data processing (DPA)</a></li></ul></div>
+    </div>
+    <div class="legal"><span>© <span id="year">2026</span> Coast</span><span data-i18n="foot.note">Content stays private to your account. Cancel anytime.</span></div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>
