@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "founder-skill": {
+      "source": {
+        "source": "github",
+        "repo": "Jakeschincariol/founder-skill"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "founder-skill@founder-skill": true
+  }
+}
