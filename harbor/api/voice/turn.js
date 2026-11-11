@@ -1,6 +1,7 @@
 // Twilio <Gather> action: receives what the caller said, asks Claude, speaks the reply, listens again.
 import { business, runTurn } from "../_lib/receptionist.js";
-import { VoiceResponse, verify, loadState, saveState, sendSms, postWebhook, ownerPhone } from "../_lib/twilio.js";
+import { VoiceResponse, verify, loadState, saveState, sendSms, ownerPhone } from "../_lib/twilio.js";
+import { makeBooker } from "../_lib/booking.js";
 
 const listen = (vr, text) => {
   const g = vr.gather({ input: "speech", action: "/api/voice/turn", method: "POST", speechTimeout: "auto", speechModel: "phone_call", enhanced: true, language: "en-US", actionOnEmptyResult: true });
@@ -35,15 +36,9 @@ export default async function handler(req, res, deps = {}) {
   try {
     turn = await runTurn(state.history, {
       onBook: async b => {
-        const when = `${b.day}, ${b.window}`;
-        const callback = b.callback_number || From;
-        await postWebhook({ type: "booking", call_sid: CallSid, caller: From, ...b, callback, company: business.company, at: new Date().toISOString() });
-        await Promise.allSettled([
-          sendSms(To, callback, `${business.company}: you're booked for ${b.problem} on ${when} at ${b.address}. Reply C to change. ${business.fees}`),
-          sendSms(To, ownerPhone, `NEW JOB${b.urgent ? " (URGENT)" : ""}: ${b.name}, ${b.problem}, ${when}, ${b.address}, ${callback}`),
-        ]);
+        const r = await makeBooker({ from: From, to: To, callSid: CallSid })(b);
         state.booked = true;
-        return `Booked for ${when}. Confirmation text sent to ${callback}.`;
+        return r;
       },
     }, { signal: ctrl.signal, client: deps.client });
   } catch (err) {

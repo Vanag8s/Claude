@@ -64,6 +64,10 @@ The phone receptionist (`api/voice/`) is now part of the product, not a promise.
 - **Defensibility 3 → 4:** it's a working, tested phone agent set up per client with a single config file. Most "AI agencies" can't deliver this.
 - **Unit economics stays at 4:** about $60–$110/month to run per client against $597 (see `VOICE_SETUP.md`).
 
-**New total: 33 / 40. ✅ PASS.**
+**Update 2: it now sounds human.** Live mode streams a natural voice, lets callers interrupt and handles "uh-huh"s.
+That's the difference between "a robot answered" and "they have a great receptionist". It lifts **Competition 3 → 4**
+(most AI receptionists still talk at you), and costs a little more to run (~$90–$170 per client, still ~75–85% margin).
+
+**New total: 34 / 40. ✅ PASS.**
 
 **Target after 90 days:** 15 clients × $597 ≈ **$9k MRR**, ~80% gross margin.

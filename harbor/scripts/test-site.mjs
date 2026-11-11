@@ -72,6 +72,32 @@ try {
   const r404 = await p.goto(base + '/nope-not-here');
   ok('Custom 404 page', r404.status() === 404 && (await p.textContent('h1')).includes('drifted'));
 
+  // Browser voice demo with a simulated mic + speech engine: barge-in and echo filtering
+  const vctx = await b.newContext({ viewport: { width: 1440, height: 900 } });
+  await vctx.addInitScript(() => {
+    window.__voice = { cancels: 0, spoken: [] };
+    class FakeSR { constructor() { window.__rec = this; } start() { this.on = true; } abort() { this.on = false; } stop() { this.on = false; } }
+    window.webkitSpeechRecognition = FakeSR; window.SpeechRecognition = FakeSR;
+    const synth = { speaking: false, pending: false, getVoices: () => [], speak(u) { this.speaking = true; window.__voice.spoken.push(u.text); window.__utt = u; }, cancel() { this.speaking = false; window.__voice.cancels++; } };
+    Object.defineProperty(window, 'speechSynthesis', { value: synth });
+    window.SpeechSynthesisUtterance = class { constructor(t) { this.text = t; } };
+    window.__hear = (t, final) => window.__rec.onresult({ results: [Object.assign([{ transcript: t }], { isFinal: final })] });
+  });
+  const vp = await vctx.newPage(); const verr = []; vp.on('pageerror', e => verr.push(e.message));
+  await vp.goto(base + '/', { waitUntil: 'networkidle' });
+  await vp.locator('#demo').scrollIntoViewIfNeeded(); await vp.waitForTimeout(1800);
+  ok('Mic button shows when speech is supported', await vp.isVisible('#botMic'));
+  await vp.click('#botMic'); await vp.waitForTimeout(200);
+  ok('Voice mode speaks Harbor\'s greeting + listens', (await vp.evaluate(() => window.__voice.spoken.length)) >= 1 && await vp.evaluate(() => window.__rec.on));
+  await vp.evaluate(() => window.__hear("riverside plumbing virtual assistant", false));
+  ok('Ignores its own voice (echo)', (await vp.evaluate(() => window.__voice.cancels)) === 0);
+  await vp.evaluate(() => window.__hear("how much for a drain", false));
+  ok('Caller can interrupt: speech stops instantly', (await vp.evaluate(() => window.__voice.cancels)) === 1);
+  await vp.evaluate(() => window.__hear("how much for a drain", true)); await vp.waitForTimeout(1900);
+  ok('Answers the interrupting question out loud', (await vp.evaluate(() => window.__voice.spoken.at(-1))).includes('149'));
+  ok('No JS errors in voice mode', verr.length === 0); if (verr.length) console.log(verr);
+  await vctx.close();
+
   // Mobile
   const m = await b.newContext({ ...devices['iPhone 13'] }); const mp = await m.newPage();
   await mp.goto(base + '/', { waitUntil: 'networkidle' }); await mp.waitForTimeout(2600);

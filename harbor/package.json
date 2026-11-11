@@ -6,10 +6,14 @@
     "dev": "npx --yes serve -l 4173 .",
     "check:links": "node scripts/check-links.mjs",
     "test:site": "node scripts/test-site.mjs",
-    "test:voice": "node scripts/test-voice.mjs"
+    "test:voice": "node scripts/test-voice.mjs",
+    "voice:live": "node voice-server/server.js",
+    "test:live-voice": "node scripts/test-live-voice.mjs",
+    "test": "node scripts/check-links.mjs && node scripts/test-site.mjs && node scripts/test-voice.mjs && node scripts/test-live-voice.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.8.0",
-    "twilio": "^6.3.0"
+    "twilio": "^6.3.0",
+    "ws": "^8.22.2"
   }
 }

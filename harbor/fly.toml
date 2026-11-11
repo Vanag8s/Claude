@@ -1,0 +1,18 @@
+# Live voice server on Fly.io. Deploy from the harbor/ folder:  fly launch --no-deploy && fly deploy
+app = "harbor-live-voice"
+primary_region = "ord"
+
+[build]
+  dockerfile = "voice-server/Dockerfile"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "off"   # stay warm: no cold start when the phone rings
+  min_machines_running = 1
+
+[[http_service.checks]]
+  method = "GET"
+  path = "/health"
+  interval = "30s"
+  timeout = "5s"

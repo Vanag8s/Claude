@@ -221,25 +221,50 @@
     };
     choose(); speechSynthesis.onvoiceschanged = choose;
     voice.on = false;
-    const listen = () => { if (!voice.on) return; try { rec.start(); mic.classList.add('is-live'); input.placeholder = 'Listening…'; } catch {} };
+    // Always-on listening while voice mode is on, so the visitor can talk over Harbor (barge-in).
+    rec.continuous = true;
+    let listening = false, speakingText = '';
+    const norm = t => t.toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(Boolean);
+    // Ignore the mic hearing Harbor's own voice from the speakers.
+    const isEcho = t => {
+      if (!speakingText) return false;
+      const said = new Set(norm(speakingText)), words = norm(t);
+      return words.length > 0 && words.filter(w => said.has(w)).length / words.length > 0.6;
+    };
+    const listen = () => {
+      if (!voice.on || listening) return;
+      try { rec.start(); listening = true; mic.classList.add('is-live'); input.placeholder = 'Listening… (talk any time, even over Harbor)'; } catch {}
+    };
     voice.speak = text => {
       if (!voice.on) return;
-      const u = new SpeechSynthesisUtterance(text.replace(/[\u{1F300}-\u{1FAFF}\u2600-\u27BF✅📅👤📍👆]/gu, '').replace(/\$(\d+)–\$(\d+)/g, '$$$1 to $$$2'));
+      const clean = text.replace(/[\u{1F300}-\u{1FAFF}☀-➿✅📅👤📍👆]/gu, '').replace(/\$(\d+)–\$(\d+)/g, '$$$1 to $$$2');
+      const u = new SpeechSynthesisUtterance(clean);
       if (pickVoice) u.voice = pickVoice;
-      u.rate = 1.05;
+      u.rate = 1.07;
+      speakingText += ' ' + clean;
       mic.classList.add('is-speaking');
-      u.onend = () => { mic.classList.remove('is-speaking'); if (!speechSynthesis.pending) setTimeout(listen, 250); };
-      try { rec.abort(); } catch {}
+      u.onend = u.onerror = () => { if (!speechSynthesis.speaking && !speechSynthesis.pending) { speakingText = ''; mic.classList.remove('is-speaking'); } };
       speechSynthesis.speak(u);
+      listen();
     };
     rec.onresult = e => {
       const r = e.results[e.results.length - 1];
-      input.value = r[0].transcript;
-      if (r.isFinal) { const v = input.value; input.value = ''; handle(v); }
+      const t = r[0].transcript.trim();
+      if (!t || isEcho(t)) return;
+      if (speechSynthesis.speaking) {          // barge-in: stop talking the moment the visitor speaks
+        speechSynthesis.cancel(); speakingText = ''; mic.classList.remove('is-speaking');
+        window.hTrack?.('demo_voice_interrupt');
+      }
+      input.value = t;
+      if (r.isFinal) { input.value = ''; handle(t); }
     };
-    rec.onend = () => { mic.classList.remove('is-live'); input.placeholder = 'Type, or tap the mic and talk…'; };
-    rec.onerror = e => { if (e.error === 'not-allowed') { stop(); add("I couldn't access your microphone — you can still type to me."); } };
-    const stop = () => { voice.on = false; mic.setAttribute('aria-pressed', 'false'); mic.classList.remove('is-live', 'is-speaking'); try { rec.abort(); } catch {} speechSynthesis.cancel(); };
+    rec.onend = () => {
+      listening = false;
+      if (voice.on) return setTimeout(listen, 150);  // browsers stop recognition periodically; resume
+      mic.classList.remove('is-live'); input.placeholder = 'Type, or tap the mic and talk…';
+    };
+    rec.onerror = e => { if (e.error === 'not-allowed' || e.error === 'service-not-allowed') { stop(); add("I couldn't access your microphone — you can still type to me."); } };
+    const stop = () => { voice.on = false; listening = false; speakingText = ''; mic.setAttribute('aria-pressed', 'false'); mic.classList.remove('is-live', 'is-speaking'); try { rec.abort(); } catch {} speechSynthesis.cancel(); input.placeholder = 'Type, or tap the mic and talk…'; };
     mic.addEventListener('click', () => {
       if (voice.on) return stop();
       voice.on = true; mic.setAttribute('aria-pressed', 'true');

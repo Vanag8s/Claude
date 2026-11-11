@@ -17,5 +17,12 @@
   "policies": "1-year parts and labor warranty. 0% financing for 12 months on jobs over $1,000, subject to approval. Licensed and insured.",
   "booking_windows": ["8 AM to 10 AM", "10 AM to 12 PM", "1 PM to 3 PM", "3 PM to 5 PM"],
   "emergency_keywords": "flooding, burst pipe, sewage backup, no water, gas smell",
-  "voice": "Polly.Joanna-Neural"
+  "voice": "Polly.Joanna-Neural",
+  "live_voice": {
+    "tts_provider": "ElevenLabs",
+    "voice": "",
+    "stt_provider": "Deepgram",
+    "speech_model": "nova-3-general",
+    "_note": "voice: leave empty for Twilio's default ElevenLabs voice, or paste an ElevenLabs voice ID (optionally with model and speed settings, per Twilio's ConversationRelay voice docs)."
+  }
 }
