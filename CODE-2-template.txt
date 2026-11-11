@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "main": {
+      "type": "nordveil-product",
+      "settings": {}
+    }
+  },
+  "order": ["main"]
+}
