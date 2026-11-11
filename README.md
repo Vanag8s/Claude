@@ -31,12 +31,12 @@ All copy, chapters, benefits, specs and FAQ are editable in **Online Store → C
 
 ## Recommended product setup (fair pricing)
 
-Comparable full-coverage covers with mirror pockets and side flaps sell for roughly $20–$40.
+Positioned as a premium all-season cover (3-layer fabric, mirror pockets, side flaps).
 
 | Variant (option "Size") | Price | Compare-at |
 |---|---|---|
-| Standard – Car / Hatchback | **$29.99** | $49.99 |
-| XL – SUV / MPV | **$34.99** | $54.99 |
+| Standard – Car / Hatchback | **$59.99** | $89.99 |
+| XL – SUV / MPV | **$64.99** | $94.99 |
 
 Upload the 5 product photos to the product. Before going live, **check the specs and FAQ against your supplier's details** (sizes, materials, what's in the box), and set the trust badges (shipping, returns) to match your real store policies.
 

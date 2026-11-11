@@ -270,7 +270,7 @@
       if (e.target.closest('[data-line-minus]')) Cart.change(line.getAttribute('data-key'), q - 1).then(Cart.render);
       if (e.target.closest('[data-line-plus]')) Cart.change(line.getAttribute('data-key'), q + 1).then(Cart.render);
     });
-    if (F.preview) { var chk = $('[data-checkout]'); if (chk) chk.addEventListener('click', function (e) { e.preventDefault(); alert('Preview mode – checkout runs on your Shopify store.'); }); }
+    if (F.preview) { var chk = $('[data-checkout]'); if (chk) chk.addEventListener('click', function (e) { e.preventDefault(); chk.textContent = 'Preview – checkout runs on your Shopify store'; }); }
   }
 
   /* ---------------- Sticky mobile buy bar ---------------- */
