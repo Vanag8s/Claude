@@ -59,4 +59,11 @@ The offer is one specific outcome: *every call answered, every job booked.* It's
 3. **Week 2–3:** Close 3–5 founding clients on Growth ($597). Set up each one with a voice-AI and telephony provider, plus calendar sync.
 4. **Week 4:** Turn the first results into case studies with permission. Raise the setup fee after client 25.
 
+### Update: the voice AI is built
+The phone receptionist (`api/voice/`) is now part of the product, not a promise. That changes two scores:
+- **Defensibility 3 → 4:** it's a working, tested phone agent set up per client with a single config file. Most "AI agencies" can't deliver this.
+- **Unit economics stays at 4:** about $60–$110/month to run per client against $597 (see `VOICE_SETUP.md`).
+
+**New total: 33 / 40. ✅ PASS.**
+
 **Target after 90 days:** 15 clients × $597 ≈ **$9k MRR**, ~80% gross margin.

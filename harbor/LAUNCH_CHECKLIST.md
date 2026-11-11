@@ -31,6 +31,7 @@ grep -rl "harbor-ai.example" . --exclude-dir=node_modules | xargs sed -i 's/harb
 # 3. In Vercel → Project → Settings → Environment Variables:
 #    ANTHROPIC_API_KEY   (makes the demo bot Claude-powered; without it the built-in engine still works)
 #    LEAD_WEBHOOK_URL    (Zapier/Make/Slack webhook that receives audit requests)
-# 4. Run the checks
-npm run check:links && npm run test:site
+# 4. Phone AI: follow VOICE_SETUP.md (Twilio number + TWILIO_*, OWNER_PHONE)
+# 5. Run the checks
+npm run check:links && npm run test:site && npm run test:voice
 ```

@@ -1,0 +1,21 @@
+{
+  "company": "Riverside Plumbing",
+  "trade": "plumbing",
+  "timezone": "America/Chicago",
+  "service_area": ["Riverside", "Oakwood", "Maple Heights", "Cedar Park", "Lakeview", "Downtown", "North Hills"],
+  "hours": "Office Monday to Saturday 7 AM to 7 PM. Emergencies 24/7.",
+  "prices": {
+    "Drain cleaning": "$149 to $249",
+    "Toilet repair": "$129 to $289",
+    "Faucet or sink repair": "$119 to $259",
+    "Leak and pipe repair": "$175 to $520",
+    "Water heater repair": "$189 to $450; replacement from $1,450",
+    "Sewer camera inspection": "$249",
+    "Remodel plumbing": "free on-site quote"
+  },
+  "fees": "Diagnostic visit $89, waived if the repair goes ahead. After-hours emergency call-out $189.",
+  "policies": "1-year parts and labor warranty. 0% financing for 12 months on jobs over $1,000, subject to approval. Licensed and insured.",
+  "booking_windows": ["8 AM to 10 AM", "10 AM to 12 PM", "1 PM to 3 PM", "3 PM to 5 PM"],
+  "emergency_keywords": "flooding, burst pipe, sewage backup, no water, gas smell",
+  "voice": "Polly.Joanna-Neural"
+}

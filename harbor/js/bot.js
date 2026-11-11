@@ -25,6 +25,7 @@
   };
 
   const state = { history: [], flow: null, booking: {}, api: null };
+  const voice = { on: false, speak: () => {} };
 
   /* ---------- UI helpers ---------- */
   const scroll = () => (log.scrollTop = log.scrollHeight);
@@ -32,7 +33,7 @@
     const d = document.createElement('div');
     d.className = `msg msg--${who} ${cls}`; d.textContent = text;
     log.append(d); scroll();
-    if (who !== 'me') state.history.push({ role: 'assistant', content: text });
+    if (who !== 'me') { state.history.push({ role: 'assistant', content: text }); voice.speak(text); }
     return d;
   };
   const typing = () => {
@@ -206,6 +207,47 @@
     log.innerHTML = ''; state.history = []; state.flow = null;
     say(`Hi! 👋 I'm Harbor, ${KB.company}'s virtual assistant. I can quote prices, handle emergencies, or book a technician in about 30 seconds. What's going on?`);
   };
+
+  /* ---------- Voice mode: talk to Harbor in the browser (Web Speech API) ---------- */
+  const mic = document.getElementById('botMic');
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (SR && 'speechSynthesis' in window && mic) {
+    mic.hidden = false;
+    const rec = new SR(); rec.lang = 'en-US'; rec.interimResults = true; rec.maxAlternatives = 1;
+    let pickVoice;
+    const choose = () => {
+      const vs = speechSynthesis.getVoices().filter(v => v.lang.startsWith('en'));
+      pickVoice = vs.find(v => /natural|neural|samantha|google us|aria|jenny/i.test(v.name)) || vs[0];
+    };
+    choose(); speechSynthesis.onvoiceschanged = choose;
+    voice.on = false;
+    const listen = () => { if (!voice.on) return; try { rec.start(); mic.classList.add('is-live'); input.placeholder = 'Listening…'; } catch {} };
+    voice.speak = text => {
+      if (!voice.on) return;
+      const u = new SpeechSynthesisUtterance(text.replace(/[\u{1F300}-\u{1FAFF}\u2600-\u27BF✅📅👤📍👆]/gu, '').replace(/\$(\d+)–\$(\d+)/g, '$$$1 to $$$2'));
+      if (pickVoice) u.voice = pickVoice;
+      u.rate = 1.05;
+      mic.classList.add('is-speaking');
+      u.onend = () => { mic.classList.remove('is-speaking'); if (!speechSynthesis.pending) setTimeout(listen, 250); };
+      try { rec.abort(); } catch {}
+      speechSynthesis.speak(u);
+    };
+    rec.onresult = e => {
+      const r = e.results[e.results.length - 1];
+      input.value = r[0].transcript;
+      if (r.isFinal) { const v = input.value; input.value = ''; handle(v); }
+    };
+    rec.onend = () => { mic.classList.remove('is-live'); input.placeholder = 'Type, or tap the mic and talk…'; };
+    rec.onerror = e => { if (e.error === 'not-allowed') { stop(); add("I couldn't access your microphone — you can still type to me."); } };
+    const stop = () => { voice.on = false; mic.setAttribute('aria-pressed', 'false'); mic.classList.remove('is-live', 'is-speaking'); try { rec.abort(); } catch {} speechSynthesis.cancel(); };
+    mic.addEventListener('click', () => {
+      if (voice.on) return stop();
+      voice.on = true; mic.setAttribute('aria-pressed', 'true');
+      window.hTrack?.('demo_voice_start');
+      const last = [...log.querySelectorAll('.msg--ai')].pop();
+      if (last) voice.speak(last.textContent); else listen();
+    });
+  }
 
   form.addEventListener('submit', e => { e.preventDefault(); const v = input.value; input.value = ''; handle(v); });
   document.querySelectorAll('[data-ask]').forEach(b => b.addEventListener('click', () => {

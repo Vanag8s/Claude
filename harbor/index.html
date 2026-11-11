@@ -164,7 +164,7 @@
         <div>
           <p class="eyebrow reveal">Live demo</p>
           <h2 id="demo-title" class="split">Don't take our word for it.<br><em>Try to stump it.</em></h2>
-          <p class="lead reveal">This is Harbor configured for a sample plumbing company, "Riverside Plumbing". Ask about prices, emergencies, service areas, or try booking a job. Then imagine it trained on <em>your</em> business.</p>
+          <p class="lead reveal">This is Harbor configured for a sample plumbing company, "Riverside Plumbing". Ask about prices, emergencies, service areas, or try booking a job. <strong>Tap the 🎙 mic to talk to it out loud</strong>, the same way your customers would on the phone. Then imagine it trained on <em>your</em> business.</p>
           <ul class="chips reveal" aria-label="Suggested questions">
             <li><button type="button" class="chip" data-ask="My water heater is leaking, can someone come tonight?">💧 Leaking water heater tonight</button></li>
             <li><button type="button" class="chip" data-ask="How much do you charge to unclog a drain?">💲 Drain unclog price</button></li>
@@ -181,7 +181,8 @@
           <div class="bot__log" id="botLog" aria-live="polite"></div>
           <form class="bot__form" id="botForm" autocomplete="off">
             <label for="botInput" class="sr-only">Message Harbor</label>
-            <input id="botInput" name="q" type="text" placeholder="Type your message…" maxlength="500" required>
+            <button type="button" class="bot__mic" id="botMic" aria-label="Talk to Harbor with your voice" aria-pressed="false" hidden><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-2.08A7 7 0 0 0 19 12h-2Z"/></svg></button>
+            <input id="botInput" name="q" type="text" placeholder="Type, or tap the mic and talk…" maxlength="500" required>
             <button type="submit" class="btn btn--primary" aria-label="Send message">Send</button>
           </form>
         </div>
