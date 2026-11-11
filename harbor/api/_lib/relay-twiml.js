@@ -14,13 +14,13 @@ export const greetingFor = ({ demo = false } = {}) => demo
  * @param {string} [actionUrl]  where Twilio posts after the session ends (/handoff)
  * @param {{demo?: boolean, from?: string}} [opts]
  */
-export function relayTwiml(wsUrl, actionUrl, { demo = false } = {}) {
+export function relayTwiml(wsUrl, actionUrl, { demo = false, greeting = null } = {}) {
   const vr = new twilio.twiml.VoiceResponse();
   const connect = vr.connect(actionUrl ? { action: actionUrl, method: "POST" } : {});
   const multi = !!lv.multilingual;
   const relay = connect.conversationRelay({
     url: wsUrl,
-    welcomeGreeting: greetingFor({ demo }),
+    welcomeGreeting: greeting || greetingFor({ demo }),
     welcomeGreetingInterruptible: "any",
     interruptible: "any",              // caller can talk over Harbor at any time
     interruptSensitivity: "medium",
@@ -45,10 +45,10 @@ export function relayTwiml(wsUrl, actionUrl, { demo = false } = {}) {
 }
 
 /** Numbers that should never reach the AI (family, suppliers, VIPs): ring the owner directly. */
-export function vipTwiml(to) {
+export function vipTwiml(to, owner = ownerPhone) {
   const vr = new twilio.twiml.VoiceResponse();
   const dial = vr.dial({ callerId: to, timeout: 30 });
-  dial.number(ownerPhone);
+  dial.number(owner);
   return vr.toString();
 }
 export const isVip = from => (business.vip_numbers || []).some(n => n.replace(/\D/g, "") === String(from || "").replace(/\D/g, "")) && !!ownerPhone;
@@ -58,11 +58,12 @@ export function handoffTwiml(params) {
   const vr = new twilio.twiml.VoiceResponse();
   let data = {};
   try { data = JSON.parse(params.HandoffData || "{}"); } catch {}
-  if (data.handoff === "transfer" && ownerPhone && !data.demo) {
+  const owner = (typeof data.owner === "string" && /^\+?\d{7,15}$/.test(data.owner)) ? data.owner : ownerPhone;
+  if (data.handoff === "transfer" && owner && !data.demo) {
     const dial = vr.dial({ callerId: params.To, timeout: 25 });
-    dial.number(ownerPhone);
+    dial.number(owner);
     vr.say({ voice: business.voice }, "Sorry, nobody picked up. The technician will call you back within ten minutes.");
-    sendSms(params.To, ownerPhone, `Missed transfer from ${params.From}: ${data.reason || "caller asked for a person"}. Call back ASAP.`).catch(() => {});
+    sendSms(params.To, owner, `Missed transfer from ${params.From}: ${data.reason || "caller asked for a person"}. Call back ASAP.`).catch(() => {});
   } else if (data.handoff === "transfer") {
     vr.say({ voice: business.voice }, data.demo
       ? "In a real call, I'd connect you to the on-call technician right now. Thanks for trying Harbor!"

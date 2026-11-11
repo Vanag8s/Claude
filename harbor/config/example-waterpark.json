@@ -1,0 +1,66 @@
+{
+  "company": "Lagoon Bay Waterpark",
+  "type": "indoor waterpark and spa",
+  "mode": "sales",
+  "language": "English",
+  "hours": "Monday to Thursday 10:00–21:00, Friday 10:00–22:00, Saturday and Sunday 09:00–22:00. Last entry 1 hour before closing.",
+  "location": "12 Harbor Road, Bayside. Free parking for 400 cars.",
+  "contact": "info@lagoonbay.example, +1 555 0100",
+  "offerings": [
+    {
+      "name": "Day ticket, adult (16+)",
+      "price": "$29",
+      "details": "All pools and slides, all day"
+    },
+    {
+      "name": "Day ticket, child (3–15)",
+      "price": "$19",
+      "details": "Under 3 free"
+    },
+    {
+      "name": "Family ticket (2 adults + 2 kids)",
+      "price": "$79",
+      "details": "Best value for families"
+    },
+    {
+      "name": "3-hour ticket, adult",
+      "price": "$22",
+      "details": ""
+    },
+    {
+      "name": "Spa & sauna add-on",
+      "price": "$15",
+      "details": "Ages 16+ only"
+    },
+    {
+      "name": "Birthday party package",
+      "price": "$199",
+      "details": "Up to 10 kids, private room for 2 hours, pizza and cake"
+    },
+    {
+      "name": "Annual pass",
+      "price": "$249",
+      "details": "Unlimited visits for one person"
+    }
+  ],
+  "rules": "Children under 14 must be accompanied by an adult aged 18 or over at all times. Children aged 14 and 15 may visit without an adult but must show a student ID. Non-swimmers must wear an armband. No glass or outside food. Swimwear required; no street clothes in the pools.",
+  "faq": [
+    {
+      "q": "Do you rent towels?",
+      "a": "Yes, towels are $4 and lockers are free."
+    },
+    {
+      "q": "Is there a café?",
+      "a": "Yes, the Lagoon Café is open during park hours."
+    }
+  ],
+  "about": "Lagoon Bay has 8 water slides, a wave pool, a lazy river, a toddler splash zone and an adults-only spa. It's busiest on weekend afternoons; mornings are quieter.",
+  "sales": {
+    "goal": "sell tickets, family tickets, birthday parties and annual passes",
+    "upsells": "Spa add-on for adults; family ticket when 2+ kids; annual pass for anyone who visits more than 8 times a year",
+    "offers": "Birthday parties booked this month include a free cake upgrade",
+    "objections": "Price: compare the family ticket to buying four separate tickets ($96). Crowds: suggest weekday mornings."
+  },
+  "personality": "cheerful, warm and helpful, like a friendly front desk",
+  "transfer_note": "For group bookings over 30 people, transfer to the events team."
+}

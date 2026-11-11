@@ -41,3 +41,12 @@ All photos are public domain (CC0) via Wikimedia Commons, originally from Unspla
 - `assets/photos/barber.jpg`: "Head shaved by barber (Unsplash)", https://commons.wikimedia.org/wiki/File:Head_shaved_by_barber_(Unsplash).jpg
 
 To make the site feel even more like *your* business, replace these with your own photos (same file names, landscape, at least 1280px wide).
+
+## Selling Harbor to a business (members)
+1. The business owner opens **`/setup.html`** and writes or dictates everything about the business (hours, prices, rules, what to sell), or pastes their website. Harbor organizes it into a profile (`api/understand.js`).
+2. They pick a **mode**: *Receptionist* (answer, book, take messages) or *Sales* (also qualifies callers, recommends one product, handles objections with the owner's own arguments, and records sales).
+3. They **test it like a customer** in the chat on the same page, by typing or talking (they can interrupt it). With an API key it's Claude; without one, a simpler offline brain answers from their facts.
+4. **Save** creates the business (`api/business.js`) with a private admin key for later edits.
+5. Put the business's **Harbor phone number** in the profile. The live voice server looks up the dialed number and answers as that business, using its facts, tools and owner phone for transfers and alerts.
+
+Storage: set `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN` (a free Upstash Redis database) on Vercel **and** on the voice server so both see the same businesses. Locally it saves to `harbor/data/` (git-ignored).

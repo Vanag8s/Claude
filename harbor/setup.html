@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Set Up Your Harbor | Members</title>
+<meta name="description" content="Tell Harbor about your business: hours, prices, rules and what to sell. Then test your AI receptionist before it answers your phone.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://harbor-ai.example/setup.html">
+<meta name="theme-color" content="#f4e9d8">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><link rel="manifest" href="/site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=DM+Sans:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/setup.css">
+</head>
+<body class="setup-page">
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav is-scrolled"><a href="/" class="brand"><img src="/assets/favicon.svg" alt="" width="30" height="30"> Harbor</a><span class="nav__tag">Members · Setup</span><span class="save-state" id="saveState" aria-live="polite"></span></header>
+
+<main id="main" class="wrap setup">
+  <div class="setup__intro">
+    <p class="eyebrow">Your receptionist</p>
+    <h1>Teach Harbor <em>your business.</em></h1>
+    <p class="lead">Write or say everything a caller might ask: opening hours, prices, rules, what you sell. Harbor turns it into its knowledge, and you can test it right here before it ever answers your phone.</p>
+  </div>
+
+  <div class="setup__grid">
+    <div class="setup__left">
+      <!-- STEP 1 -->
+      <section class="panel" aria-labelledby="s1">
+        <h2 id="s1"><span class="num">1</span> Tell Harbor about your business</h2>
+        <p class="hint">Just write naturally, like you'd brief a new receptionist. Or tap 🎙 and talk.</p>
+        <div class="dictate">
+          <label for="about" class="sr-only">About your business</label>
+          <textarea id="about" rows="9" placeholder="Example: We're Lagoon Bay Waterpark. Open Mon–Thu 10–21, Fri 10–22, weekends 9–22. Adult day ticket $29, kids 3–15 $19, under 3 free. Kids under 14 must come with an adult 18+…"></textarea>
+          <button type="button" class="btn btn--ghost btn--sm" id="dictateBtn" hidden>🎙 Dictate</button>
+        </div>
+        <div class="row2">
+          <label for="site" class="sr-only">Website (optional)</label>
+          <input id="site" type="text" inputmode="url" placeholder="Website (optional): yourbusiness.com">
+          <button type="button" class="btn btn--primary" id="understandBtn">✨ Build my Harbor</button>
+        </div>
+        <p class="note" id="understandMsg" role="status" aria-live="polite"></p>
+        <p class="hint">No time? <button type="button" class="linkish" id="exampleBtn">Load an example waterpark</button> to see how it works.</p>
+      </section>
+
+      <!-- STEP 2 -->
+      <section class="panel" aria-labelledby="s2">
+        <h2 id="s2"><span class="num">2</span> Check what Harbor knows</h2>
+        <p class="hint">Everything here is what Harbor will say. Fix anything, add anything.</p>
+        <form id="profileForm" class="pform" autocomplete="off">
+          <div class="row2">
+            <label>Business name<input name="company" required></label>
+            <label>Type of business<input name="type" placeholder="e.g. waterpark, dental clinic, solar sales"></label>
+          </div>
+          <fieldset class="modes">
+            <legend>What should Harbor do?</legend>
+            <label class="mode"><input type="radio" name="mode" value="receptionist" checked><span><b>Receptionist</b>Answer questions, book, take messages</span></label>
+            <label class="mode"><input type="radio" name="mode" value="sales"><span><b>Sales</b>All of that, plus actively sell your products</span></label>
+          </fieldset>
+          <div class="row2">
+            <label>Main language<input name="language" placeholder="English"></label>
+            <label>Personality<input name="personality" placeholder="warm, friendly and efficient"></label>
+          </div>
+          <label>Opening hours<textarea name="hours" rows="2"></textarea></label>
+          <div class="row2">
+            <label>Address / location<input name="location"></label>
+            <label>Contact (email, phone)<input name="contact"></label>
+          </div>
+
+          <div class="block">
+            <div class="block__head"><b>Products, services &amp; prices</b><button type="button" class="btn btn--ghost btn--sm" data-add="offerings">+ Add</button></div>
+            <div class="rows" id="offerings"></div>
+          </div>
+          <label>Rules &amp; policies <small>(ages, safety, cancellations, payment; Harbor quotes these word for word)</small><textarea name="rules" rows="4"></textarea></label>
+          <div class="block">
+            <div class="block__head"><b>Common questions</b><button type="button" class="btn btn--ghost btn--sm" data-add="faq">+ Add</button></div>
+            <div class="rows" id="faq"></div>
+          </div>
+          <label>Anything else callers should know<textarea name="about2" rows="3"></textarea></label>
+
+          <div class="block sales-only" id="salesBlock">
+            <div class="block__head"><b>💼 How Harbor should sell</b></div>
+            <label>Sales goal<input name="sales.goal" placeholder="e.g. sell family tickets and birthday parties"></label>
+            <label>Upsells (when they fit)<textarea name="sales.upsells" rows="2"></textarea></label>
+            <label>Current offers<textarea name="sales.offers" rows="2"></textarea></label>
+            <label>How to handle objections<textarea name="sales.objections" rows="3" placeholder="e.g. Too expensive → compare the family ticket to 4 separate tickets"></textarea></label>
+          </div>
+
+          <div class="block">
+            <div class="block__head"><b>📞 Phone</b></div>
+            <div class="row2">
+              <label>Your Harbor phone number<input name="phone_number" placeholder="+15550100" inputmode="tel"></label>
+              <label>Owner / staff phone (transfers &amp; alerts)<input name="owner_phone" placeholder="+15550111" inputmode="tel"></label>
+            </div>
+            <label>When to put callers through to a person<input name="transfer_note" placeholder="e.g. group bookings over 30 people"></label>
+          </div>
+        </form>
+      </section>
+
+      <!-- STEP 4 -->
+      <section class="panel" aria-labelledby="s4">
+        <h2 id="s4"><span class="num">4</span> Save &amp; go live</h2>
+        <p class="hint">Saving gives your business its own Harbor. Calls to your Harbor phone number are answered with everything above.</p>
+        <button type="button" class="btn btn--primary btn--lg" id="saveBtn">Save my Harbor</button>
+        <p class="note" id="saveMsg" role="status" aria-live="polite"></p>
+        <div class="keybox" id="keyBox" hidden>
+          <p><b>Your business ID:</b> <code id="bizId"></code></p>
+          <p><b>Your admin key</b> (keep it private; it's needed to make changes):<br><code id="bizKey"></code> <button type="button" class="btn btn--ghost btn--sm" id="copyKey">Copy</button></p>
+          <p class="hint">Your edit link: <a id="editLink" href="#">open later to make changes</a> (the key stays in this browser).</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- STEP 3: TEST -->
+    <aside class="setup__right">
+      <section class="panel panel--test" aria-labelledby="s3">
+        <h2 id="s3"><span class="num">3</span> Test it like a customer</h2>
+        <p class="hint">Ask anything a caller would. Try to trip it up, argue about the price, or try to buy something.</p>
+        <div class="bot bot--test" id="testBot">
+          <div class="bot__head">
+            <div class="bot__avatar" aria-hidden="true"></div>
+            <div><strong id="testName">Your business</strong><small><span class="dot"></span> Harbor · <span id="testMode">receptionist</span> · <span id="testBrain">checking…</span></small></div>
+            <button type="button" class="bot__reset" id="testReset" aria-label="Start over">↺</button>
+          </div>
+          <div class="bot__log" id="testLog" aria-live="polite"></div>
+          <form class="bot__form" id="testForm" autocomplete="off">
+            <button type="button" class="bot__mic" id="testMic" aria-label="Talk to your Harbor" aria-pressed="false" hidden><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-2.08A7 7 0 0 0 19 12h-2Z"/></svg></button>
+            <label for="testInput" class="sr-only">Message your Harbor</label>
+            <input id="testInput" placeholder="e.g. When do you open? Can my 14-year-old come alone?" maxlength="500" required>
+            <button class="btn btn--primary" type="submit">Send</button>
+          </form>
+        </div>
+        <ul class="chips" id="testChips" aria-label="Try asking"></ul>
+      </section>
+    </aside>
+  </div>
+</main>
+<footer class="footer"><div class="wrap footer__grid"><a href="/" class="brand"><img src="/assets/favicon.svg" alt="" width="30" height="30"> Harbor</a>
+<nav aria-label="Footer"><a href="/">Home</a><a href="/legal/privacy.html">Privacy Policy</a><a href="/legal/terms.html">Terms of Service</a></nav></div></footer>
+<script src="/js/kb-answer.js" defer></script>
+<script src="/js/setup.js" defer></script>
+</body></html>

@@ -18,7 +18,7 @@ const SCHEMA = {
 };
 
 let client;
-export async function summarizeCall(history, { from, to, callSid, booked, demo }, { anthropic } = {}) {
+export async function summarizeCall(history, { from, to, callSid, booked, demo, company = business.company, owner = ownerPhone, businessId = null }, { anthropic } = {}) {
   const transcript = history
     .filter(h => !h.content.startsWith("(call connected)"))
     .map(h => `${h.role === "user" ? "Caller" : "Harbor"}: ${h.content.replace(/^\(You were interrupted[^\n]*\n/, "")}`)
@@ -30,7 +30,7 @@ export async function summarizeCall(history, { from, to, callSid, booked, demo }
     model: "claude-opus-5-5",
     max_tokens: 1024,
     output_config: { effort: "low", format: { type: "json_schema", schema: SCHEMA } },
-    system: `You write short after-call notes for the owner of ${business.company}. Be factual; use only what is in the transcript.`,
+    system: `You write short after-call notes for the owner of ${company}. Be factual; use only what is in the transcript.`,
     messages: [{ role: "user", content: `Call transcript (booked: ${booked ? "yes" : "no"}):\n\n${transcript}` }],
   });
   if (res.stop_reason === "refusal") return null;
@@ -41,8 +41,8 @@ export async function summarizeCall(history, { from, to, callSid, booked, demo }
   const tag = s.urgent ? "🚨 URGENT · " : "";
   const line = `${tag}${s.caller_name || "Caller"} (${from}): ${s.reason}. ${s.outcome.replace(/_/g, " ")}.${s.follow_up ? " Next: " + s.follow_up : ""}`;
   await Promise.allSettled([
-    postWebhook({ type: demo ? "demo_call_summary" : "call_summary", call_sid: callSid, caller: from, company: business.company, booked, ...s, transcript, at: new Date().toISOString() }),
-    demo ? Promise.resolve() : sendSms(to, ownerPhone, line.slice(0, 320)),
+    postWebhook({ type: demo ? "demo_call_summary" : "call_summary", call_sid: callSid, business_id: businessId, caller: from, company, booked, ...s, transcript, at: new Date().toISOString() }),
+    demo ? Promise.resolve() : sendSms(to, owner, line.slice(0, 320)),
   ]);
   return s;
 }

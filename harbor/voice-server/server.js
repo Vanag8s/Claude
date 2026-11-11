@@ -16,6 +16,10 @@ import { makeBooker } from "../api/_lib/booking.js";
 import { sendSms, postWebhook, ownerPhone } from "../api/_lib/twilio.js";
 import { relayTwiml, handoffTwiml, greetingFor, vipTwiml, isVip } from "../api/_lib/relay-twiml.js";
 import { summarizeCall } from "../api/_lib/summary.js";
+import { buildSystem, toolsFor } from "../api/_lib/profile.js";
+import { businessForNumber } from "../api/_lib/store.js";
+
+const memberGreeting = p => `Hi, thanks for calling ${p.company}! This is Harbor, the virtual assistant. How can I help?`;
 
 export { relayTwiml, handoffTwiml, greetingFor };
 
@@ -28,8 +32,8 @@ This call is a DEMO requested from Harbor's website by a business owner trying t
 const LIVE_TOOLS = TOOLS.map(t => ({ ...t, eager_input_streaming: true }));
 
 // ---------- Tool input validation (inputs stream unvalidated with eager_input_streaming) ----------
-function validInput(tool, input) {
-  const def = TOOLS.find(t => t.name === tool);
+function validInput(tool, input, tools = TOOLS) {
+  const def = tools.find(t => t.name === tool);
   if (!def || typeof input !== "object" || input === null) return false;
   const props = def.input_schema.properties;
   return def.input_schema.required.every(k => k in input && typeof input[k] === props[k].type);
@@ -37,7 +41,9 @@ function validInput(tool, input) {
 
 // ---------- One live call ----------
 export class CallSession {
-  constructor(ws, { client = new Anthropic(), log = () => {}, summarize = summarizeCall } = {}) {
+  constructor(ws, { client = new Anthropic(), log = () => {}, summarize = summarizeCall, lookup = businessForNumber } = {}) {
+    this.lookup = lookup;
+    this.member = null;         // { id, profile } when the dialed number belongs to a member business
     this.ws = ws;
     this.client = client;
     this.log = log;
@@ -51,6 +57,7 @@ export class CallSession {
     this.demo = false;
     this.lang = null;
     this.call = {};
+    this.ready = Promise.resolve();
   }
 
   send(msg) { if (this.ws.readyState === 1) this.ws.send(JSON.stringify(msg)); }
@@ -64,10 +71,16 @@ export class CallSession {
         this.demo = m.customParameters?.mode === "demo";
         // For an outbound demo call, the visitor is the "to" number.
         if (this.demo) this.call = { sid: m.callSid, from: m.to, to: m.from };
-        this.history.push({ role: "user", content: "(call connected)" }, { role: "assistant", content: greetingFor({ demo: this.demo }) });
+        this.ready = (async () => {
+          if (this.demo) return;
+          try { const rec = await this.lookup(m.to); if (rec) this.member = { id: rec.id, profile: rec.profile }; } catch (e) { this.log("lookup failed", e?.message); }
+        })();
+        await this.ready;
+        this.history.push({ role: "user", content: "(call connected)" }, { role: "assistant", content: this.member ? memberGreeting(this.member.profile) : greetingFor({ demo: this.demo }) });
         this.log("call started", m.callSid, this.demo ? "(demo)" : "");
         break;
       case "prompt": {
+        await this.ready;
         const text = (m.voicePrompt ?? m.prompt ?? "").trim();
         if (m.last === false || !text) break; // partial transcript
         if (m.lang) this.lang = m.lang;
@@ -128,8 +141,10 @@ export class CallSession {
             betas: ["server-side-fallback-2026-07-01"],
             fallbacks: "default",
             output_config: { effort: "low" },
-            system: [{ type: "text", text: LIVE_SYSTEM + (this.demo ? DEMO_NOTE : ""), cache_control: { type: "ephemeral" } }],
-            tools: LIVE_TOOLS,
+            system: [{ type: "text", text: this.member
+              ? buildSystem(this.member.profile, { channel: "voice" }) + "\n" + LIVE_VOICE_STYLE + "\n- Each caller message may start with a (caller language: xx) tag; reply in that language."
+              : LIVE_SYSTEM + (this.demo ? DEMO_NOTE : ""), cache_control: { type: "ephemeral" } }],
+            tools: this.member ? this.memberTools() : LIVE_TOOLS,
             messages,
           },
           { signal: ctrl.signal }
@@ -154,12 +169,15 @@ export class CallSession {
         messages.push({ role: "assistant", content: msg.content });
         const results = [];
         for (const c of calls) {
-          if (!validInput(c.name, c.input)) {
+          if (!validInput(c.name, c.input, this.member ? this.memberTools() : TOOLS)) {
             results.push({ type: "tool_result", tool_use_id: c.id, is_error: true, content: "INVALID_INPUT: arguments incomplete or wrong type; ask the caller for any missing detail and try again." });
             continue;
           }
           let content = "ok";
-          if (c.name === "book_job") {
+          if (this.member && ["book", "take_message", "capture_sale"].includes(c.name)) {
+            try { content = await this.memberAction(c.name, c.input); if (c.name !== "take_message") this.booked = true; }
+            catch { content = "Couldn't save that right now. Tell the caller the team will follow up by text."; }
+          } else if (c.name === "book_job") {
             try {
               content = this.demo ? await this.demoBooking(c.input) : await makeBooker({ from: this.call.from, to: this.call.to, callSid: this.call.sid })(c.input);
               this.booked = true;
@@ -193,6 +211,28 @@ export class CallSession {
     }
   }
 
+  memberTools() {
+    return (this._memberTools ??= toolsFor(this.member.profile).map(t => ({ ...t, eager_input_streaming: true })));
+  }
+
+  /** A member's booking / message / sale: webhook to their tools, text the caller, alert the owner. */
+  async memberAction(kind, x) {
+    const p = this.member.profile, owner = p.owner_phone || ownerPhone;
+    const callback = x.callback_number || x.contact || this.call.from;
+    await postWebhook({ type: kind, business_id: this.member.id, company: p.company, call_sid: this.call.sid, caller: this.call.from, ...x, at: new Date().toISOString() });
+    const jobs = [];
+    if (kind === "book") {
+      jobs.push(sendSms(this.call.to, callback, `${p.company}: you're booked for ${x.what} on ${x.when}. Reply here if anything changes.`));
+      jobs.push(sendSms(this.call.to, owner, `NEW BOOKING: ${x.name}, ${x.what}, ${x.when}, ${callback}`));
+    } else if (kind === "capture_sale") {
+      jobs.push(sendSms(this.call.to, owner, `NEW SALE/LEAD: ${x.name} wants ${x.quantity} × ${x.product}. Contact: ${x.contact || callback}. ${x.notes || ""}`.trim()));
+    } else {
+      jobs.push(sendSms(this.call.to, owner, `${x.urgent ? "🚨 URGENT " : ""}MESSAGE from ${x.name} (${callback}): ${x.message}`));
+    }
+    await Promise.allSettled(jobs);
+    return kind === "book" ? `Booked: ${x.what}, ${x.when}. Confirmation text sent.` : kind === "capture_sale" ? "Sale recorded. The team will confirm with the customer." : "Message passed to the team.";
+  }
+
   /** Demo bookings don't touch a client's calendar: the visitor gets the confirmation text their customers would get. */
   async demoBooking(b) {
     await sendSms(this.call.to, this.call.from, `[Harbor demo] This is the text your customers get: "${business.company}: you're booked for ${b.problem} on ${b.day}, ${b.window}." Want this for your business? Reply YES.`);
@@ -202,27 +242,28 @@ export class CallSession {
   end(action) {
     if (this.ended) return;
     this.ended = true;
-    this.send({ type: "end", handoffData: JSON.stringify({ ...action, booked: this.booked, demo: this.demo }) });
+    this.send({ type: "end", handoffData: JSON.stringify({ ...action, booked: this.booked, demo: this.demo, ...(this.member?.profile.owner_phone ? { owner: this.member.profile.owner_phone } : {}) }) });
   }
 
   async onClose() {
     this.current?.ctrl.abort();
     if (!this.call.from) return;
-    const meta = { from: this.call.from, to: this.call.to, callSid: this.call.sid, booked: this.booked, demo: this.demo };
+    const meta = { from: this.call.from, to: this.call.to, callSid: this.call.sid, booked: this.booked, demo: this.demo,
+      ...(this.member ? { company: this.member.profile.company, owner: this.member.profile.owner_phone || ownerPhone, businessId: this.member.id } : {}) };
     const jobs = [this.summarize(this.history, meta).catch(e => this.log("summary failed", e?.message))];
     if (this.demo) {
       // Someone who tried the demo is a hot lead for Harbor itself.
       jobs.push(postWebhook({ type: "demo_lead", phone: this.call.from, booked_in_demo: this.booked, at: new Date().toISOString() }).catch(() => {}));
     } else if (!this.booked && !this.transferred) {
       // Missed-call text-back for live calls that ended without a booking.
-      jobs.push(sendSms(this.call.to, this.call.from, `Hi, it's ${business.company}! Sorry we didn't get you booked on the call. Reply here with what you need and a good time, and we'll lock it in.`).catch(() => {}));
+      jobs.push(sendSms(this.call.to, this.call.from, `Hi, it's ${this.member?.profile.company || business.company}! Sorry we didn't get you booked on the call. Reply here with what you need and a good time, and we'll lock it in.`).catch(() => {}));
     }
     await Promise.allSettled(jobs);
   }
 }
 
 // ---------- HTTP + WebSocket server ----------
-export function createServer({ client, summarize, log = console.log, skipSignature = process.env.VOICE_SKIP_SIGNATURE === "1" } = {}) {
+export function createServer({ client, summarize, lookup, log = console.log, skipSignature = process.env.VOICE_SKIP_SIGNATURE === "1" } = {}) {
   const base = () => (process.env.PUBLIC_BASE_URL || "").replace(/\/$/, "");
   const token = process.env.TWILIO_AUTH_TOKEN;
 
@@ -231,7 +272,7 @@ export function createServer({ client, summarize, log = console.log, skipSignatu
     if (req.method === "POST" && (req.url.startsWith("/twiml") || req.url.startsWith("/handoff"))) {
       let body = "";
       req.on("data", c => { body += c; if (body.length > 1e5) req.destroy(); });
-      req.on("end", () => {
+      req.on("end", async () => {
         const params = Object.fromEntries(new URLSearchParams(body));
         const host = base() || `https://${req.headers.host}`;
         if (!skipSignature && !(token && twilio.validateRequest(token, req.headers["x-twilio-signature"] || "", host + req.url, params))) {
@@ -239,8 +280,13 @@ export function createServer({ client, summarize, log = console.log, skipSignatu
         }
         res.writeHead(200, { "Content-Type": "text/xml" });
         if (req.url.startsWith("/handoff")) return res.end(handoffTwiml(params));
-        if (isVip(params.From)) return res.end(vipTwiml(params.To));
-        res.end(relayTwiml(host.replace(/^http/, "ws") + "/relay", host + "/handoff"));
+        let rec = null;
+        try { rec = await (lookup || businessForNumber)(params.To); } catch (e) { log("lookup failed", e?.message); }
+        const p = rec?.profile;
+        const owner = p?.owner_phone || ownerPhone;
+        const vip = p ? (p.vip_numbers || []).some(n => n.replace(/\D/g, "") === String(params.From || "").replace(/\D/g, "")) && owner : isVip(params.From);
+        if (vip) return res.end(vipTwiml(params.To, owner));
+        res.end(relayTwiml(host.replace(/^http/, "ws") + "/relay", host + "/handoff", p ? { greeting: memberGreeting(p) } : {}));
       });
       return;
     }
@@ -258,7 +304,7 @@ export function createServer({ client, summarize, log = console.log, skipSignatu
       }
     }
     wss.handleUpgrade(req, socket, head, ws => {
-      const session = new CallSession(ws, { client, log, ...(summarize ? { summarize } : {}) });
+      const session = new CallSession(ws, { client, log, ...(summarize ? { summarize } : {}), ...(lookup ? { lookup } : {}) });
       ws.on("message", d => session.onMessage(d.toString()).catch(e => log("message error", e?.message)));
       ws.on("close", () => session.onClose().catch(() => {}));
     });

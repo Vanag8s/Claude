@@ -143,6 +143,24 @@ try {
   dws.close(); await sleep(150);
   ok("Demo caller is captured as a Harbor lead", logs.some(l => l.includes('"type":"demo_lead"') && l.includes("+15550177")));
 
+  // 8d) Call to a member business's number answers as that business
+  const { EXAMPLE_WATERPARK } = await import("../api/_lib/profile.js");
+  const memberSrv = createServer({ client, summarize, lookup: async n => (String(n).endsWith("0123") ? { id: "biz1", profile: { ...EXAMPLE_WATERPARK, owner_phone: "+15550999" } } : null), log() {}, skipSignature: true }).listen(0);
+  const mport = memberSrv.address().port;
+  const mtw = await fetch(`http://localhost:${mport}/twiml`, { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: "To=%2B15550123&From=%2B15550100" }).then(r => r.text());
+  ok("Member number gets its own greeting", mtw.includes("thanks for calling Lagoon Bay Waterpark"));
+  const mws = new WebSocket(`ws://localhost:${mport}/relay`); const mgot = [];
+  mws.on("message", d => mgot.push(JSON.parse(d)));
+  await new Promise(r => mws.on("open", r));
+  mws.send(JSON.stringify({ type: "setup", callSid: "CAM", from: "+15550100", to: "+15550123" }));
+  logs.length = 0;
+  script = [{ text: "Kids aged 14 and 15 can come without an adult with a student ID. ", stop: "tool_use", tool: "capture_sale", input: { name: "Ona", product: "Day ticket, child", quantity: "1", contact: "+15550100", notes: "" } }, { text: "All set!", stop: "end_turn" }];
+  say(mws, "Can my 14 year old come alone? And I want a ticket for him");
+  await sleep(400);
+  ok("Live call uses the member's facts and sales tools", seen.at(-1).system[0].text.includes("Lagoon Bay Waterpark") && seen.at(-1).tools.some(t => t.name === "capture_sale"));
+  ok("Sale alert goes to the member's own phone", logs.some(l => l.includes("-> +15550999") && l.includes("NEW SALE")));
+  mws.close(); memberSrv.close();
+
   // 9) Handoff TwiML
   ok("Transfer handoff dials the owner", handoffTwiml({ HandoffData: JSON.stringify({ handoff: "transfer", reason: "flooding" }), To: "+15550199", From: "+15550100" }).includes("<Number>+15550111</Number>"));
   ok("Hang-up handoff hangs up", handoffTwiml({ HandoffData: JSON.stringify({ handoff: "hangup" }) }).includes("<Hangup/>"));
