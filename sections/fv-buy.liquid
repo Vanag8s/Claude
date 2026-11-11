@@ -1,0 +1,152 @@
+{%- liquid
+  assign p = section.settings.product
+  if product
+    assign p = product
+  endif
+  if p
+    assign v = p.selected_or_first_available_variant
+  endif
+-%}
+<section id="buy" class="section buy" data-buy>
+  <div class="buy__aura" aria-hidden="true"></div>
+  <div class="container buy__grid">
+    <div class="gallery" data-gallery>
+      <div class="gallery__main" data-tilt>
+        {%- if p and p.images.size > 0 -%}
+          {%- for image in p.images -%}
+            {%- assign alt = image.alt | default: p.title -%}
+            {{ image | image_url: width: 1200 | image_tag: class: 'gallery__img', loading: 'lazy', alt: alt }}
+          {%- endfor -%}
+        {%- else -%}
+          {%- assign fallbacks = 'fv-zones.webp,fv-coverage.webp,fv-layers.webp,fv-before-after.webp,fv-fit.webp' | split: ',' -%}
+          {%- for f in fallbacks -%}
+            <img class="gallery__img" src="{{ f | asset_url }}" alt="Frostveil windshield cover photo {{ forloop.index }}" loading="lazy" width="800" height="800">
+          {%- endfor -%}
+        {%- endif -%}
+        <span class="gallery__badge">{{ section.settings.badge }}</span>
+      </div>
+      <div class="gallery__thumbs" role="tablist" aria-label="Product images">
+        {%- if p and p.images.size > 0 -%}
+          {%- for image in p.images -%}
+            <button type="button" class="gallery__thumb{% if forloop.first %} is-active{% endif %}" data-gallery-thumb="{{ forloop.index0 }}" aria-label="Image {{ forloop.index }}">{{ image | image_url: width: 200 | image_tag: loading: 'lazy' }}</button>
+          {%- endfor -%}
+        {%- else -%}
+          {%- for f in fallbacks -%}
+            <button type="button" class="gallery__thumb{% if forloop.first %} is-active{% endif %}" data-gallery-thumb="{{ forloop.index0 }}" aria-label="Image {{ forloop.index }}"><img src="{{ f | asset_url }}" alt="" loading="lazy" width="120" height="120"></button>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="buy__panel">
+      <p class="eyebrow">{{ section.settings.eyebrow }}</p>
+      <h2 class="h2 buy__title">{% if p %}{{ p.title }}{% else %}{{ section.settings.fallback_title }}{% endif %}</h2>
+
+      {%- if section.settings.rating_text != blank -%}
+        <p class="buy__rating"><span class="review__stars"><span class="on">★</span><span class="on">★</span><span class="on">★</span><span class="on">★</span><span class="on">★</span></span> {{ section.settings.rating_text }}</p>
+      {%- endif -%}
+
+      <div class="price" data-price-wrap>
+        {%- if p -%}
+          <span class="price__now" data-price>{{ v.price | money }}</span>
+          {%- if v.compare_at_price > v.price -%}
+            <s class="price__was" data-compare>{{ v.compare_at_price | money }}</s>
+            <span class="price__save" data-save>Save {{ v.compare_at_price | minus: v.price | money }}</span>
+          {%- else -%}
+            <s class="price__was" data-compare hidden></s><span class="price__save" data-save hidden></span>
+          {%- endif -%}
+        {%- else -%}
+          <span class="price__now">{{ section.settings.fallback_price }}</span>
+          <s class="price__was">{{ section.settings.fallback_compare }}</s>
+        {%- endif -%}
+      </div>
+
+      <ul class="buy__bullets">
+        {%- assign bullets = section.settings.bullets | newline_to_br | split: '<br />' -%}
+        {%- for line in bullets -%}{%- assign l = line | strip -%}{%- if l != blank -%}<li>{{ l }}</li>{%- endif -%}{%- endfor -%}
+      </ul>
+
+      {%- if p -%}
+        {%- form 'product', p, class: 'product-form', data-product-form: '', novalidate: 'novalidate' -%}
+          <script type="application/json" data-product-json>{{ p | json }}</script>
+          <input type="hidden" name="id" value="{{ v.id }}" data-variant-id>
+
+          {%- unless p.has_only_default_variant -%}
+            {%- for option in p.options_with_values -%}
+              {%- assign opt_idx = forloop.index0 -%}
+              <fieldset class="option" data-option-index="{{ forloop.index0 }}">
+                <legend>{{ option.name }}: <span data-option-value>{{ option.selected_value }}</span></legend>
+                <div class="option__pills">
+                  {%- for value in option.values -%}
+                    <label class="pill">
+                      <input type="radio" name="option-{{ opt_idx }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %}>
+                      <span>{{ value }}</span>
+                    </label>
+                  {%- endfor -%}
+                </div>
+              </fieldset>
+            {%- endfor -%}
+          {%- endunless -%}
+
+          <div class="buy__row">
+            <div class="qty" data-qty>
+              <button type="button" data-qty-minus aria-label="Decrease quantity">−</button>
+              <input type="number" name="quantity" value="1" min="1" max="10" aria-label="Quantity">
+              <button type="button" data-qty-plus aria-label="Increase quantity">+</button>
+            </div>
+            <button type="submit" class="btn btn--lime btn--glow btn--block" data-add-btn {% unless v.available %}disabled{% endunless %}>
+              <span data-add-label>{% if v.available %}Add to cart{% else %}Sold out{% endif %}</span>
+            </button>
+          </div>
+          <p class="form-error" data-form-error hidden></p>
+        {%- endform -%}
+      {%- else -%}
+        <p class="notice">Choose a product for this section in the theme editor to enable checkout.</p>
+        <button class="btn btn--lime btn--block" disabled>Add to cart</button>
+      {%- endif -%}
+
+      <ul class="trust">
+        {%- for block in section.blocks -%}
+          <li {{ block.shopify_attributes }}><span>{% render 'fv-icon', name: block.settings.icon %}</span>{{ block.settings.text }}</li>
+        {%- endfor -%}
+      </ul>
+
+      {%- if p and p.description != blank and section.settings.show_description -%}
+        <details class="buy__desc"><summary>Full description</summary><div class="rte">{{ p.description }}</div></details>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{%- if p -%}
+<div class="sticky-buy" data-sticky-buy aria-hidden="true">
+  <div class="sticky-buy__info"><strong>{{ p.title | truncate: 34 }}</strong><span data-price>{{ v.price | money }}</span></div>
+  <a href="#buy" class="btn btn--lime btn--small" tabindex="-1">Buy now</a>
+</div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Product buy box",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Product (used on the home page)" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Limited winter stock" },
+    { "type": "text", "id": "badge", "label": "Image badge", "default": "All-season" },
+    { "type": "text", "id": "rating_text", "label": "Rating line (leave blank until you have real reviews)" },
+    { "type": "textarea", "id": "bullets", "label": "Bullets – one per line", "default": "Covers windshield, front side windows and both mirrors\n3-layer composite: nano-coating, Oxford, non-slip PVC\nDoor-tuck flaps hold it in wind and deter theft\nReflective mirror bands for night visibility\nFolds flat for storage" },
+    { "type": "checkbox", "id": "show_description", "label": "Show product description", "default": true },
+    { "type": "text", "id": "fallback_title", "label": "Fallback title (no product chosen)", "default": "Frostveil 3-Layer All-Season Windshield Cover" },
+    { "type": "text", "id": "fallback_price", "label": "Fallback price", "default": "$29.99" },
+    { "type": "text", "id": "fallback_compare", "label": "Fallback compare-at price", "default": "$49.99" }
+  ],
+  "blocks": [
+    { "type": "trust", "name": "Trust badge", "settings": [
+      { "type": "select", "id": "icon", "label": "Icon", "default": "shield", "options": [
+        { "value": "shield", "label": "Shield" }, { "value": "car", "label": "Car" }, { "value": "clock", "label": "Clock" }, { "value": "lock", "label": "Lock" }, { "value": "fold", "label": "Box" }
+      ] },
+      { "type": "text", "id": "text", "label": "Text" }
+    ] }
+  ],
+  "presets": [{ "name": "Product buy box" }]
+}
+{% endschema %}

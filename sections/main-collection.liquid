@@ -1,0 +1,22 @@
+<section class="section page-simple">
+  <div class="container">
+    <h1 class="h1">{{ collection.title | default: 'Products' }}</h1>
+    {%- paginate collection.products by 24 -%}
+      <div class="product-grid">
+        {%- for item in collection.products -%}
+          <a class="product-card" href="{{ item.url }}">
+            {%- if item.featured_image -%}{{ item.featured_image | image_url: width: 600 | image_tag: loading: 'lazy' }}{%- endif -%}
+            <span>{{ item.title }}</span>
+            <strong>{{ item.price | money }}</strong>
+          </a>
+        {%- else -%}
+          <p class="muted">No products yet.</p>
+        {%- endfor -%}
+      </div>
+      {%- if paginate.pages > 1 -%}<div class="pagination">{{ paginate | default_pagination }}</div>{%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</section>
+{% schema %}
+{ "name": "Collection", "settings": [] }
+{% endschema %}

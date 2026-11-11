@@ -1,0 +1,20 @@
+<div class="drawer" data-cart-drawer aria-hidden="true">
+  <div class="drawer__backdrop" data-cart-close></div>
+  <aside class="drawer__panel" role="dialog" aria-modal="true" aria-label="Your cart">
+    <header class="drawer__head">
+      <h2 class="h3">Your cart</h2>
+      <button type="button" class="drawer__close" data-cart-close aria-label="Close cart">✕</button>
+    </header>
+    <div class="drawer__items" data-cart-items>
+      <p class="muted">Your cart is empty.</p>
+    </div>
+    <footer class="drawer__foot">
+      <div class="drawer__total"><span>Subtotal</span><strong data-cart-total>{{ cart.total_price | money }}</strong></div>
+      <p class="muted small">Taxes and shipping calculated at checkout.</p>
+      <form action="{{ routes.cart_url }}" method="post">
+        <button type="submit" name="checkout" class="btn btn--lime btn--block" data-checkout>Checkout</button>
+      </form>
+      <a href="{{ routes.cart_url }}" class="drawer__link">View cart</a>
+    </footer>
+  </aside>
+</div>

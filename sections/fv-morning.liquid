@@ -1,0 +1,53 @@
+<section class="section morning">
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow" data-reveal>{{ section.settings.eyebrow }}</p>
+      <h2 class="h1" data-reveal>{{ section.settings.heading }}</h2>
+    </header>
+
+    <div class="morning__grid">
+      <div class="morning__col morning__col--bad" data-reveal>
+        <p class="morning__label">{{ section.settings.bad_label }}</p>
+        <p class="morning__big"><span data-count-to="{{ section.settings.bad_minutes }}">0</span><small>min</small></p>
+        <ul class="ticks ticks--bad">
+          {%- assign bad = section.settings.bad_list | newline_to_br | split: '<br />' -%}
+          {%- for line in bad -%}{%- assign l = line | strip -%}{%- if l != blank -%}<li>{{ l }}</li>{%- endif -%}{%- endfor -%}
+        </ul>
+      </div>
+
+      <figure class="compare" data-compare-slider data-reveal style="--pos: 50%">
+        <img src="{{ 'fv-before.webp' | asset_url }}" alt="Frozen windshield seen from the driver's seat" loading="lazy" width="1392" height="492">
+        <div class="compare__after"><img src="{{ 'fv-after.webp' | asset_url }}" alt="Clear windshield after removing the Frostveil cover" loading="lazy" width="1392" height="492"></div>
+        <span class="compare__tag compare__tag--l">Before</span><span class="compare__tag compare__tag--r">After</span>
+        <div class="compare__handle" aria-hidden="true"><span>⟷</span></div>
+        <input class="compare__range" type="range" min="0" max="100" value="50" aria-label="Drag to compare before and after">
+      </figure>
+
+      <div class="morning__col morning__col--good" data-reveal>
+        <p class="morning__label">{{ section.settings.good_label }}</p>
+        <p class="morning__big"><span data-count-to="{{ section.settings.good_seconds }}">0</span><small>sec</small></p>
+        <ul class="ticks">
+          {%- assign good = section.settings.good_list | newline_to_br | split: '<br />' -%}
+          {%- for line in good -%}{%- assign l = line | strip -%}{%- if l != blank -%}<li>{{ l }}</li>{%- endif -%}{%- endfor -%}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Morning comparison",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Your 7:00 a.m." },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Scrape for minutes, or peel for seconds." },
+    { "type": "text", "id": "bad_label", "label": "Without label", "default": "Without a cover" },
+    { "type": "number", "id": "bad_minutes", "label": "Without – minutes", "default": 15 },
+    { "type": "textarea", "id": "bad_list", "label": "Without – one item per line", "default": "Idling the engine to defrost\nScraping thick ice by hand\nScratches from the scraper\nDe-icer spray every morning\nFrozen wiper blades and mirrors" },
+    { "type": "text", "id": "good_label", "label": "With label", "default": "With Frostveil" },
+    { "type": "number", "id": "good_seconds", "label": "With – seconds", "default": 30 },
+    { "type": "textarea", "id": "good_list", "label": "With – one item per line", "default": "Open the door, pull the cover\nShake off the snow, fold it away\nClear windshield and side glass\nIce-free mirrors\nDrive off immediately" }
+  ],
+  "presets": [{ "name": "Morning comparison" }]
+}
+{% endschema %}

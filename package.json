@@ -1,0 +1,14 @@
+{
+  "name": "frostveil-shopify-theme",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cinematic 3D Shopify theme for the Frostveil all-season windshield cover",
+  "type": "module",
+  "scripts": {
+    "preview": "node tools/preview/build.mjs",
+    "zip": "zip -r frostveil-theme.zip assets config layout locales sections snippets templates"
+  },
+  "devDependencies": {
+    "liquidjs": "10.21.0"
+  }
+}

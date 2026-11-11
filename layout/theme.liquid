@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code | default: 'en' }}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#05070b">
+  <title>{{ page_title }}{% unless page_title contains shop.name %} – {{ shop.name }}{% endunless %}</title>
+  {%- if page_description -%}<meta name="description" content="{{ page_description | escape }}">{%- endif -%}
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+  <link rel="preload" as="image" href="{{ 'fv-cover-cutout.webp' | asset_url }}">
+
+  <script>
+    window.Frost = {
+      routes: {
+        cartAdd: {{ routes.cart_add_url | json }},
+        cartChange: {{ routes.cart_change_url | json }},
+        cart: {{ routes.cart_url | json }}
+      },
+      moneyFormat: {{ shop.money_format | json }},
+      snow: {{ settings.enable_snow | json }},
+      preview: false
+    };
+    document.documentElement.classList.add('js');
+  </script>
+
+  {{ content_for_header }}
+</head>
+
+<body class="template-{{ template.name }}">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="fx-grain" aria-hidden="true"></div>
+
+  {% section 'header' %}
+
+  <main id="main" role="main">
+    {{ content_for_layout }}
+  </main>
+
+  {% section 'footer' %}
+  {% render 'cart-drawer' %}
+
+  <script src="{{ 'story.js' | asset_url }}" defer></script>
+  <script src="{{ 'theme.js' | asset_url }}" defer></script>
+</body>
+</html>

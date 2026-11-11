@@ -1,0 +1,16 @@
+<section class="section page-simple">
+  <div class="container">
+    <h1 class="h1">Collections</h1>
+    <div class="product-grid">
+      {%- for c in collections -%}
+        <a class="product-card" href="{{ c.url }}">
+          {%- if c.featured_image -%}{{ c.featured_image | image_url: width: 600 | image_tag: loading: 'lazy' }}{%- endif -%}
+          <span>{{ c.title }}</span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{ "name": "Collections list", "settings": [] }
+{% endschema %}

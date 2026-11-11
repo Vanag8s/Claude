@@ -1,0 +1,22 @@
+<section class="cta" data-cta>
+  <div class="cta__bg" aria-hidden="true" data-snowfield></div>
+  <div class="container cta__inner">
+    <p class="eyebrow" data-reveal>{{ section.settings.eyebrow }}</p>
+    <h2 class="display" data-reveal>{{ section.settings.heading }}</h2>
+    <p class="lead" data-reveal>{{ section.settings.text }}</p>
+    <a href="#buy" class="btn btn--lime btn--glow btn--large" data-reveal data-magnetic>{{ section.settings.button }}</a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Final call to action",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Tonight, it freezes again" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Tomorrow, just drive." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Put it on in 30 seconds tonight. Pull it off in 2 tomorrow." },
+    { "type": "text", "id": "button", "label": "Button", "default": "Get Frostveil" }
+  ],
+  "presets": [{ "name": "Final call to action" }]
+}
+{% endschema %}

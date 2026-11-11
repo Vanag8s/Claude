@@ -1,0 +1,21 @@
+<section class="section page-simple">
+  <div class="container">
+    <h1 class="h1">Search</h1>
+    <form action="{{ routes.search_url }}" method="get" class="search-form">
+      <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search" aria-label="Search">
+      <button class="btn btn--lime" type="submit">Search</button>
+    </form>
+    {%- if search.performed -%}
+      <div class="product-grid">
+        {%- for item in search.results -%}
+          <a class="product-card" href="{{ item.url }}"><span>{{ item.title }}</span></a>
+        {%- else -%}
+          <p class="muted">No results for “{{ search.terms | escape }}”.</p>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+{% schema %}
+{ "name": "Search", "settings": [] }
+{% endschema %}

@@ -1,0 +1,70 @@
+<section id="coverage" class="section coverage">
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow" data-reveal>{{ section.settings.eyebrow }}</p>
+      <h2 class="h1" data-reveal>{{ section.settings.heading }}</h2>
+      <p class="lead" data-reveal>{{ section.settings.text }}</p>
+    </header>
+
+    <div class="coverage__grid">
+      <figure class="coverage__media" data-reveal data-parallax-frame>
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy', class: 'coverage__img' }}
+        {%- else -%}
+          <img class="coverage__img" src="{{ 'fv-coverage-wide.webp' | asset_url }}" alt="Cover installed on a car showing windshield, side window and mirror protection" loading="lazy" width="2000" height="900">
+        {%- endif -%}
+        {%- for block in section.blocks -%}
+          <button type="button" class="hotspot" style="left: {{ block.settings.x }}%; top: {{ block.settings.y }}%" data-hotspot="{{ forloop.index0 }}" aria-label="{{ block.settings.title | escape }}" {{ block.shopify_attributes }}>
+            <span class="hotspot__pulse"></span><span class="hotspot__num">{{ forloop.index }}</span>
+          </button>
+        {%- endfor -%}
+      </figure>
+
+      <ol class="zone-list">
+        {%- for block in section.blocks -%}
+          <li class="zone{% if forloop.first %} is-active{% endif %}" data-zone="{{ forloop.index0 }}" data-reveal style="--d: {{ forloop.index0 | times: 80 }}ms">
+            <button type="button" class="zone__head" data-zone-btn="{{ forloop.index0 }}">
+              <span class="zone__num">{{ forloop.index }}</span>
+              <span class="zone__title">{{ block.settings.title }}</span>
+            </button>
+            <div class="zone__body">
+              <p>{{ block.settings.text }}</p>
+              {%- if block.settings.image != blank -%}
+                {{ block.settings.image | image_url: width: 700 | image_tag: loading: 'lazy' }}
+              {%- elsif block.settings.asset != blank -%}
+                <img src="{{ block.settings.asset | asset_url }}" alt="{{ block.settings.title | escape }}" loading="lazy" width="800" height="800">
+              {%- endif -%}
+            </div>
+          </li>
+        {%- endfor -%}
+      </ol>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Coverage hotspots",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Full coverage" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Windshield. Side glass. Mirrors." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "An oversized cut that protects every surface you need to see through before you drive." },
+    { "type": "image_picker", "id": "image", "label": "Image (defaults to bundled product photo)" }
+  ],
+  "blocks": [
+    {
+      "type": "zone",
+      "name": "Zone",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "textarea", "id": "text", "label": "Text" },
+        { "type": "range", "id": "x", "label": "Hotspot X (%)", "min": 0, "max": 100, "step": 1, "default": 50 },
+        { "type": "range", "id": "y", "label": "Hotspot Y (%)", "min": 0, "max": 100, "step": 1, "default": 50 },
+        { "type": "image_picker", "id": "image", "label": "Detail image" },
+        { "type": "text", "id": "asset", "label": "Fallback theme asset filename" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Coverage hotspots" }]
+}
+{% endschema %}

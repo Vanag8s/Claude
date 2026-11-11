@@ -1,0 +1,10 @@
+<section class="section page-simple">
+  <div class="container container--narrow">
+    <p class="eyebrow">{{ article.published_at | date: '%B %d, %Y' }}</p>
+    <h1 class="h1">{{ article.title }}</h1>
+    <div class="rte">{{ article.content }}</div>
+  </div>
+</section>
+{% schema %}
+{ "name": "Article", "settings": [] }
+{% endschema %}

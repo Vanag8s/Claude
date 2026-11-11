@@ -1,0 +1,583 @@
+{
+  "sections": {
+    "story": {
+      "type": "fv-hero",
+      "blocks": {
+        "ch_1": {
+          "type": "chapter",
+          "settings": {
+            "kicker": "The problem",
+            "heading": "Overnight, your glass turns to stone.",
+            "text": "At \u221212\u00b0C, moisture freezes into a hard crust on the windshield, side windows and mirrors. Every morning starts with a scraper.",
+            "stat": "15 min",
+            "stat_label": "of scraping & defrosting \u2014 gone",
+            "from": 14,
+            "to": 29
+          }
+        },
+        "ch_2": {
+          "type": "chapter",
+          "settings": {
+            "kicker": "The fix",
+            "heading": "Lay it on. Tuck it in. Done.",
+            "text": "Spread Frostveil over the windshield, slip the elastic pockets over your mirrors and close the doors on the side flaps. It locks in place \u2014 no tools, no clips.",
+            "stat": "30 sec",
+            "stat_label": "to install",
+            "from": 31,
+            "to": 49
+          }
+        },
+        "ch_3": {
+          "type": "chapter",
+          "settings": {
+            "kicker": "Overnight",
+            "heading": "Snow lands on the cover. Not on your car.",
+            "text": "The nano-coated outer layer sheds water and snow, the Oxford core isolates the cold, and the non-slip PVC backing stays put on the glass.",
+            "stat": "3 layers",
+            "stat_label": "between the weather and your glass",
+            "from": 51,
+            "to": 63
+          }
+        },
+        "ch_4": {
+          "type": "chapter",
+          "settings": {
+            "kicker": "7:00 a.m.",
+            "heading": "Peel. Shake. Drive.",
+            "text": "Open the door, pull the cover away and the ice goes with it. Clear windshield, clear side glass, clear mirrors.",
+            "stat": "2 sec",
+            "stat_label": "to clear glass",
+            "from": 65,
+            "to": 77
+          }
+        },
+        "ch_5": {
+          "type": "chapter",
+          "settings": {
+            "kicker": "Then summer arrives",
+            "heading": "It blocks the sun, too.",
+            "text": "Flip the season \u2014 the same cover shields your dashboard from UV and heat, so the cabin and steering wheel stay cooler in the parking lot.",
+            "stat": "UV",
+            "stat_label": "blocking outer layer",
+            "from": 79,
+            "to": 100
+          }
+        }
+      },
+      "block_order": [
+        "ch_1",
+        "ch_2",
+        "ch_3",
+        "ch_4",
+        "ch_5"
+      ],
+      "settings": {}
+    },
+    "layers": {
+      "type": "fv-layers",
+      "blocks": {
+        "layer_1": {
+          "type": "layer",
+          "settings": {
+            "title": "Nano-coating",
+            "role": "Sun & snow shield \u00b7 UV block",
+            "text": "A water-repellent outer skin. Snow, sleet and rain slide off instead of soaking in, and UV rays are reflected before they reach your dashboard."
+          }
+        },
+        "layer_2": {
+          "type": "layer",
+          "settings": {
+            "title": "Oxford layer",
+            "role": "Isolates heat & cold",
+            "text": "A tightly woven, tear-resistant core that adds strength and creates an insulating barrier between the weather and your glass."
+          }
+        },
+        "layer_3": {
+          "type": "layer",
+          "settings": {
+            "title": "Non-slip PVC",
+            "role": "Grip & wear resistance",
+            "text": "The soft backing grips the glass so the cover won't shift in wind, and protects the windshield from scratches."
+          }
+        }
+      },
+      "block_order": [
+        "layer_1",
+        "layer_2",
+        "layer_3"
+      ],
+      "settings": {}
+    },
+    "features": {
+      "type": "fv-features",
+      "blocks": {
+        "f_1": {
+          "type": "feature",
+          "settings": {
+            "icon": "snow",
+            "title": "No more scraping",
+            "text": "Ice forms on the cover, not the glass. Pull it off and the frost comes with it."
+          }
+        },
+        "f_2": {
+          "type": "feature",
+          "settings": {
+            "icon": "sun",
+            "title": "Summer sun & UV shield",
+            "text": "Reflects sunlight and UV to keep the dashboard, seats and steering wheel cooler and protect interior trim from fading."
+          }
+        },
+        "f_3": {
+          "type": "feature",
+          "settings": {
+            "icon": "mirror",
+            "title": "Mirror pockets",
+            "text": "Elastic covers for both side mirrors \u2014 no more frozen mirror glass in the morning."
+          }
+        },
+        "f_4": {
+          "type": "feature",
+          "settings": {
+            "icon": "shield",
+            "title": "Side window protection",
+            "text": "Extra-wide flaps wrap over the front side windows for a clear view on both sides."
+          }
+        },
+        "f_5": {
+          "type": "feature",
+          "settings": {
+            "icon": "lock",
+            "title": "Wind-proof & theft-resistant",
+            "text": "Flaps tuck inside the closed doors, holding the cover in strong wind and stopping it from being pulled off."
+          }
+        },
+        "f_6": {
+          "type": "feature",
+          "settings": {
+            "icon": "reflect",
+            "title": "Reflective safety bands",
+            "text": "High-visibility bands on the mirror pockets catch headlights when you're parked at night."
+          }
+        },
+        "f_7": {
+          "type": "feature",
+          "settings": {
+            "icon": "drop",
+            "title": "Waterproof, never soggy",
+            "text": "No cotton or sponge to absorb water and freeze stiff. It stays light and flexible in deep cold."
+          }
+        },
+        "f_8": {
+          "type": "feature",
+          "settings": {
+            "icon": "fold",
+            "title": "Folds flat",
+            "text": "Light composite folds down small enough for the trunk or door pocket."
+          }
+        },
+        "f_9": {
+          "type": "feature",
+          "settings": {
+            "icon": "car",
+            "title": "Universal fit",
+            "text": "One oversized cut for hatchbacks, sedans, SUVs and MPVs \u2014 choose Standard or XL."
+          }
+        },
+        "f_10": {
+          "type": "feature",
+          "settings": {
+            "icon": "leaf",
+            "title": "Leaves, sap & droppings",
+            "text": "Parking under trees? The cover catches leaves, sap, pollen and bird droppings instead of your glass."
+          }
+        },
+        "f_11": {
+          "type": "feature",
+          "settings": {
+            "icon": "clock",
+            "title": "Save your mornings",
+            "text": "Skip the idling, de-icer spray and scraping. Your morning gets 15 minutes back."
+          }
+        },
+        "f_12": {
+          "type": "feature",
+          "settings": {
+            "icon": "wind",
+            "title": "Protects wipers",
+            "text": "Wiper blades stay under the cover, so they don't freeze to the glass or tear on ice."
+          }
+        }
+      },
+      "block_order": [
+        "f_1",
+        "f_2",
+        "f_3",
+        "f_4",
+        "f_5",
+        "f_6",
+        "f_7",
+        "f_8",
+        "f_9",
+        "f_10",
+        "f_11",
+        "f_12"
+      ],
+      "settings": {}
+    },
+    "coverage": {
+      "type": "fv-coverage",
+      "blocks": {
+        "z_1": {
+          "type": "zone",
+          "settings": {
+            "title": "Front windshield",
+            "text": "Oversized panel covers the whole windshield edge to edge, including the wiper area.",
+            "x": 45,
+            "y": 52,
+            "asset": "fv-zone-front.webp"
+          }
+        },
+        "z_2": {
+          "type": "zone",
+          "settings": {
+            "title": "Side window glass",
+            "text": "Wrap-around flaps cover the front side windows and tuck into the doors to hold the cover tight.",
+            "x": 84,
+            "y": 44,
+            "asset": "fv-zone-side.webp"
+          }
+        },
+        "z_3": {
+          "type": "zone",
+          "settings": {
+            "title": "Rearview mirrors",
+            "text": "Elastic mirror pockets with reflective bands keep both mirrors ice-free and visible at night.",
+            "x": 24,
+            "y": 30,
+            "asset": "fv-zone-mirror.webp"
+          }
+        }
+      },
+      "block_order": [
+        "z_1",
+        "z_2",
+        "z_3"
+      ],
+      "settings": {}
+    },
+    "morning": {
+      "type": "fv-morning",
+      "settings": {}
+    },
+    "seasons": {
+      "type": "fv-seasons",
+      "blocks": {
+        "s_1": {
+          "type": "item",
+          "settings": {
+            "season": "winter",
+            "icon": "snow",
+            "title": "Snow & ice",
+            "text": "Heavy snowfall and thick ice stay on the cover \u2014 sweep it off in one pull."
+          }
+        },
+        "s_2": {
+          "type": "item",
+          "settings": {
+            "season": "winter",
+            "icon": "drop",
+            "title": "Frost & freezing rain",
+            "text": "No more frozen crust. The nano-coating sheds sleet before it can bond."
+          }
+        },
+        "s_3": {
+          "type": "item",
+          "settings": {
+            "season": "winter",
+            "icon": "wind",
+            "title": "Frozen wipers & mirrors",
+            "text": "Wipers and mirror glass stay protected underneath."
+          }
+        },
+        "s_4": {
+          "type": "item",
+          "settings": {
+            "season": "summer",
+            "icon": "sun",
+            "title": "Sun & heat",
+            "text": "Reflects direct sunlight off the windshield so the cabin heats up less."
+          }
+        },
+        "s_5": {
+          "type": "item",
+          "settings": {
+            "season": "summer",
+            "icon": "shield",
+            "title": "UV damage",
+            "text": "Protects dashboard, leather and trim from UV fading and cracking."
+          }
+        },
+        "s_6": {
+          "type": "item",
+          "settings": {
+            "season": "summer",
+            "icon": "leaf",
+            "title": "Dust, pollen & sap",
+            "text": "Keeps tree sap, bird droppings and dust off the glass."
+          }
+        }
+      },
+      "block_order": [
+        "s_1",
+        "s_2",
+        "s_3",
+        "s_4",
+        "s_5",
+        "s_6"
+      ],
+      "settings": {}
+    },
+    "install": {
+      "type": "fv-install",
+      "blocks": {
+        "st_1": {
+          "type": "step",
+          "settings": {
+            "time": "5 sec",
+            "title": "Unfold",
+            "text": "Shake out the cover, soft PVC side down, lime trim facing out."
+          }
+        },
+        "st_2": {
+          "type": "step",
+          "settings": {
+            "time": "10 sec",
+            "title": "Lay it on",
+            "text": "Center it over the windshield and let the side panels fall over the front side windows."
+          }
+        },
+        "st_3": {
+          "type": "step",
+          "settings": {
+            "time": "10 sec",
+            "title": "Mirror pockets",
+            "text": "Slip the elastic pockets over both side mirrors."
+          }
+        },
+        "st_4": {
+          "type": "step",
+          "settings": {
+            "time": "5 sec",
+            "title": "Close the doors",
+            "text": "Tuck the side flaps inside the doors and close them. Locked in place."
+          }
+        }
+      },
+      "block_order": [
+        "st_1",
+        "st_2",
+        "st_3",
+        "st_4"
+      ],
+      "settings": {}
+    },
+    "specs": {
+      "type": "fv-specs",
+      "blocks": {
+        "sp_1": {
+          "type": "row",
+          "settings": {
+            "label": "Material",
+            "value": "3-layer composite: nano-coated surface, Oxford core, non-slip PVC backing"
+          }
+        },
+        "sp_2": {
+          "type": "row",
+          "settings": {
+            "label": "Coverage",
+            "value": "Windshield, front side windows, both side mirrors"
+          }
+        },
+        "sp_3": {
+          "type": "row",
+          "settings": {
+            "label": "Sizes",
+            "value": "Standard (hatchback, sedan) \u00b7 XL (SUV, MPV)"
+          }
+        },
+        "sp_4": {
+          "type": "row",
+          "settings": {
+            "label": "Fixing",
+            "value": "Door-tuck side flaps + elastic mirror pockets"
+          }
+        },
+        "sp_5": {
+          "type": "row",
+          "settings": {
+            "label": "Protects against",
+            "value": "Snow, ice, frost, sleet, sun, UV, dust, sap, bird droppings"
+          }
+        },
+        "sp_6": {
+          "type": "row",
+          "settings": {
+            "label": "Visibility",
+            "value": "Reflective bands on mirror pockets"
+          }
+        },
+        "sp_7": {
+          "type": "row",
+          "settings": {
+            "label": "Colour",
+            "value": "Black with silver quilting and lime trim"
+          }
+        },
+        "sp_8": {
+          "type": "row",
+          "settings": {
+            "label": "Care",
+            "value": "Shake off, wipe or rinse with water, air dry before folding"
+          }
+        }
+      },
+      "block_order": [
+        "sp_1",
+        "sp_2",
+        "sp_3",
+        "sp_4",
+        "sp_5",
+        "sp_6",
+        "sp_7",
+        "sp_8"
+      ],
+      "settings": {}
+    },
+    "reviews": {
+      "type": "fv-reviews",
+      "settings": {}
+    },
+    "faq": {
+      "type": "fv-faq",
+      "blocks": {
+        "q_1": {
+          "type": "q",
+          "settings": {
+            "q": "Will it fit my car?",
+            "a": "<p>Frostveil is designed to fit most hatchbacks, sedans, SUVs and MPVs. Choose <strong>Standard</strong> for cars and hatchbacks and <strong>XL</strong> for SUVs, MPVs and vans. If you're between sizes, choose XL \u2014 extra overlap is better than too little.</p>"
+          }
+        },
+        "q_2": {
+          "type": "q",
+          "settings": {
+            "q": "How does it stay on in the wind?",
+            "a": "<p>The side flaps tuck inside the front doors and are held when you close them, and the elastic mirror pockets anchor both sides. The non-slip PVC backing keeps it from sliding on the glass.</p>"
+          }
+        },
+        "q_3": {
+          "type": "q",
+          "settings": {
+            "q": "Can someone steal it?",
+            "a": "<p>With the flaps shut inside locked doors, the cover can't simply be lifted off the car.</p>"
+          }
+        },
+        "q_4": {
+          "type": "q",
+          "settings": {
+            "q": "Will it scratch my windshield or paint?",
+            "a": "<p>No. The inner layer is a soft PVC that sits gently on glass. Make sure the glass is free of grit before laying it on.</p>"
+          }
+        },
+        "q_5": {
+          "type": "q",
+          "settings": {
+            "q": "What if snow freezes onto the cover?",
+            "a": "<p>Pull it off and give it a shake \u2014 the nano-coated surface stops ice from bonding strongly. Let it dry before folding it away.</p>"
+          }
+        },
+        "q_6": {
+          "type": "q",
+          "settings": {
+            "q": "Can I use it in summer?",
+            "a": "<p>Yes. The outer layer reflects sunlight and UV, helping keep your dashboard and steering wheel cooler when parked.</p>"
+          }
+        },
+        "q_7": {
+          "type": "q",
+          "settings": {
+            "q": "Can I put it on a wet or frosted windshield?",
+            "a": "<p>Yes. It's waterproof. For best results, install it the evening before frost is forecast.</p>"
+          }
+        },
+        "q_8": {
+          "type": "q",
+          "settings": {
+            "q": "How do I clean it?",
+            "a": "<p>Rinse with water or wipe with a damp cloth and mild soap, then air dry. Don't machine wash or tumble dry.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q_1",
+        "q_2",
+        "q_3",
+        "q_4",
+        "q_5",
+        "q_6",
+        "q_7",
+        "q_8"
+      ],
+      "settings": {}
+    },
+    "cta": {
+      "type": "fv-cta",
+      "settings": {}
+    },
+    "main": {
+      "type": "fv-buy",
+      "blocks": {
+        "t_1": {
+          "type": "trust",
+          "settings": {
+            "icon": "car",
+            "text": "Fast, tracked shipping"
+          }
+        },
+        "t_2": {
+          "type": "trust",
+          "settings": {
+            "icon": "shield",
+            "text": "30-day returns"
+          }
+        },
+        "t_3": {
+          "type": "trust",
+          "settings": {
+            "icon": "lock",
+            "text": "Secure checkout"
+          }
+        }
+      },
+      "block_order": [
+        "t_1",
+        "t_2",
+        "t_3"
+      ],
+      "settings": {}
+    }
+  },
+  "order": [
+    "story",
+    "layers",
+    "features",
+    "coverage",
+    "morning",
+    "seasons",
+    "install",
+    "main",
+    "specs",
+    "reviews",
+    "faq",
+    "cta"
+  ]
+}

@@ -1,0 +1,44 @@
+<section id="install" class="section install" data-install>
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow" data-reveal>{{ section.settings.eyebrow }}</p>
+      <h2 class="h1" data-reveal>{{ section.settings.heading }}</h2>
+      <p class="lead" data-reveal>{{ section.settings.text }}</p>
+    </header>
+
+    <ol class="steps">
+      <span class="steps__line" aria-hidden="true"><span data-install-progress></span></span>
+      {%- for block in section.blocks -%}
+        <li class="step" data-reveal style="--d: {{ forloop.index0 | times: 90 }}ms" {{ block.shopify_attributes }}>
+          <span class="step__num">{{ forloop.index }}</span>
+          <span class="step__time">{{ block.settings.time }}</span>
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.text }}</p>
+        </li>
+      {%- endfor -%}
+    </ol>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Install steps",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Install in 30 seconds" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "No tools. No clips. No stress." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Works the same on hatchbacks, sedans, SUVs and MPVs." }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "text", "id": "time", "label": "Time" },
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "textarea", "id": "text", "label": "Text" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Install steps" }]
+}
+{% endschema %}

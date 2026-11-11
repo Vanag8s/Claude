@@ -1,0 +1,36 @@
+<header class="site-header" data-header>
+  <div class="site-header__inner">
+    <a href="{{ routes.root_url }}" class="logo" aria-label="{{ shop.name }}">
+      <span class="logo__mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" width="26" height="26"><path d="M16 2 4 8v8c0 7 5 12 12 14 7-2 12-7 12-14V8L16 2Z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 9v14M10 12l12 8M22 12l-12 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+      </span>
+      <span class="logo__text">{{ section.settings.logo_text | default: shop.name }}</span>
+    </a>
+
+    <nav class="site-nav" aria-label="Main">
+      <a href="#story">Story</a>
+      <a href="#layers">Technology</a>
+      <a href="#coverage">Coverage</a>
+      <a href="#install">Install</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+
+    <div class="site-header__actions">
+      <a href="#buy" class="btn btn--small btn--lime">{{ section.settings.cta_label }}</a>
+      <button class="cart-btn" type="button" data-cart-open aria-label="Open cart">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 7a3 3 0 0 1 6 0" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+        <span class="cart-btn__count" data-cart-count>{{ cart.item_count }}</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    { "type": "text", "id": "logo_text", "label": "Logo text", "default": "FROSTVEIL" },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Shop now" }
+  ]
+}
+{% endschema %}

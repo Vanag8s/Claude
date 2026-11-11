@@ -1,0 +1,56 @@
+<section id="seasons" class="section seasons" data-seasons data-season="winter">
+  <div class="seasons__sky" aria-hidden="true"><div class="seasons__sun"></div><div class="seasons__flakes"></div></div>
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow" data-reveal>{{ section.settings.eyebrow }}</p>
+      <h2 class="h1" data-reveal>{{ section.settings.heading }}</h2>
+      <div class="season-toggle" role="tablist" aria-label="Season" data-reveal>
+        <button type="button" role="tab" aria-selected="true" data-season-btn="winter">{% render 'fv-icon', name: 'snow' %} Winter</button>
+        <button type="button" role="tab" aria-selected="false" data-season-btn="summer">{% render 'fv-icon', name: 'sun' %} Summer</button>
+        <span class="season-toggle__pill" aria-hidden="true"></span>
+      </div>
+    </header>
+
+    <div class="seasons__panels">
+      {%- for season in (1..2) -%}
+        {%- if season == 1 -%}{%- assign key = 'winter' -%}{%- else -%}{%- assign key = 'summer' -%}{%- endif -%}
+        <div class="season-panel" data-season-panel="{{ key }}" {% if season == 2 %}hidden{% endif %}>
+          {%- for block in section.blocks -%}
+            {%- if block.settings.season == key -%}
+              <div class="season-card" {{ block.shopify_attributes }}>
+                <span class="season-card__icon">{% render 'fv-icon', name: block.settings.icon %}</span>
+                <div><h3>{{ block.settings.title }}</h3><p>{{ block.settings.text }}</p></div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Season switcher",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "365 days a year" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "One cover. Every season." }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        { "type": "select", "id": "season", "label": "Season", "default": "winter", "options": [{ "value": "winter", "label": "Winter" }, { "value": "summer", "label": "Summer" }] },
+        { "type": "select", "id": "icon", "label": "Icon", "default": "snow", "options": [
+          { "value": "snow", "label": "Snow" }, { "value": "sun", "label": "Sun" }, { "value": "shield", "label": "Shield" },
+          { "value": "drop", "label": "Drop" }, { "value": "leaf", "label": "Leaf" }, { "value": "wind", "label": "Wind" }, { "value": "clock", "label": "Clock" }
+        ] },
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "textarea", "id": "text", "label": "Text" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Season switcher" }]
+}
+{% endschema %}

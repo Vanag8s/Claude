@@ -1,0 +1,28 @@
+<footer class="site-footer">
+  <div class="container site-footer__grid">
+    <div>
+      <p class="logo__text">{{ section.settings.brand | default: shop.name }}</p>
+      <p class="muted">{{ section.settings.tagline }}</p>
+    </div>
+    <nav aria-label="Footer">
+      {%- assign menu = linklists[section.settings.menu] -%}
+      {%- if menu and menu.links.size > 0 -%}
+        {%- for link in menu.links -%}<a href="{{ link.url }}">{{ link.title }}</a>{%- endfor -%}
+      {%- else -%}
+        <a href="#buy">Shop</a><a href="#faq">FAQ</a><a href="{{ routes.cart_url }}">Cart</a>
+      {%- endif -%}
+    </nav>
+    <p class="muted small">&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    { "type": "text", "id": "brand", "label": "Brand", "default": "FROSTVEIL" },
+    { "type": "text", "id": "tagline", "label": "Tagline", "default": "All-season windshield protection. Clear glass, every morning." },
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" }
+  ]
+}
+{% endschema %}

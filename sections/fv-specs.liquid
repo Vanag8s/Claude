@@ -1,0 +1,35 @@
+<section id="specs" class="section specs">
+  <div class="container specs__grid">
+    <header>
+      <p class="eyebrow" data-reveal>{{ section.settings.eyebrow }}</p>
+      <h2 class="h1" data-reveal>{{ section.settings.heading }}</h2>
+      <p class="lead" data-reveal>{{ section.settings.text }}</p>
+      <figure class="specs__fit" data-reveal>
+        <img src="{{ 'fv-fit.webp' | asset_url }}" alt="Cover shape with compatible vehicle types: hatchback, sedan, SUV, MPV" loading="lazy" width="800" height="800">
+      </figure>
+    </header>
+    <dl class="spec-table" data-reveal>
+      {%- for block in section.blocks -%}
+        <div class="spec-row" {{ block.shopify_attributes }}><dt>{{ block.settings.label }}</dt><dd>{{ block.settings.value }}</dd></div>
+      {%- endfor -%}
+    </dl>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Specifications",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Specifications" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Universal fit, honest specs." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Fits most hatchbacks, sedans, SUVs and MPVs. Measure your windshield and pick the size that covers it with a little to spare." }
+  ],
+  "blocks": [
+    { "type": "row", "name": "Spec row", "settings": [
+      { "type": "text", "id": "label", "label": "Label" },
+      { "type": "text", "id": "value", "label": "Value" }
+    ] }
+  ],
+  "presets": [{ "name": "Specifications" }]
+}
+{% endschema %}
