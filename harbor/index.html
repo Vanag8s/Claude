@@ -87,22 +87,12 @@
   <main id="main">
     <!-- HERO: a living beach -->
     <section class="hero" aria-labelledby="hero-title">
-      <div class="scene" aria-hidden="true">
-        <div class="sky"></div>
-        <div class="sun"></div>
-        <div class="gull gull--1"><svg viewBox="0 0 40 14"><path d="M1 12 C8 2 14 2 20 9 C26 2 32 2 39 12"/></svg></div>
-        <div class="gull gull--2"><svg viewBox="0 0 40 14"><path d="M1 12 C8 2 14 2 20 9 C26 2 32 2 39 12"/></svg></div>
-        <div class="sea">
-          <div class="shimmer"></div>
-          <svg class="wave wave--far" viewBox="0 0 2880 120" preserveAspectRatio="none"><path d="M0 60 C240 20 480 100 720 60 C960 20 1200 100 1440 60 C1680 20 1920 100 2160 60 C2400 20 2640 100 2880 60 V120 H0Z"/></svg>
-          <svg class="wave wave--mid" viewBox="0 0 2880 120" preserveAspectRatio="none"><path d="M0 70 C180 30 420 110 720 70 C1020 30 1260 110 1440 70 C1620 30 1860 110 2160 70 C2460 30 2700 110 2880 70 V120 H0Z"/></svg>
-          <svg class="wave wave--near" viewBox="0 0 2880 120" preserveAspectRatio="none"><path d="M0 50 C300 90 540 10 720 50 C900 90 1140 10 1440 50 C1740 90 1980 10 2160 50 C2340 90 2580 10 2880 50 V120 H0Z"/></svg>
-        </div>
-        <div class="shore">
-          <svg class="foam" viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0 20 C120 40 240 5 360 22 C480 40 600 8 720 24 C840 40 960 6 1080 22 C1200 38 1320 10 1440 24 V60 H0Z"/></svg>
-          <div class="wet"></div>
-        </div>
-        <div class="sand"></div>
+      <div class="hero__photo" aria-hidden="true">
+        <picture>
+          <source media="(max-width: 760px)" srcset="/assets/photos/hero-mobile.jpg">
+          <img src="/assets/photos/hero.jpg" alt="" width="2400" height="1350" fetchpriority="high" decoding="async" onerror="this.remove()">
+        </picture>
+        <div class="hero__shade"></div>
       </div>
 
       <div class="hero__inner">
@@ -140,6 +130,20 @@
       <div class="marquee__track">
         <span>Plumbers</span><span>Dental clinics</span><span>Hair &amp; beauty salons</span><span>Law offices</span><span>Real estate</span><span>Auto repair</span><span>Restaurants</span><span>HVAC</span><span>Physio &amp; wellness</span><span>Agencies</span>
         <span aria-hidden="true">Plumbers</span><span aria-hidden="true">Dental clinics</span><span aria-hidden="true">Hair &amp; beauty salons</span><span aria-hidden="true">Law offices</span><span aria-hidden="true">Real estate</span><span aria-hidden="true">Auto repair</span><span aria-hidden="true">Restaurants</span><span aria-hidden="true">HVAC</span><span aria-hidden="true">Physio &amp; wellness</span><span aria-hidden="true">Agencies</span>
+      </div>
+    </section>
+
+    <!-- REAL BUSINESSES -->
+    <section class="section people" aria-labelledby="people-title" hidden>
+      <div class="wrap">
+        <p class="eyebrow reveal">Made for busy people</p>
+        <h2 id="people-title" class="split">You can't answer the phone<br><em>with your hands full.</em></h2>
+        <div class="people__grid">
+          <figure class="photo reveal"><img src="/assets/photos/dentist.jpg" alt="A dentist treating a patient in a clinic" loading="lazy" width="900" height="1125"><figcaption><b>Mid-appointment</b> Harbor books the next patient while you work.</figcaption></figure>
+          <figure class="photo reveal"><img src="/assets/photos/barber.jpg" alt="A barber cutting a client's hair" loading="lazy" width="900" height="1125"><figcaption><b>Mid-haircut</b> Harbor fills tomorrow's chair.</figcaption></figure>
+          <figure class="photo reveal"><img src="/assets/photos/workshop.jpg" alt="A mechanic's workbench in a busy workshop" loading="lazy" width="900" height="1125"><figcaption><b>Under a car</b> Harbor takes the job details and texts you.</figcaption></figure>
+          <figure class="photo reveal"><img src="/assets/photos/phone.jpg" alt="A person on the phone at their desk" loading="lazy" width="900" height="1125"><figcaption><b>On another call</b> Harbor picks up line two.</figcaption></figure>
+        </div>
       </div>
     </section>
 
