@@ -1,6 +1,7 @@
 // Turns whatever the owner writes or says about their business (and optionally their website)
 // into a structured Harbor profile.
 import Anthropic from "@anthropic-ai/sdk";
+import { getAI } from "./_lib/ai.js";
 import { normalizeProfile } from "./_lib/profile.js";
 import { fetchPublicPage, pageText } from "./_lib/safe-fetch.js";
 import { limited, clientIp } from "./_lib/ratelimit.js";
@@ -37,7 +38,7 @@ export default async function handler(req, res, deps = {}) {
     catch (e) { if (!text.trim()) return res.status(422).json({ error: `Couldn't read that site: ${e.message}.` }); }
   }
   try {
-    const c = deps.anthropic || (client ??= new Anthropic());
+    const c = deps.anthropic || (client ??= getAI());
     const r = await c.messages.create({
       model: "claude-opus-5-5",
       max_tokens: 8000,

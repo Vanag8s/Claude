@@ -1,5 +1,6 @@
 // "Paste your website → get your own Harbor": reads a business's site and drafts its receptionist setup.
 import Anthropic from "@anthropic-ai/sdk";
+import { getAI } from "./_lib/ai.js";
 import { fetchPublicPage, pageText } from "./_lib/safe-fetch.js";
 import { limited, clientIp } from "./_lib/ratelimit.js";
 
@@ -33,7 +34,7 @@ export default async function handler(req, res, deps = {}) {
   catch (e) { return res.status(422).json({ error: `Couldn't read that site: ${e.message}.` }); }
 
   try {
-    const c = deps.anthropic || (client ??= new Anthropic());
+    const c = deps.anthropic || (client ??= getAI());
     const r = await c.messages.create({
       model: "claude-opus-5-5",
       max_tokens: 4096,

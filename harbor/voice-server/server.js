@@ -10,6 +10,7 @@
 import http from "node:http";
 import { WebSocketServer } from "ws";
 import Anthropic from "@anthropic-ai/sdk";
+import { getAI } from "../api/_lib/ai.js";
 import twilio from "twilio";
 import { business, SYSTEM, LIVE_VOICE_STYLE, TOOLS } from "../api/_lib/receptionist.js";
 import { makeBooker } from "../api/_lib/booking.js";
@@ -41,7 +42,7 @@ function validInput(tool, input, tools = TOOLS) {
 
 // ---------- One live call ----------
 export class CallSession {
-  constructor(ws, { client = new Anthropic(), log = () => {}, summarize = summarizeCall, lookup = businessForNumber } = {}) {
+  constructor(ws, { client = getAI(), log = () => {}, summarize = summarizeCall, lookup = businessForNumber } = {}) {
     this.lookup = lookup;
     this.member = null;         // { id, profile } when the dialed number belongs to a member business
     this.ws = ws;

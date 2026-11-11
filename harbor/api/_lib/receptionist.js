@@ -1,6 +1,7 @@
 // Shared brain for the Harbor phone receptionist: one Claude turn with booking / transfer / hang-up tools.
 // Files under api/_lib are not exposed as routes on Vercel.
 import Anthropic from "@anthropic-ai/sdk";
+import { getAI } from "./ai.js";
 import { readFileSync } from "node:fs";
 
 export const business = JSON.parse(
@@ -83,7 +84,7 @@ export const TOOLS = [
 ];
 
 let defaultClient;
-const getClient = () => (defaultClient ??= new Anthropic());
+const getClient = () => (defaultClient ??= getAI());
 
 /**
  * Runs one caller turn.

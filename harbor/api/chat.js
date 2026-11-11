@@ -1,8 +1,9 @@
 // Vercel serverless function: Claude-powered answers for the Harbor demo bot.
 // Requires ANTHROPIC_API_KEY in the project's environment variables.
 import Anthropic from "@anthropic-ai/sdk";
+import { getAI } from "./_lib/ai.js";
 
-const client = new Anthropic();
+let client;
 
 const SYSTEM = `You are Harbor, the AI front-desk assistant for "Riverside Plumbing", a sample plumbing company used in a live demo on Harbor's website.
 
@@ -59,6 +60,7 @@ export default async function handler(req, res) {
   if (!messages.length || messages.at(-1).role !== "user") return res.status(400).json({ error: "No user message" });
 
   try {
+    client ??= getAI();
     const response = await client.beta.messages.create({
       model: "claude-opus-5-5",
       max_tokens: 1024,

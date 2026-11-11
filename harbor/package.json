@@ -9,9 +9,10 @@
     "test:voice": "node scripts/test-voice.mjs",
     "voice:live": "node voice-server/server.js",
     "test:live-voice": "node scripts/test-live-voice.mjs",
-    "test": "node scripts/check-links.mjs && node scripts/test-site.mjs && node scripts/test-api.mjs && node scripts/test-voice.mjs && node scripts/test-live-voice.mjs && node scripts/test-setup.mjs",
+    "test": "node scripts/check-links.mjs && node scripts/test-site.mjs && node scripts/test-api.mjs && node scripts/test-voice.mjs && node scripts/test-live-voice.mjs && node scripts/test-setup.mjs && node scripts/test-ai.mjs",
     "test:api": "node scripts/test-api.mjs",
-    "test:setup": "node scripts/test-setup.mjs"
+    "test:setup": "node scripts/test-setup.mjs",
+    "test:ai": "node scripts/test-ai.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.8.0",

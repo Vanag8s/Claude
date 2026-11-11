@@ -1,5 +1,6 @@
 // After-call summary: Claude turns the transcript into a short, structured note for the owner.
 import Anthropic from "@anthropic-ai/sdk";
+import { getAI } from "./ai.js";
 import { business } from "./receptionist.js";
 import { sendSms, postWebhook, ownerPhone } from "./twilio.js";
 
@@ -25,7 +26,7 @@ export async function summarizeCall(history, { from, to, callSid, booked, demo, 
     .join("\n");
   if (!transcript.includes("Caller:")) return null;
 
-  const c = anthropic || (client ??= new Anthropic());
+  const c = anthropic || (client ??= getAI());
   const res = await c.messages.create({
     model: "claude-opus-5-5",
     max_tokens: 1024,

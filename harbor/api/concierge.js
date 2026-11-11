@@ -2,6 +2,7 @@
 // knows when (and when not) to bring up the membership, and can switch into a
 // live role-play as the visitor's receptionist.
 import Anthropic from "@anthropic-ai/sdk";
+import { getAI } from "./_lib/ai.js";
 import { limited, clientIp } from "./_lib/ratelimit.js";
 
 export const TONES = ["calm", "friendly", "curious", "excited", "skeptical", "rushed", "frustrated", "worried", "confused", "neutral"];
@@ -115,7 +116,7 @@ export default async function handler(req, res, deps = {}) {
   if (req.body?.via === "voice") messages.at(-1).content = `(spoken aloud)\n${messages.at(-1).content}`;
 
   try {
-    const c = deps.anthropic || (client ??= new Anthropic());
+    const c = deps.anthropic || (client ??= getAI());
     const r = await c.beta.messages.create({
       model: "claude-opus-5-5",
       max_tokens: 2048,
