@@ -27,6 +27,12 @@ Copy from the line after "START" to the line before "END".
 ==============================================================================
 ----- START -----
 {%- comment -%} Nordveil cinematic product page. Upload the .webp files to Assets first. {%- endcomment -%}
+{%- liquid
+  assign p = product
+  if section.settings.product != blank
+    assign p = section.settings.product
+  endif
+-%}
 {%- assign fallback = 'protection.webp,coverage.webp,night.webp,layers.webp,after.webp' | split: ',' -%}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -74,18 +80,18 @@ Copy from the line after "START" to the line before "END".
 .nv .hero:after{content:"";position:absolute;left:-30%;top:0;width:60%;height:100%;z-index:2;background:linear-gradient(100deg,transparent 30%,rgba(191,227,255,.10) 50%,transparent 70%);animation:sweep 7s 1.2s var(--ease) infinite}
 @keyframes sweep{0%{transform:translateX(-30%)}60%,100%{transform:translateX(260%)}}
 .nv #snow{position:absolute;inset:0;z-index:3;pointer-events:none}
-.nv .letterbox{position:absolute;left:0;right:0;height:9vh;background:#000;z-index:4;transition:transform 1.6s var(--ease)}
+.nv .letterbox{display:none}.nv.anim .letterbox{display:block}.nv .letterbox{position:absolute;left:0;right:0;height:9vh;background:#000;z-index:4;transition:transform 1.6s var(--ease)}
 .nv .letterbox.t{top:0}.nv .letterbox.b{bottom:0}
 .nv.loaded .letterbox.t{transform:translateY(-100%)}.nv.loaded .letterbox.b{transform:translateY(100%)}
 .nv .hero-content{position:relative;z-index:5;padding-bottom:72px;width:100%}
 .nv .hero h1{font-size:clamp(44px,8.4vw,118px);font-weight:700;max-width:12ch}
 .nv .hero h1 span{display:block;overflow:hidden}
-.nv .hero h1 span em{display:block;font-style:normal;transform:translateY(110%);transition:transform 1.3s var(--ease)}
+.nv .hero h1 span em{display:block;font-style:normal}.nv.anim .hero h1 span em{transform:translateY(110%);transition:transform 1.3s var(--ease)}
 .nv .hero h1 span:nth-child(2) em{transition-delay:.12s;color:transparent;-webkit-text-stroke:1.2px rgba(255,255,255,.85)}
 .nv.loaded .hero h1 span em{transform:none}
 .nv .hero-row{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;margin-top:28px}
 .nv .hero p{max-width:440px;color:#b9c2cc;font-size:16px}
-.nv .fade{opacity:0;transform:translateY(18px);transition:1.1s var(--ease)}
+.nv.anim .fade{opacity:0;transform:translateY(18px);transition:1.1s var(--ease)}
 .nv.loaded .fade{opacity:1;transform:none}
 .nv.loaded .d1{transition-delay:.5s}.nv.loaded .d2{transition-delay:.7s}.nv.loaded .d3{transition-delay:.9s}
 .nv .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:54px;padding:0 28px;border-radius:999px;font-weight:600;font-size:14px;letter-spacing:.01em;transition:transform .35s var(--ease),box-shadow .35s,background .3s}
@@ -273,8 +279,7 @@ footer{border-top:1px solid var(--line);padding:72px 0 32px;margin-top:40px}
 .nv .toast{position:fixed;left:50%;top:84px;transform:translate(-50%,-20px);opacity:0;z-index:100;background:#fff;color:#000;padding:12px 18px;border-radius:99px;font-size:13px;font-weight:600;transition:.4s var(--ease);pointer-events:none}
 .nv .toast.show{opacity:1;transform:translate(-50%,0)}
 
-.nv /* reveal */
-.rv{opacity:0;transform:translateY(40px);transition:opacity 1.1s var(--ease),transform 1.1s var(--ease)}
+.nv .nv.anim .rv{opacity:0;transform:translateY(40px);transition:opacity 1.1s var(--ease),transform 1.1s var(--ease)}
 .nv .rv.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){.nv *,.nv *:before,.nv *:after{animation:none!important;transition:none!important}.nv .rv,.nv .fade{opacity:1;transform:none}.nv .hero h1 span em{transform:none}.nv .letterbox{display:none}}
 
@@ -297,7 +302,7 @@ footer{border-top:1px solid var(--line);padding:72px 0 32px;margin-top:40px}
     <div class="hero-row">
       <p class="fade d2">A 3-layer composite shield for windshield, side windows and mirrors. Fitted in 30 seconds. Removed in 5. No scraping, ever again.</p>
       <div class="fade d3" style="display:flex;gap:10px;flex-wrap:wrap">
-        <a href="#shop" class="btn btn-primary">Shop now — from {{ product.price_min | money_without_trailing_zeros }}</a>
+        <a href="#shop" class="btn btn-primary">Shop now — from {% if p %}{{ p.price_min | money_without_trailing_zeros }}{% else %}€49{% endif %}</a>
         <a href="#compare" class="btn btn-ghost">See the difference</a>
       </div>
     </div>
@@ -322,15 +327,15 @@ footer{border-top:1px solid var(--line);padding:72px 0 32px;margin-top:40px}
   <div class="gallery rv">
     <div class="stage" id="stage">
       <span class="tag">New season</span>
-      {%- if product.media.size > 0 -%}
-        {%- for m in product.media limit: 5 -%}<img src="{{ m.preview_image | image_url: width: 1400 }}" alt="{{ m.alt | default: product.title | escape }}" {% if forloop.first %}class="on"{% endif %} loading="lazy">{%- endfor -%}
+      {%- if p and p.media.size > 0 -%}
+        {%- for m in p.media limit: 5 -%}<img src="{{ m.preview_image | image_url: width: 1400 }}" alt="{{ m.alt | default: p.title | escape }}" {% if forloop.first %}class="on"{% endif %} loading="lazy">{%- endfor -%}
       {%- else -%}
-        {%- for f in fallback -%}<img src="{{ f | asset_url }}" alt="{{ product.title | escape }}" {% if forloop.first %}class="on"{% endif %}>{%- endfor -%}
+        {%- for f in fallback -%}<img src="{{ f | asset_url }}" alt="{{ p.title | escape }}" {% if forloop.first %}class="on"{% endif %}>{%- endfor -%}
       {%- endif -%}
     </div>
     <div class="thumbs" id="thumbs">
-      {%- if product.media.size > 0 -%}
-        {%- for m in product.media limit: 5 -%}<button type="button" {% if forloop.first %}class="on"{% endif %}><img src="{{ m.preview_image | image_url: width: 240 }}" alt=""></button>{%- endfor -%}
+      {%- if p and p.media.size > 0 -%}
+        {%- for m in p.media limit: 5 -%}<button type="button" {% if forloop.first %}class="on"{% endif %}><img src="{{ m.preview_image | image_url: width: 240 }}" alt=""></button>{%- endfor -%}
       {%- else -%}
         {%- for f in fallback -%}<button type="button" {% if forloop.first %}class="on"{% endif %}><img src="{{ f | asset_url }}" alt=""></button>{%- endfor -%}
       {%- endif -%}
@@ -338,8 +343,8 @@ footer{border-top:1px solid var(--line);padding:72px 0 32px;margin-top:40px}
   </div>
 
   <div class="info rv">
-    <div class="eyebrow">{{ product.vendor }}</div>
-    <h2>{{ product.title }}</h2>
+    <div class="eyebrow">{{ p.vendor | default: 'Nordveil' }}</div>
+    <h2>{{ p.title | default: 'All-Season Windshield &amp; Mirror Cover' }}</h2>
     <p class="sub">Windshield, both side windows and both mirrors — covered in one piece. Frost, snow, sleet and summer UV stay on the outside.</p>
 
     <div class="price-row">
@@ -447,7 +452,7 @@ footer{border-top:1px solid var(--line);padding:72px 0 32px;margin-top:40px}
     <div class="eyebrow">Limited winter stock</div>
     <h2>Stop scraping. Start driving.</h2>
     <p>Choose your size, fit it tonight, and wake up to clear glass tomorrow.</p>
-    <a href="#shop" class="btn btn-primary">Shop Shield Pro — from {{ product.price_min | money_without_trailing_zeros }}</a>
+    <a href="#shop" class="btn btn-primary">Shop Shield Pro — from {% if p %}{{ p.price_min | money_without_trailing_zeros }}{% else %}€49{% endif %}</a>
   </div>
 </div></section>
 
@@ -464,25 +469,31 @@ footer{border-top:1px solid var(--line);padding:72px 0 32px;margin-top:40px}
 <div class="toast" id="toast"></div>
 </div>
 <script>
+setTimeout(()=>{const r=document.getElementById('nv-{{ section.id }}');if(r&&!r.dataset.ok){r.classList.remove('anim');r.classList.add('loaded')}},3000);
+</script>
+<script>
 (()=>{
 const root=document.getElementById('nv-{{ section.id }}');
 const $=s=>root.querySelector(s);
+root.classList.add('anim');
+setTimeout(()=>root.classList.add('loaded'),2500);
 const money=c=>'€'+(c/100).toFixed(c%100?2:0);
 const ROOT=(window.Shopify&&Shopify.routes&&Shopify.routes.root)||'/';
 const IMG={hatch:"{{ 'car-hatch.webp' | asset_url }}",sedan:"{{ 'car-sedan.webp' | asset_url }}",suv:"{{ 'car-suv.webp' | asset_url }}"};
 const FIT={hatch:'Compact & hatchback cars, windshield up to 135 cm',sedan:'Sedans, saloons & estates, windshield up to 150 cm',suv:'SUVs, crossovers & vans, windshield up to 168 cm'};
 const key=t=>/suv|cross|van/i.test(t)?'suv':/hatch|compact/i.test(t)?'hatch':'sedan';
-const V={{ product.variants | json }}.map(v=>({id:v.id,name:v.title==='Default Title'?'Standard':v.title,price:v.price,compare:v.compare_at_price||0,available:v.available,k:key(v.title)}));
+const PV={% if p %}{{ p.variants | json }}{% else %}[]{% endif %};
+const V=(PV.length?PV:[{id:0,title:'Hatchback',price:4900,compare_at_price:6900,available:true},{id:0,title:'Sedan',price:7900,compare_at_price:10900,available:true},{id:0,title:'SUV',price:11900,compare_at_price:15900,available:true}]).map(v=>({id:v.id,name:v.title==='Default Title'?'Standard':v.title,price:v.price,compare:v.compare_at_price||0,available:v.available,k:key(v.title)}));
 let sel=V.find(v=>v.available)||V[0], qty=1;
 const params=new URLSearchParams(location.search).get('variant');if(params){const f=V.find(v=>String(v.id)===params);if(f)sel=f}
 
 const vEl=$('#variants');
-V.forEach(v=>{const b=document.createElement('button');b.type='button';b.className='variant';b.dataset.id=v.id;
+V.forEach(v=>{const b=document.createElement('button');b.type='button';b.className='variant';b.dataset.id=v.name;
   b.innerHTML=`<div class="car" style="background-image:url(${IMG[v.k]})"></div><b>${v.name}</b><span class="vp">${money(v.price)}</span>${v.available?'':'<small>Sold out</small>'}`;
-  b.onclick=()=>{sel=v;render();history.replaceState(null,'','?variant='+v.id)};vEl.appendChild(b)});
+  b.onclick=()=>{sel=v;render();sel.id&&history.replaceState(null,'','?variant='+v.id)};vEl.appendChild(b)});
 if(V.length<2)vEl.style.gridTemplateColumns='1fr';
 function render(){
-  root.querySelectorAll('.variant').forEach(b=>b.classList.toggle('on',b.dataset.id==sel.id));
+  root.querySelectorAll('.variant').forEach(b=>b.classList.toggle('on',b.dataset.id==sel.name));
   $('#price').textContent=money(sel.price);
   const c=sel.compare>sel.price;
   $('#compare').textContent=c?money(sel.compare):'';$('#save').style.display=c?'':'none';
@@ -497,6 +508,7 @@ $('#minus').onclick=()=>{qty=Math.max(1,qty-1);render()};
 $('#plus').onclick=()=>{qty=Math.min(9,qty+1);render()};
 
 async function add(n,go){
+  if(!sel.id)return toast('Pick your product in the section settings first');
   try{
     const r=await fetch(ROOT+'cart/add.js',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({items:[{id:sel.id,quantity:n}]})});
     if(!r.ok){const e=await r.json().catch(()=>({}));return toast(e.description||'Could not add to cart')}
@@ -551,7 +563,7 @@ const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
   x.beginPath();x.arc(f.x,f.y,f.r,0,7);x.fillStyle=`rgba(235,244,255,${f.o})`;x.fill()}if(!still)requestAnimationFrame(loop)})();
 
 
-render();drawCart();
+render();root.dataset.ok='1';drawCart().catch(()=>{});
 requestAnimationFrame(()=>setTimeout(()=>root.classList.add('loaded'),150));
 })();
 </script>
@@ -560,7 +572,9 @@ requestAnimationFrame(()=>setTimeout(()=>root.classList.add('loaded'),150));
 {
   "name": "Nordveil product page",
   "class": "nv-section",
-  "settings": [],
+  "settings": [
+    { "type": "product", "id": "product", "label": "Product", "info": "Leave empty on the product template. Pick your cover here if you place this section on another page." }
+  ],
   "presets": [{ "name": "Nordveil product page" }]
 }
 {% endschema %}
