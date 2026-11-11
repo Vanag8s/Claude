@@ -4,7 +4,7 @@ NORDVEIL – SHOPIFY CODE (copy & paste)
 STEP 0 – Delete the broken "product.liquid" you created earlier.
 
 STEP 1 – IMAGES
-Code editor > assets > "Add a new asset" > upload all 12 .webp files
+Code editor > assets > "Add a new asset" > upload ALL the .webp files
 from nordveil-images.zip (unzip it first).
 
 STEP 2 – SECTION
