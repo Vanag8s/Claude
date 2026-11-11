@@ -69,6 +69,7 @@
       <ul class="nav__links">
         <li><a href="#how">How it works</a></li>
         <li><a href="#demo">Live demo</a></li>
+        <li><a href="#build">Build yours</a></li>
         <li><a href="#roi">ROI</a></li>
         <li><a href="#pricing">Pricing</a></li>
         <li><a href="#faq">FAQ</a></li>
@@ -78,7 +79,7 @@
     <button class="nav__toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span></button>
   </header>
   <div class="mobile-menu" id="mobileMenu" hidden>
-    <a href="#how">How it works</a><a href="#demo">Live demo</a><a href="#roi">ROI</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
+    <a href="#how">How it works</a><a href="#demo">Live demo</a><a href="#build">Build yours</a><a href="#roi">ROI</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
     <a href="#book" class="btn btn--primary">Book a free audit</a>
   </div>
 
@@ -171,11 +172,22 @@
             <li><button type="button" class="chip" data-ask="Do you service Oakwood?">📍 Service area</button></li>
             <li><button type="button" class="chip" data-ask="I want to book a quote for a bathroom remodel">📅 Book a quote</button></li>
           </ul>
+          <form class="callme reveal" id="callMe" novalidate>
+            <div class="callme__head"><span class="callme__icon" aria-hidden="true">📞</span><div><strong>Rather hear it on the phone?</strong><small>Harbor will call you in about 10 seconds. Free, no sign-up, 3 minutes max.</small></div></div>
+            <div class="callme__row">
+              <label for="callPhone" class="sr-only">Your mobile number</label>
+              <input id="callPhone" name="phone" type="tel" autocomplete="tel" placeholder="Your mobile number" required>
+              <button class="btn btn--primary" type="submit" data-track="demo_call_request">Call me</button>
+            </div>
+            <div class="hp" aria-hidden="true"><label for="callWebsite">Website</label><input id="callWebsite" name="website" tabindex="-1" autocomplete="off"></div>
+            <label class="consent consent--sm"><input type="checkbox" name="consent" id="callConsent" required> Yes, Harbor may call this number once for a demo.</label>
+            <p class="callme__msg" id="callMsg" role="status" aria-live="polite"></p>
+          </form>
         </div>
         <div class="bot reveal" id="bot" role="region" aria-label="Harbor chat demo">
           <div class="bot__head">
             <div class="bot__avatar" aria-hidden="true"></div>
-            <div><strong>Riverside Plumbing</strong><small><span class="dot"></span> Harbor assistant · replies instantly</small></div>
+            <div><strong id="botName">Riverside Plumbing</strong><small><span class="dot"></span> Harbor assistant · replies instantly</small></div>
             <button type="button" class="bot__reset" id="botReset" aria-label="Restart conversation">↺</button>
           </div>
           <div class="bot__log" id="botLog" aria-live="polite"></div>
@@ -185,6 +197,58 @@
             <input id="botInput" name="q" type="text" placeholder="Type, or tap the mic and talk…" maxlength="500" required>
             <button type="submit" class="btn btn--primary" aria-label="Send message">Send</button>
           </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- BUILD YOUR HARBOR -->
+    <section class="section build" id="build" aria-labelledby="build-title">
+      <div class="wrap">
+        <p class="eyebrow reveal">Your Harbor in 30 seconds</p>
+        <h2 id="build-title" class="split">Paste your website.<br><em>Meet your new receptionist.</em></h2>
+        <p class="lead reveal">Harbor reads your site, learns your services, prices and service area, and writes its own phone script. Then you can talk to it as if you were your own customer.</p>
+        <form class="build__form reveal" id="buildForm" novalidate>
+          <label for="buildUrl" class="sr-only">Your business website</label>
+          <input id="buildUrl" name="url" type="text" inputmode="url" autocomplete="url" placeholder="yourbusiness.com" required>
+          <button class="btn btn--primary btn--lg magnetic" type="submit" data-track="build_submit">Build my Harbor</button>
+        </form>
+        <p class="build__msg" id="buildMsg" role="status" aria-live="polite"></p>
+        <div class="build__out" id="buildOut" hidden>
+          <div class="build__steps" aria-hidden="true"><span>✓ Website read</span><span>✓ Services learned</span><span>✓ Script written</span></div>
+          <div class="build__grid">
+            <article class="pcard">
+              <h3 id="pCompany"></h3><p class="pcard__trade" id="pTrade"></p>
+              <p class="pcard__greet">“<span id="pGreeting"></span>”</p>
+              <button type="button" class="btn btn--ghost btn--sm" id="pHear">▶ Hear the greeting</button>
+            </article>
+            <article class="pcard"><h4>Services &amp; prices it will quote</h4><ul id="pServices"></ul></article>
+            <article class="pcard"><h4>Hours &amp; area</h4><p id="pHours"></p><p id="pArea"></p><h4>Questions it's ready for</h4><ul id="pFaq"></ul></article>
+            <article class="pcard pcard--warn" id="pMissingCard"><h4>To finish setup we'd ask you</h4><ul id="pMissing"></ul></article>
+          </div>
+          <div class="build__ctas">
+            <button type="button" class="btn btn--primary btn--lg" id="pChat" data-track="build_chat">💬 Chat with your Harbor</button>
+            <a href="#book" class="btn btn--ghost btn--lg" id="pLive" data-track="build_live">Make it answer my phone →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AFTER THE CALL -->
+    <section class="section after" aria-labelledby="after-title">
+      <div class="wrap after__grid">
+        <div>
+          <p class="eyebrow reveal">After every call</p>
+          <h2 id="after-title" class="split">You get the job,<br><em>not a voicemail.</em></h2>
+          <p class="lead reveal">Seconds after a call ends, Harbor texts you a one-line summary and sends the full write-up wherever you work: email, Google Sheets, your CRM. Urgent calls are flagged so you see them first.</p>
+          <ul class="checks reveal"><li>Caller, problem, outcome and next step</li><li>🚨 URGENT flag for emergencies</li><li>Full transcript of every call</li><li>Callers who hung up get a text back automatically</li></ul>
+        </div>
+        <div class="phone reveal" aria-label="Example of the text message the owner receives">
+          <div class="phone__notch"></div>
+          <div class="phone__time">10:42 PM</div>
+          <div class="sms sms--in"><small>Harbor</small>🚨 URGENT · Maria Lopez (+1 555-0148): burst pipe under kitchen sink, water shut off. <b>Booked</b> Tue 8–10 AM. Next: bring 1/2" PEX fittings.</div>
+          <div class="sms sms--in"><small>Harbor</small>Kevin (+1 555-0193): price for water heater swap. Needs callback. Next: quote 50-gal gas replacement.</div>
+          <div class="sms sms--in"><small>Harbor</small>NEW JOB: Dan Park, drain cleaning, Wed 1–3 PM, 88 Cedar Ave, Lakeview.</div>
+          <div class="sms sms--out">👍 Thanks Harbor</div>
         </div>
       </div>
     </section>
@@ -202,7 +266,9 @@
           <article class="card tilt reveal"><span class="card__icon" aria-hidden="true">🚨</span><h3>Smart emergency routing</h3><p>Flooding, gas smell, no heat in winter? It patches the call to your on-call tech instantly.</p></article>
           <article class="card tilt reveal"><span class="card__icon" aria-hidden="true">⭐</span><h3>Review engine</h3><p>After each job, Harbor asks happy customers for a Google review. More reviews, more calls.</p></article>
           <article class="card tilt reveal"><span class="card__icon" aria-hidden="true">🔁</span><h3>Quote follow-up</h3><p>Chases every unsigned estimate on day 2, 5 and 10. Most shops leave this money on the table.</p></article>
-          <article class="card tilt reveal"><span class="card__icon" aria-hidden="true">📈</span><h3>Revenue dashboard</h3><p>See every call, every booking and every dollar Harbor brought in. Weekly report to your inbox.</p></article>
+          <article class="card tilt reveal"><span class="card__icon" aria-hidden="true">📈</span><h3>Revenue report</h3><p>Every call, booking and dollar Harbor brought in, in a weekly report to your inbox.</p></article>
+          <article class="card tilt reveal"><span class="card__icon" aria-hidden="true">🌎</span><h3>Speaks their language</h3><p>Callers can speak Spanish or other languages. Harbor can detect it and answer in the same language.</p></article>
+          <article class="card tilt reveal"><span class="card__icon" aria-hidden="true">⭐</span><h3>VIP numbers ring you</h3><p>Family, suppliers and your best clients skip the AI and ring straight through to your cell.</p></article>
         </div>
       </div>
     </section>
@@ -241,6 +307,30 @@
       </div>
     </section>
 
+    <!-- COMPARISON -->
+    <section class="section compare" aria-labelledby="compare-title">
+      <div class="wrap">
+        <p class="eyebrow reveal">Why owners switch</p>
+        <h2 id="compare-title" class="split">Voicemail loses the job.<br><em>Harbor books it.</em></h2>
+        <div class="table-wrap reveal" role="region" aria-label="Comparison table" tabindex="0">
+          <table class="ctable">
+            <thead><tr><th scope="col"></th><th scope="col" class="hl">Harbor</th><th scope="col">Voicemail</th><th scope="col">Answering service</th><th scope="col">Message-taking AI</th><th scope="col">Hiring a receptionist</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">Monthly cost</th><td class="hl">from $297</td><td>$0</td><td>$300–$1,000+</td><td>$50–$200</td><td>$3,000+</td></tr>
+              <tr><th scope="row">Answers 24/7, instantly</th><td class="hl">✓</td><td>✗</td><td>✓</td><td>✓</td><td>✗</td></tr>
+              <tr><th scope="row">Books the job into your calendar</th><td class="hl">✓</td><td>✗</td><td>Sometimes</td><td>✗ takes a message</td><td>✓</td></tr>
+              <tr><th scope="row">Knows your prices &amp; services</th><td class="hl">✓</td><td>✗</td><td>Script only</td><td>Partly</td><td>✓</td></tr>
+              <tr><th scope="row">Natural voice, can be interrupted</th><td class="hl">✓</td><td>—</td><td>✓ human</td><td>Varies</td><td>✓</td></tr>
+              <tr><th scope="row">Transfers emergencies live</th><td class="hl">✓</td><td>✗</td><td>✓</td><td>✗</td><td>✓</td></tr>
+              <tr><th scope="row">Texts back callers who hang up</th><td class="hl">✓</td><td>✗</td><td>✗</td><td>✗</td><td>✗</td></tr>
+              <tr><th scope="row">Guarantee</th><td class="hl">10 jobs or refund</td><td>—</td><td>—</td><td>Some: 30-day refund</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="footnote reveal">Typical market ranges; check providers in your area.</p>
+      </div>
+    </section>
+
     <!-- PRICING -->
     <section class="section pricing" id="pricing" aria-labelledby="pricing-title">
       <div class="wrap">
@@ -254,14 +344,14 @@
           <article class="plan reveal">
             <h3>Starter</h3><p class="plan__for">Solo operators</p>
             <p class="plan__price"><b data-m="297" data-a="247">$297</b>/mo</p>
-            <ul><li>Web chat + missed-call text-back</li><li>Up to 300 conversations/mo</li><li>Calendar booking</li><li>Weekly report</li></ul>
+            <ul><li>Web chat + missed-call text-back</li><li>Up to 300 conversations/mo</li><li>Calendar booking</li><li>Call summaries by email</li><li>Weekly report</li></ul>
             <a href="#book" class="btn btn--ghost" data-plan="starter" data-track="plan_starter">Start with Starter</a>
           </article>
           <article class="plan plan--hot reveal">
             <span class="plan__tag">Most popular</span>
             <h3>Growth</h3><p class="plan__for">2–10 trucks</p>
             <p class="plan__price"><b data-m="597" data-a="497">$597</b>/mo</p>
-            <ul><li>Everything in Starter</li><li>24/7 AI voice answering</li><li>Emergency call routing</li><li>Quote follow-up + review engine</li><li>Unlimited conversations</li></ul>
+            <ul><li>Everything in Starter</li><li>24/7 human-sounding AI phone answering</li><li>Emergency call transfer</li><li>Text summary after every call</li><li>Spanish &amp; other languages</li><li>Quote follow-up + review engine</li></ul>
             <a href="#book" class="btn btn--primary magnetic" data-plan="growth" data-track="plan_growth">Get Growth</a>
           </article>
           <article class="plan reveal">
@@ -281,6 +371,22 @@
       </div>
     </section>
 
+    <!-- TRUST -->
+    <section class="section trust" aria-labelledby="trust-title">
+      <div class="wrap">
+        <p class="eyebrow reveal">Built to be trusted</p>
+        <h2 id="trust-title" class="split">Your customers, your data,<br><em>your rules.</em></h2>
+        <div class="grid grid--3">
+          <article class="card reveal"><span class="card__icon" aria-hidden="true">🗣️</span><h3>Always honest</h3><p>Harbor says it's a virtual assistant in its first sentence. No tricks: it's the law in many places, and it builds trust.</p></article>
+          <article class="card reveal"><span class="card__icon" aria-hidden="true">🔒</span><h3>Private by default</h3><p>Encrypted in transit and at rest. Your call data is never sold and never used to train public AI models.</p></article>
+          <article class="card reveal"><span class="card__icon" aria-hidden="true">🧭</span><h3>You set the guardrails</h3><p>It only quotes prices you approve, only offers windows you choose, and hands off to you whenever it's unsure.</p></article>
+          <article class="card reveal"><span class="card__icon" aria-hidden="true">📄</span><h3>Every word on record</h3><p>A full transcript and summary of every call, so you can check exactly what was said.</p></article>
+          <article class="card reveal"><span class="card__icon" aria-hidden="true">🇪🇺</span><h3>GDPR &amp; CCPA ready</h3><p>Data-processing agreement available, delete-on-request, and clear retention limits. See our <a href="/legal/privacy.html">Privacy Policy</a>.</p></article>
+          <article class="card reveal"><span class="card__icon" aria-hidden="true">🤝</span><h3>No lock-in</h3><p>No contracts, keep your number, cancel any time. Prices are on this page, not hidden behind sign-up.</p></article>
+        </div>
+      </div>
+    </section>
+
     <!-- FAQ -->
     <section class="section faq" id="faq" aria-labelledby="faq-title">
       <div class="wrap wrap--narrow">
@@ -293,6 +399,9 @@
           <details class="reveal"><summary>Do I need to change my phone number?</summary><p>No. Keep your number and forward overflow or after-hours calls to Harbor. Takes two minutes with any carrier.</p></details>
           <details class="reveal"><summary>What software does it work with?</summary><p>Google Calendar, Outlook, Jobber, Housecall Pro, ServiceTitan, and most CRMs via Zapier. If you use pen and paper, Harbor texts you every booking.</p></details>
           <details class="reveal"><summary>What if it doesn't work for my business?</summary><p>The 10 Jobs Guarantee: if Harbor doesn't book at least 10 extra jobs in 60 days, you get a full refund and we keep working free until it does. No contracts, cancel any time.</p></details>
+          <details class="reveal"><summary>Does it sound like a robot?</summary><p>No. Harbor uses a natural, human-sounding voice, starts answering almost instantly, and stops the moment the caller talks over it, just like a person. Hear it yourself: enter your number in the demo above and it'll call you.</p></details>
+          <details class="reveal"><summary>Can it speak Spanish or other languages?</summary><p>Yes. Harbor can detect the caller's language and answer in it. Tell us which languages your customers speak during setup.</p></details>
+          <details class="reveal"><summary>Can I stop some people from reaching the AI?</summary><p>Yes. Add family, suppliers or VIP clients to your list and their calls ring straight through to your phone.</p></details>
           <details class="reveal"><summary>What happens to my customers' data?</summary><p>Encrypted in transit and at rest, never sold, never used to train public AI models. See our <a href="/legal/privacy.html">Privacy Policy</a>.</p></details>
         </div>
       </div>
@@ -360,6 +469,7 @@
         <p>The AI front desk for home-service businesses.</p>
       </div>
       <nav aria-label="Footer">
+        <a href="/plumbers.html">For plumbers</a><a href="/hvac.html">For HVAC</a><a href="/roofers.html">For roofers</a><a href="/electricians.html">For electricians</a>
         <a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
         <a href="/legal/privacy.html">Privacy Policy</a><a href="/legal/terms.html">Terms of Service</a><a href="/legal/cookies.html">Cookie Policy</a>
         <button type="button" class="linkish" id="cookieSettings">Cookie settings</button>
@@ -384,5 +494,6 @@
   <script src="/js/analytics.js" defer></script>
   <script src="/js/main.js" defer></script>
   <script src="/js/bot.js" defer></script>
+  <script src="/js/growth.js" defer></script>
 </body>
 </html>

@@ -1,9 +1,9 @@
 // Harbor Live Voice: real-time, interruptible phone receptionist.
 //
 // Twilio ConversationRelay handles the audio (speech-to-text, ElevenLabs text-to-speech, barge-in,
-// turn detection) and talks to this server over a WebSocket in plain text. We stream Claude's reply
-// back token by token, so the caller hears it start almost immediately, and we stop instantly when
-// the caller talks over it.
+// turn detection, language detection) and talks to this server over a WebSocket in plain text.
+// We stream Claude's reply back token by token, so the caller hears it start almost immediately,
+// and we stop instantly when the caller talks over it.
 //
 // Runs as a normal always-on Node service (Fly.io / Render / Railway). Vercel can't hold WebSockets.
 
@@ -13,60 +13,19 @@ import Anthropic from "@anthropic-ai/sdk";
 import twilio from "twilio";
 import { business, SYSTEM, LIVE_VOICE_STYLE, TOOLS } from "../api/_lib/receptionist.js";
 import { makeBooker } from "../api/_lib/booking.js";
-import { sendSms, ownerPhone } from "../api/_lib/twilio.js";
+import { sendSms, postWebhook, ownerPhone } from "../api/_lib/twilio.js";
+import { relayTwiml, handoffTwiml, greetingFor, vipTwiml, isVip } from "../api/_lib/relay-twiml.js";
+import { summarizeCall } from "../api/_lib/summary.js";
+
+export { relayTwiml, handoffTwiml, greetingFor };
 
 const PORT = Number(process.env.PORT || 8080);
-const LIVE_SYSTEM = SYSTEM + "\n" + LIVE_VOICE_STYLE;
+const LIVE_SYSTEM = SYSTEM + "\n" + LIVE_VOICE_STYLE + `
+- Reply in the language the caller is speaking. Each caller message may start with a (caller language: xx) tag; use it.`;
+const DEMO_NOTE = `
+This call is a DEMO requested from Harbor's website by a business owner trying the product. Play the receptionist for ${business.company} convincingly. Bookings are simulated (the tool still works). If they ask about Harbor itself, say it's an AI front desk for home-service businesses, live in seven days, and they can book a free audit on the website.`;
 // Eager input streaming on each client tool (streamed tool inputs); we validate inputs ourselves below.
 const LIVE_TOOLS = TOOLS.map(t => ({ ...t, eager_input_streaming: true }));
-
-export const greetingFor = () =>
-  `Hi, thanks for calling ${business.company}! This is Harbor, the virtual assistant. How can I help?`;
-
-/** TwiML that connects a call to this server. Served at POST /twiml, or by api/voice/incoming.js when VOICE_RELAY_URL is set. */
-export function relayTwiml(wsUrl, actionUrl) {
-  const vr = new twilio.twiml.VoiceResponse();
-  const connect = vr.connect(actionUrl ? { action: actionUrl, method: "POST" } : {});
-  connect.conversationRelay({
-    url: wsUrl,
-    welcomeGreeting: greetingFor(),
-    welcomeGreetingInterruptible: "any",
-    interruptible: "any",              // caller can talk over Harbor at any time
-    interruptSensitivity: "medium",
-    ignorebackchannel: "true",          // "yeah", "uh-huh" don't cut Harbor off
-    turnDetection: true,                // smarter "are they done talking?" than plain silence
-    echoPromptFiltering: true,          // don't transcribe Harbor's own voice
-    preemptible: true,
-    ttsProvider: business.live_voice?.tts_provider || "ElevenLabs",
-    ...(business.live_voice?.voice ? { voice: business.live_voice.voice } : {}),
-    elevenlabsTextNormalization: "on",
-    transcriptionProvider: business.live_voice?.stt_provider || "Deepgram",
-    speechModel: business.live_voice?.speech_model || "nova-3-general",
-    asrSmartFormat: true,
-    backgroundnoisereduction: "true",
-    hints: [business.company, ...business.service_area, ...Object.keys(business.prices)].join(","),
-    language: "en-US",
-    dtmfDetection: true,
-  });
-  return vr.toString();
-}
-
-/** <Connect action> target: runs after the live session ends (transfer to a human, or hang up). */
-export function handoffTwiml(params) {
-  const vr = new twilio.twiml.VoiceResponse();
-  let data = {};
-  try { data = JSON.parse(params.HandoffData || "{}"); } catch {}
-  if (data.handoff === "transfer" && ownerPhone) {
-    const dial = vr.dial({ callerId: params.To, timeout: 25 });
-    dial.number(ownerPhone);
-    vr.say({ voice: business.voice }, "Sorry, nobody picked up. The technician will call you back within ten minutes.");
-    sendSms(params.To, ownerPhone, `Missed transfer from ${params.From}: ${data.reason || "caller asked for a person"}. Call back ASAP.`).catch(() => {});
-  } else if (data.handoff === "transfer") {
-    vr.say({ voice: business.voice }, "I'll have the technician call you right back. Thanks for calling!");
-  }
-  vr.hangup();
-  return vr.toString();
-}
 
 // ---------- Tool input validation (inputs stream unvalidated with eager_input_streaming) ----------
 function validInput(tool, input) {
@@ -78,15 +37,19 @@ function validInput(tool, input) {
 
 // ---------- One live call ----------
 export class CallSession {
-  constructor(ws, { client = new Anthropic(), log = () => {} } = {}) {
+  constructor(ws, { client = new Anthropic(), log = () => {}, summarize = summarizeCall } = {}) {
     this.ws = ws;
     this.client = client;
     this.log = log;
+    this.summarize = summarize;
     this.history = [];          // text-only turns, append-only (keeps the prompt cache warm)
     this.current = null;        // { ctrl, spoken } for the reply being streamed
     this.interruptedNote = null;
     this.booked = false;
+    this.transferred = false;
     this.ended = false;
+    this.demo = false;
+    this.lang = null;
     this.call = {};
   }
 
@@ -98,12 +61,16 @@ export class CallSession {
     switch (m.type) {
       case "setup":
         this.call = { sid: m.callSid, from: m.from, to: m.to };
-        this.history.push({ role: "user", content: "(call connected)" }, { role: "assistant", content: greetingFor() });
-        this.log("call started", m.callSid);
+        this.demo = m.customParameters?.mode === "demo";
+        // For an outbound demo call, the visitor is the "to" number.
+        if (this.demo) this.call = { sid: m.callSid, from: m.to, to: m.from };
+        this.history.push({ role: "user", content: "(call connected)" }, { role: "assistant", content: greetingFor({ demo: this.demo }) });
+        this.log("call started", m.callSid, this.demo ? "(demo)" : "");
         break;
       case "prompt": {
         const text = (m.voicePrompt ?? m.prompt ?? "").trim();
         if (m.last === false || !text) break; // partial transcript
+        if (m.lang) this.lang = m.lang;
         await this.reply(text);
         break;
       }
@@ -137,8 +104,9 @@ export class CallSession {
 
     const note = this.interruptedNote !== null
       ? `(You were interrupted. The caller only heard: "${this.interruptedNote}")\n` : "";
+    const langTag = this.lang ? `(caller language: ${this.lang}) ` : "";
     this.interruptedNote = null;
-    this.history.push({ role: "user", content: note + userText });
+    this.history.push({ role: "user", content: note + langTag + userText });
 
     const ctrl = new AbortController();
     const cur = (this.current = { ctrl, spoken: "" });
@@ -160,7 +128,7 @@ export class CallSession {
             betas: ["server-side-fallback-2026-07-01"],
             fallbacks: "default",
             output_config: { effort: "low" },
-            system: [{ type: "text", text: LIVE_SYSTEM, cache_control: { type: "ephemeral" } }],
+            system: [{ type: "text", text: LIVE_SYSTEM + (this.demo ? DEMO_NOTE : ""), cache_control: { type: "ephemeral" } }],
             tools: LIVE_TOOLS,
             messages,
           },
@@ -192,10 +160,13 @@ export class CallSession {
           }
           let content = "ok";
           if (c.name === "book_job") {
-            try { content = await makeBooker({ from: this.call.from, to: this.call.to, callSid: this.call.sid })(c.input); this.booked = true; }
-            catch { content = "Booking system unavailable. Tell the caller the office will text to confirm the time."; }
+            try {
+              content = this.demo ? await this.demoBooking(c.input) : await makeBooker({ from: this.call.from, to: this.call.to, callSid: this.call.sid })(c.input);
+              this.booked = true;
+            } catch { content = "Booking system unavailable. Tell the caller the office will text to confirm the time."; }
           } else if (c.name === "transfer_to_human") {
-            action = { handoff: "transfer", reason: c.input.reason }; content = "Transfer starts right after you finish speaking. Say you're connecting them now.";
+            action = { handoff: "transfer", reason: c.input.reason }; this.transferred = true;
+            content = this.demo ? "Demo call: say that on a real call you'd connect them to the technician now." : "Transfer starts right after you finish speaking. Say you're connecting them now.";
           } else if (c.name === "end_call") {
             action = { handoff: "hangup" }; content = "Call ends after your goodbye.";
           }
@@ -222,26 +193,36 @@ export class CallSession {
     }
   }
 
+  /** Demo bookings don't touch a client's calendar: the visitor gets the confirmation text their customers would get. */
+  async demoBooking(b) {
+    await sendSms(this.call.to, this.call.from, `[Harbor demo] This is the text your customers get: "${business.company}: you're booked for ${b.problem} on ${b.day}, ${b.window}." Want this for your business? Reply YES.`);
+    return `Demo booking confirmed for ${b.day}, ${b.window}. A sample confirmation text was sent.`;
+  }
+
   end(action) {
     if (this.ended) return;
     this.ended = true;
-    this.send({ type: "end", handoffData: JSON.stringify({ ...action, booked: this.booked }) });
+    this.send({ type: "end", handoffData: JSON.stringify({ ...action, booked: this.booked, demo: this.demo }) });
   }
 
   async onClose() {
     this.current?.ctrl.abort();
-    if (this.booked || !this.call.from) return;
-    // Missed-call text-back for live calls that ended without a booking.
-    const said = this.history.filter(h => h.role === "user" && !h.content.startsWith("(")).map(h => h.content.replace(/^\(You were interrupted[^\n]*\n/, "")).join(" / ").slice(0, 300);
-    await Promise.allSettled([
-      sendSms(this.call.to, this.call.from, `Hi, it's ${business.company}! Sorry we didn't get you booked on the call. Reply here with what you need and a good time, and we'll lock it in.`),
-      sendSms(this.call.to, ownerPhone, `Unbooked call from ${this.call.from}${said ? `: "${said}"` : " (hung up early)"}. Harbor texted them back.`),
-    ]);
+    if (!this.call.from) return;
+    const meta = { from: this.call.from, to: this.call.to, callSid: this.call.sid, booked: this.booked, demo: this.demo };
+    const jobs = [this.summarize(this.history, meta).catch(e => this.log("summary failed", e?.message))];
+    if (this.demo) {
+      // Someone who tried the demo is a hot lead for Harbor itself.
+      jobs.push(postWebhook({ type: "demo_lead", phone: this.call.from, booked_in_demo: this.booked, at: new Date().toISOString() }).catch(() => {}));
+    } else if (!this.booked && !this.transferred) {
+      // Missed-call text-back for live calls that ended without a booking.
+      jobs.push(sendSms(this.call.to, this.call.from, `Hi, it's ${business.company}! Sorry we didn't get you booked on the call. Reply here with what you need and a good time, and we'll lock it in.`).catch(() => {}));
+    }
+    await Promise.allSettled(jobs);
   }
 }
 
 // ---------- HTTP + WebSocket server ----------
-export function createServer({ client, log = console.log, skipSignature = process.env.VOICE_SKIP_SIGNATURE === "1" } = {}) {
+export function createServer({ client, summarize, log = console.log, skipSignature = process.env.VOICE_SKIP_SIGNATURE === "1" } = {}) {
   const base = () => (process.env.PUBLIC_BASE_URL || "").replace(/\/$/, "");
   const token = process.env.TWILIO_AUTH_TOKEN;
 
@@ -257,8 +238,9 @@ export function createServer({ client, log = console.log, skipSignature = proces
           res.writeHead(403); return res.end("Forbidden");
         }
         res.writeHead(200, { "Content-Type": "text/xml" });
-        if (req.url.startsWith("/twiml")) return res.end(relayTwiml(host.replace(/^http/, "ws") + "/relay", host + "/handoff"));
-        res.end(handoffTwiml(params));
+        if (req.url.startsWith("/handoff")) return res.end(handoffTwiml(params));
+        if (isVip(params.From)) return res.end(vipTwiml(params.To));
+        res.end(relayTwiml(host.replace(/^http/, "ws") + "/relay", host + "/handoff"));
       });
       return;
     }
@@ -276,7 +258,7 @@ export function createServer({ client, log = console.log, skipSignature = proces
       }
     }
     wss.handleUpgrade(req, socket, head, ws => {
-      const session = new CallSession(ws, { client, log });
+      const session = new CallSession(ws, { client, log, ...(summarize ? { summarize } : {}) });
       ws.on("message", d => session.onMessage(d.toString()).catch(e => log("message error", e?.message)));
       ws.on("close", () => session.onClose().catch(() => {}));
     });

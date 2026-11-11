@@ -46,6 +46,28 @@ Caller ──► Twilio number ──POST──► voice-server /twiml  (returns
 4. **Forwarding:** the client forwards overflow or after-hours calls (or all calls) to the Twilio number.
 5. **Test call checklist:** ask for a price, interrupt it mid-sentence, say "uh-huh" while it talks (it should keep going), book a fake job, check the confirmation text and owner alert, then say "I need a real person" to test the transfer.
 
+## Website "Harbor calls you" demo
+Visitors enter their number and Harbor calls them within seconds, in demo mode. On demo calls bookings are simulated: the visitor gets the sample confirmation text their customers would get, and they're saved as a hot lead (`demo_lead` on your webhook).
+Add these to **Vercel**:
+
+| Variable | Value |
+|---|---|
+| `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN` | same as above |
+| `DEMO_FROM_NUMBER` | a Twilio number to call from (a separate "demo" number is best) |
+| `LIVE_VOICE_URL` | your live server, e.g. `https://harbor-live-voice.fly.dev` |
+| `DEMO_ALLOWED_PREFIXES` | countries the demo may call, e.g. `+1` or `+1,+44` (default `+1`) |
+
+Built-in protections: a consent checkbox, a honeypot, 3 demo calls per hour per visitor, 2 per day per number, a 3-minute limit, and voicemail detection.
+
+## After-call summaries
+When a live call ends, Claude writes a short note (caller, problem, outcome, next step, and an URGENT flag). The owner gets it by text (`OWNER_PHONE`), and the full summary and transcript go to `BOOKING_WEBHOOK_URL`/`LEAD_WEBHOOK_URL` as `type: "call_summary"`. Point that webhook at email or a Google Sheet to get a call log.
+
+## Languages
+In `config/business.json`, set `live_voice.multilingual` to `true` and Harbor detects the caller's language and answers in it. This needs Deepgram and ElevenLabs, which are the defaults. To use one fixed language, set `live_voice.language`, e.g. `es-US`. Check that Twilio's speech providers support any language you need before you sell it.
+
+## VIP numbers
+Add numbers to `vip_numbers` in `config/business.json`. Calls from those numbers skip the AI and ring `OWNER_PHONE` directly.
+
 ## Tuning the feel
 These are settings in `voice-server/server.js`, inside `relayTwiml()`:
 - `interruptSensitivity`: `low` / `medium` / `high`. Raise it if callers say it talks over them. Lower it for noisy job sites.

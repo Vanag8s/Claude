@@ -2,7 +2,15 @@
   "company": "Riverside Plumbing",
   "trade": "plumbing",
   "timezone": "America/Chicago",
-  "service_area": ["Riverside", "Oakwood", "Maple Heights", "Cedar Park", "Lakeview", "Downtown", "North Hills"],
+  "service_area": [
+    "Riverside",
+    "Oakwood",
+    "Maple Heights",
+    "Cedar Park",
+    "Lakeview",
+    "Downtown",
+    "North Hills"
+  ],
   "hours": "Office Monday to Saturday 7 AM to 7 PM. Emergencies 24/7.",
   "prices": {
     "Drain cleaning": "$149 to $249",
@@ -15,7 +23,12 @@
   },
   "fees": "Diagnostic visit $89, waived if the repair goes ahead. After-hours emergency call-out $189.",
   "policies": "1-year parts and labor warranty. 0% financing for 12 months on jobs over $1,000, subject to approval. Licensed and insured.",
-  "booking_windows": ["8 AM to 10 AM", "10 AM to 12 PM", "1 PM to 3 PM", "3 PM to 5 PM"],
+  "booking_windows": [
+    "8 AM to 10 AM",
+    "10 AM to 12 PM",
+    "1 PM to 3 PM",
+    "3 PM to 5 PM"
+  ],
   "emergency_keywords": "flooding, burst pipe, sewage backup, no water, gas smell",
   "voice": "Polly.Joanna-Neural",
   "live_voice": {
@@ -23,6 +36,10 @@
     "voice": "",
     "stt_provider": "Deepgram",
     "speech_model": "nova-3-general",
-    "_note": "voice: leave empty for Twilio's default ElevenLabs voice, or paste an ElevenLabs voice ID (optionally with model and speed settings, per Twilio's ConversationRelay voice docs)."
-  }
+    "_note": "voice: empty = Twilio's default ElevenLabs voice, or paste an ElevenLabs voice ID. multilingual: true = Harbor detects and replies in the caller's language (Deepgram + ElevenLabs required). language: fixed language when multilingual is false, e.g. en-US, es-US.",
+    "multilingual": false,
+    "language": "en-US"
+  },
+  "vip_numbers": [],
+  "_vip_note": "Numbers that skip the AI and ring OWNER_PHONE directly (family, suppliers, key clients), in +1555... format."
 }

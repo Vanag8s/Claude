@@ -98,6 +98,41 @@ try {
   ok('No JS errors in voice mode', verr.length === 0); if (verr.length) console.log(verr);
   await vctx.close();
 
+  // Growth features with mocked APIs (as when deployed)
+  const gctx = await b.newContext({ viewport: { width: 1440, height: 900 } });
+  const gp = await gctx.newPage(); const gerr = []; gp.on('pageerror', e => gerr.push(e.message));
+  const profile = { company: 'Ace Plumbing', trade: 'plumbing', services: [{ name: 'Drain cleaning', price: '$99' }, { name: 'Water heater install', price: 'from $1,200' }], hours: 'Mon–Fri 8–6', service_area: ['Austin', 'Round Rock'], phone: '', emergency_service: true, greeting: 'Thanks for calling Ace Plumbing, this is Harbor, the virtual assistant. How can I help?', faq: [{ q: 'Do you do emergencies?', a: 'Yes' }], missing: ['Weekend hours'] };
+  let chatBody = null, callBody = null;
+  await gp.route('**/api/demo-call', r => { callBody = JSON.parse(r.request().postData()); r.fulfill({ json: { ok: true, sid: 'CA1' } }); });
+  await gp.route('**/api/onboard', r => r.fulfill({ json: { ok: true, profile } }));
+  await gp.route('**/api/chat', r => { chatBody = JSON.parse(r.request().postData()); r.fulfill({ json: { reply: 'Drain cleaning at Ace is $99. Want me to book it?' } }); });
+  await gp.goto(base + '/', { waitUntil: 'networkidle' });
+  await gp.evaluate(() => localStorage.setItem('harbor_consent', 'reject'));
+  await gp.locator('#callMe').scrollIntoViewIfNeeded();
+  await gp.fill('#callPhone', '555 010 1234'); await gp.click('#callMe button[type=submit]');
+  ok('Call-me requires consent', (await gp.textContent('#callMsg')).includes('tick the box') && callBody === null);
+  await gp.check('#callConsent'); await gp.click('#callMe button[type=submit]'); await gp.waitForTimeout(400);
+  ok('Call-me places the demo call', callBody?.phone === '555 010 1234' && (await gp.textContent('#callMsg')).includes('Calling you now'));
+  await gp.locator('#build').scrollIntoViewIfNeeded();
+  await gp.fill('#buildUrl', 'aceplumbing.com'); await gp.click('#buildForm button[type=submit]'); await gp.waitForTimeout(900);
+  ok('Build-your-Harbor shows the profile', await gp.isVisible('#buildOut') && (await gp.textContent('#pCompany')) === 'Ace Plumbing' && (await gp.textContent('#pServices')).includes('$99'));
+  ok('Shows what\'s missing to finish setup', (await gp.textContent('#pMissing')).includes('Weekend hours'));
+  if (shots) await gp.locator('#build').screenshot({ path: `${shots}/build.png` });
+  await gp.click('#pChat'); await gp.waitForTimeout(1600);
+  ok('Chat switches to the visitor\'s business', (await gp.textContent('#botName')) === 'Ace Plumbing' && (await gp.locator('.msg--ai').last().textContent()).includes('Ace Plumbing'));
+  await gp.fill('#botInput', 'how much is drain cleaning'); await gp.press('#botInput', 'Enter'); await gp.waitForTimeout(800);
+  ok('Their Harbor answers from their own facts', chatBody?.profile?.company === 'Ace Plumbing' && (await gp.locator('.msg--ai').last().textContent()).includes('$99'));
+  ok('Audit form pre-filled with their company', (await gp.inputValue('#company')) === 'Ace Plumbing');
+  ok('No JS errors in growth features', gerr.length === 0); if (gerr.length) console.log(gerr);
+  if (shots) { await gp.locator('.after').scrollIntoViewIfNeeded(); await gp.waitForTimeout(2200); await gp.locator('.after').screenshot({ path: `${shots}/after.png` }); }
+  await gctx.close();
+
+  // Industry page
+  const ip = await (await b.newContext()).newPage(); const ierr = []; ip.on('pageerror', e => ierr.push(e.message));
+  await ip.goto(base + '/plumbers.html', { waitUntil: 'networkidle' });
+  ok('Industry page has unique title + canonical + FAQ schema', (await ip.title()).includes('Plumbers') && (await ip.getAttribute('link[rel=canonical]', 'href')).endsWith('/plumbers.html') && (await ip.locator('script[type="application/ld+json"]').count()) === 1);
+  ok('Industry page has no JS errors', ierr.length === 0);
+
   // Mobile
   const m = await b.newContext({ ...devices['iPhone 13'] }); const mp = await m.newPage();
   await mp.goto(base + '/', { waitUntil: 'networkidle' }); await mp.waitForTimeout(2600);
@@ -105,7 +140,7 @@ try {
   ok('No horizontal scroll on mobile', overflow <= 1);
   await mp.click('.nav__toggle'); ok('Mobile menu opens', await mp.isVisible('#mobileMenu')); await mp.click('.nav__toggle');
   if (shots) await mp.screenshot({ path: `${shots}/mobile.png` });
-  for (const path of ['/legal/privacy.html', '/legal/terms.html', '/legal/cookies.html', '/robots.txt', '/sitemap.xml', '/site.webmanifest', '/assets/og-image.png']) {
+  for (const path of ['/plumbers.html', '/hvac.html', '/roofers.html', '/electricians.html', '/llms.txt', '/legal/privacy.html', '/legal/terms.html', '/legal/cookies.html', '/robots.txt', '/sitemap.xml', '/site.webmanifest', '/assets/og-image.png']) {
     const r = await mp.goto(base + path); ok(`Serves ${path}`, r.status() === 200);
   }
 } finally { await b.close(); srv.close(); }

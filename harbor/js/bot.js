@@ -106,8 +106,9 @@
     }
     if (state.flow === 'address') {
       b.address = text.trim(); state.flow = null;
-      const inArea = KB.areas.some(a => text.toLowerCase().includes(a));
-      await say(`✅ You're booked!\n\n${b.reason}\n📅 ${b.slot}\n👤 ${b.name} · ${b.phone}\n📍 ${b.address}\n\nYou'll get a text confirmation now and a reminder the evening before. ${KB.fee}${inArea ? '' : "\n\n(I'll have the office double-check that address is inside our service area.)"}`, m => m.classList.add('msg--card'));
+      const inArea = state.profile ? true : KB.areas.some(a => text.toLowerCase().includes(a));
+      const fee = state.profile ? '' : KB.fee;
+      await say(`✅ You're booked!\n\n${b.reason}\n📅 ${b.slot}\n👤 ${b.name} · ${b.phone}\n📍 ${b.address}\n\nYou'll get a text confirmation now and a reminder the evening before. ${fee}${inArea ? '' : "\n\n(I'll have the office double-check that address is inside our service area.)"}`, m => m.classList.add('msg--card'));
       await say("👆 That's the moment a missed call becomes a paid job. Want Harbor doing this for your business?");
       quick(['Yes — book my free audit', 'Ask another question']);
       window.hTrack?.('demo_booking_complete');
@@ -159,7 +160,7 @@
       const ctrl = new AbortController(); const to = setTimeout(() => ctrl.abort(), 12000);
       const r = await fetch('/api/chat', {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: ctrl.signal,
-        body: JSON.stringify({ messages: state.history.slice(-16) })
+        body: JSON.stringify({ messages: state.history.slice(-16), ...(state.profile ? { profile: state.profile } : {}) })
       });
       clearTimeout(to);
       if (!r.ok) throw new Error(r.status);
@@ -175,6 +176,17 @@
     window.hTrack?.('demo_message');
 
     if (state.flow) return bookingStep(q);
+
+    // Visitor's own business (built from their website): everything goes to Claude.
+    if (state.profile) {
+      if (/^(yes,? )?book|book (a|it|me)|appointment|schedule/i.test(q)) return startBooking(null);
+      const t = typing();
+      const api = await viaApi(q);
+      t.remove();
+      if (api?.reply) { add(api.reply); if (api.action === 'book') return startBooking(api.reason); return; }
+      state.api = null; // allow retry next message
+      return say("I'm having trouble reaching my brain right now 😅 Try again in a moment, or book a free audit below.");
+    }
 
     const r = local(q);
     if (r.startBooking === null && state.pendingBook) { r.startBooking = state.pendingBook; }
@@ -203,7 +215,19 @@
     if (r.quick) quick(r.quick);
   }
 
+  window.harborBot = {
+    useProfile(p) {
+      state.profile = p; state.api = null;
+      document.getElementById('botName').textContent = p.company || 'Your business';
+      log.innerHTML = ''; state.history = []; state.flow = null;
+      say(p.greeting || `Hi! I'm Harbor, ${p.company}'s virtual assistant. How can I help?`);
+      document.getElementById('bot').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      input.focus({ preventScroll: true });
+    }
+  };
+
   const greet = () => {
+    if (state.profile) return window.harborBot.useProfile(state.profile);
     log.innerHTML = ''; state.history = []; state.flow = null;
     say(`Hi! 👋 I'm Harbor, ${KB.company}'s virtual assistant. I can quote prices, handle emergencies, or book a technician in about 30 seconds. What's going on?`);
   };

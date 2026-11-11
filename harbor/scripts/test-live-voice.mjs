@@ -32,7 +32,8 @@ function fakeStream(params, { signal }) {
 }
 const client = { beta: { messages: { stream: fakeStream } } };
 
-const server = createServer({ client, log: (...a) => logs.push(a.join(" ")), skipSignature: true }).listen(0);
+const summaries = []; const summarize = async (h, meta) => { summaries.push({ h, meta }); };
+const server = createServer({ client, summarize, log: (...a) => logs.push(a.join(" ")), skipSignature: true }).listen(0);
 const port = server.address().port;
 const open = () => new Promise(res => {
   const ws = new WebSocket(`ws://localhost:${port}/relay`); const got = [];
@@ -111,7 +112,8 @@ try {
   script = [{ text: "Sure, what area are you in?", stop: "end_turn" }];
   say(ws, "How much is a drain cleaning"); await sleep(200);
   ws.close(); await sleep(150);
-  ok("Missed-call text-back when caller hangs up unbooked", logs.filter(l => l.includes("[sms:dry-run]")).length === 2);
+  ok("Missed-call text-back when caller hangs up unbooked", logs.filter(l => l.includes("[sms:dry-run]") && l.includes("didn't get you booked")).length === 1);
+  ok("After-call summary runs with the transcript", summaries.at(-1)?.meta.booked === false && summaries.at(-1).h.some(x => x.content.includes("drain cleaning")));
 
   // 8) Model failure -> graceful line
   ({ ws, got } = await open());
@@ -121,9 +123,33 @@ try {
   ok("Graceful fallback line if the AI fails", spoken(got).includes("trouble on my end") && got.at(-1).last === true);
   client.beta.messages.stream = orig; ws.close();
 
+  // 8b) Caller language is passed to Claude
+  ({ ws, got } = await open());
+  script = [{ text: "¡Claro! ¿En qué zona está?", stop: "end_turn" }];
+  ws.send(JSON.stringify({ type: "prompt", voicePrompt: "Hola, necesito un plomero", lang: "es", last: true })); await sleep(150);
+  ok("Passes the caller's detected language to Claude", seen.at(-1).messages.at(-1).content.startsWith("(caller language: es)") && seen.at(-1).system[0].text.includes("Reply in the language"));
+  ws.close();
+
+  // 8c) Website demo call: simulated booking, lead captured, no client texts
+  logs.length = 0;
+  const dws = new WebSocket(`ws://localhost:${port}/relay`); const dgot = [];
+  dws.on("message", d => dgot.push(JSON.parse(d)));
+  await new Promise(r => dws.on("open", r));
+  dws.send(JSON.stringify({ type: "setup", callSid: "CADEMO", from: "+15550199", to: "+15550177", customParameters: { mode: "demo" } }));
+  script = [{ text: "Okay, booking that. ", stop: "tool_use", tool: "book_job", input: booking }, { text: "Done!", stop: "end_turn" }];
+  say(dws, "book me for tomorrow"); await sleep(300);
+  ok("Demo call uses the demo prompt", seen.at(-1).system[0].text.includes("DEMO requested from Harbor's website"));
+  ok("Demo booking texts the visitor a sample confirmation", logs.some(l => l.includes("-> +15550177") && l.includes("[Harbor demo]")) && !logs.some(l => l.includes("[webhook:dry-run]") && l.includes('"type":"booking"')));
+  dws.close(); await sleep(150);
+  ok("Demo caller is captured as a Harbor lead", logs.some(l => l.includes('"type":"demo_lead"') && l.includes("+15550177")));
+
   // 9) Handoff TwiML
   ok("Transfer handoff dials the owner", handoffTwiml({ HandoffData: JSON.stringify({ handoff: "transfer", reason: "flooding" }), To: "+15550199", From: "+15550100" }).includes("<Number>+15550111</Number>"));
   ok("Hang-up handoff hangs up", handoffTwiml({ HandoffData: JSON.stringify({ handoff: "hangup" }) }).includes("<Hangup/>"));
+
+  ok("Demo transfer doesn't ring the client", !handoffTwiml({ HandoffData: JSON.stringify({ handoff: "transfer", demo: true }) }).includes("<Dial"));
+  const { relayTwiml } = await import("../voice-server/server.js");
+  ok("Demo TwiML marks the session as demo", relayTwiml("wss://x/relay", "https://x/handoff", { demo: true }).includes('<Parameter name="mode" value="demo"/>'));
 
   // 10) Unsigned WebSocket rejected when signatures are on
   const secure = createServer({ client, log() {}, skipSignature: false }).listen(0);

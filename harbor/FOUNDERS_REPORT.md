@@ -70,4 +70,11 @@ That's the difference between "a robot answered" and "they have a great receptio
 
 **New total: 34 / 40. ✅ PASS.**
 
+**Update 3: after the competitor review** (see `COMPETITOR_REVIEW.md`). Harbor now has the strongest features of both rivals:
+a call-me demo, setup from your website, after-call summaries, multiple languages, a VIP list and industry pages. It also keeps
+what both of them lack: it books jobs, transfers emergencies live, texts back callers who hang up, shows prices upfront and has an outcome guarantee.
+- **Distribution 4 → 5:** "paste your website, hear your own receptionist" and "it calls you in 10 seconds" let the product sell itself, and every demo creates a lead.
+
+**New total: 35 / 40. ✅ PASS.**
+
 **Target after 90 days:** 15 clients × $597 ≈ **$9k MRR**, ~80% gross margin.
