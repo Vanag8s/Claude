@@ -43,7 +43,7 @@
     io.observe(el);
   });
   // Hero is visible immediately (after curtain)
-  setTimeout(() => $$('.hero .reveal, .hero .split').forEach(el => el.classList.add('is-in')), reduce ? 0 : 1300);
+  setTimeout(() => $$('.hero .reveal, .hero .split').forEach(el => el.classList.add('is-in')), reduce ? 0 : 1100);
 
   function countUp(el) {
     const end = +el.dataset.count, pre = el.dataset.prefix ? el.dataset.prefix.replace('&lt;', '<') : '', suf = el.dataset.suffix || '';
@@ -61,7 +61,7 @@
   const nav = $('#nav'), sticky = $('.stickycta');
   const onScroll = () => {
     nav.classList.toggle('is-scrolled', scrollY > 30);
-    const book = $('#book').getBoundingClientRect();
+    const book = ($('#join') || $('#book')).getBoundingClientRect();
     sticky.classList.toggle('is-on', scrollY > innerHeight * 0.8 && book.top > innerHeight);
   };
   addEventListener('scroll', onScroll, { passive: true }); onScroll();
@@ -74,48 +74,15 @@
   $$('a', menu).forEach(a => a.addEventListener('click', () => toggle.click()));
   addEventListener('keydown', e => { if (e.key === 'Escape' && !menu.hidden) toggle.click(); });
 
-  /* ---------- Hero ocean canvas (performance-capped) ---------- */
-  const cv = $('#sea');
-  if (cv && !reduce) {
-    const ctx = cv.getContext('2d');
-    let w, h, dpr, t = 0, visible = true;
-    const resize = () => {
-      dpr = Math.min(devicePixelRatio || 1, 1.5);
-      w = cv.width = cv.offsetWidth * dpr; h = cv.height = cv.offsetHeight * dpr;
-    };
-    resize(); addEventListener('resize', resize);
-    new IntersectionObserver(([e]) => (visible = e.isIntersecting)).observe(cv);
-    const lines = 22;
-    const draw = () => {
-      requestAnimationFrame(draw);
-      if (!visible || document.hidden) return;
-      t += 0.006;
-      ctx.clearRect(0, 0, w, h);
-      for (let i = 0; i < lines; i++) {
-        const p = i / lines, y0 = h * (0.45 + p * 0.6);
-        ctx.beginPath();
-        for (let x = 0; x <= w; x += 14 * dpr) {
-          const y = y0 + Math.sin(x * 0.0022 / dpr + t * (1 + p) + i) * (14 + p * 30) * dpr
-                       + Math.sin(x * 0.0051 / dpr - t * 1.7 + i * 0.6) * 6 * dpr;
-          x ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
-        }
-        ctx.strokeStyle = `rgba(${94 - p * 35},${234 - p * 104},${212 + p * 34},${0.05 + p * 0.22})`;
-        ctx.lineWidth = dpr;
-        ctx.stroke();
-      }
-    };
-    draw();
-  }
-
   /* ---------- Hero call simulation ---------- */
   const script = [
-    ['ai', "Thanks for calling Riverside Plumbing, this is Harbor, the virtual assistant. What's going on?"],
-    ['cx', "Pipe burst under my kitchen sink, water everywhere!"],
-    ['ai', "Okay — first, shut the valve under the sink, or the main by your water meter. I'm flagging this as an emergency."],
-    ['cx', "Done. Can someone come?"],
-    ['ai', "Yes. Our on-call tech can be there at 7:30 AM, or I can page him now for tonight ($189 call-out). Which works?"],
-    ['cx', "7:30 is fine."],
-    ['ai', "Booked! You'll get a text confirmation and a reminder. Anything else?"]
+    ['ai', "Hi, thanks for calling Bright Smile Dental, this is Harbor, the virtual assistant. How can I help?"],
+    ['cx', "Hi, I chipped a tooth at dinner and it really hurts."],
+    ['ai', "Oh no, I'm sorry, that sounds painful. Let's get you seen quickly. Is it bleeding, or just sore?"],
+    ['cx', "Just sore, but it's sharp."],
+    ['ai', "Okay. Our first emergency slot is tomorrow at 9:30. Would that work?"],
+    ['cx', "Yes please."],
+    ['ai', "You're booked. I'll text you the details. Warm salt water can help tonight. Take care!"]
   ];
   const log = $('#callLog'), booked = $('#callBooked');
   let loopTimer;
@@ -174,7 +141,7 @@
     const recovered = lostMonthly * 0.5;
     $('#lost').textContent = fmt(lostMonthly);
     $('#recovered').textContent = fmt(recovered);
-    $('#multiple').textContent = (recovered / 597).toFixed(1) + '×';
+    $('#multiple').textContent = (recovered / 349).toFixed(1) + '×';
   };
   ids.forEach(id => $('#' + id).addEventListener('input', roi)); roi();
   let roiTracked = false;
@@ -187,7 +154,7 @@
     const k = b.dataset.billing === 'annual' ? 'a' : 'm';
     $$('.plan__price b').forEach(p => (p.textContent = '$' + (+p.dataset[k]).toLocaleString('en-US')));
   }));
-  $$('[data-plan]').forEach(a => a.addEventListener('click', () => ($('#planField').value = a.dataset.plan)));
+  $$('[data-plan]').forEach(a => a.addEventListener('click', () => { $('#planField').value = a.dataset.plan; const sel = $('#planSelect'); if (sel) sel.value = a.dataset.plan; }));
 
   /* ---------- Lead form: validation + submit ---------- */
   const form = $('#leadForm');

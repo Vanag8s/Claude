@@ -78,3 +78,18 @@ what both of them lack: it books jobs, transfers emergencies live, texts back ca
 **New total: 35 / 40. ✅ PASS.**
 
 **Target after 90 days:** 15 clients × $597 ≈ **$9k MRR**, ~80% gross margin.
+
+## Update 4: repositioned as a membership for every business size
+Harbor is no longer only for trades. It's an **AI receptionist membership** for any business that misses calls:
+- **Shore $149/mo** (small & solo, 150 calls), **Tide $349/mo** (growing, 600 calls), **Ocean $899/mo** (big teams, unlimited).
+- Promise: catch 30 calls you'd have missed in 30 days, or the first month is free.
+- The website bot *is* the product demo: it senses tone, decides when to sell, and role-plays as the visitor's receptionist.
+
+| Criterion | Before | Now | Why |
+|---|---|---|---|
+| Market size | 4 | 5 | Every appointment-based or call-driven business, not one niche |
+| Who pays | 5 | 4 | $149 entry tier is easier to say yes to, but lower revenue per client |
+| Competition | 4 | 3 | Broad AI receptionists are more crowded than trade-specific ones |
+| Distribution | 5 | 5 | The site sells itself: talk to it, have it call you, build yours |
+
+**New total: 34 / 40. ✅ PASS.** Positioning tip: lead your ads and outreach with one niche at a time (dental, salons, trades) using the industry pages, even though the product serves all of them.

@@ -1,13 +1,13 @@
 # Harbor
 
-> Harbor is an AI front desk (AI receptionist) for home-service businesses: plumbers, HVAC, roofers and electricians. It answers every phone call in about two rings, 24/7, in a natural human-sounding voice that callers can interrupt. It quotes the business's approved prices, books jobs into the calendar, transfers emergencies live, texts back callers who hang up, and sends the owner a summary of every call.
+> Harbor is an AI receptionist offered as a monthly membership for small, growing and large businesses that miss calls: trades, clinics, salons, offices, restaurants and multi-location teams. It answers every phone call in about two rings, 24/7, in a natural human-sounding voice that callers can interrupt. It quotes the business's approved prices, books jobs into the calendar, transfers emergencies live, texts back callers who hang up, and sends the owner a summary of every call.
 
 ## Key facts
-- Pricing: Starter $297/mo, Growth $597/mo, Fleet $1,197/mo. No contracts.
-- Guarantee: at least 10 extra booked jobs in the first 60 days, or a full refund and free service until it does.
-- Setup: done for you, live in 7 days. Keeps the business's existing phone number (call forwarding).
+- Membership: Shore $149/mo (small & solo, 150 calls), Tide $349/mo (growing, 600 calls), Ocean $899/mo (big teams, unlimited). No contracts.
+- Promise: if Harbor doesn't catch at least 30 calls you'd have missed in the first 30 days, the first month is free.
+- Setup: done for you, live in 48 hours. Keeps the business's existing phone number (call forwarding).
 - Always tells callers it is a virtual assistant.
-- Can detect the caller's language and reply in it.
+- Can detect the caller's language and reply in it, and adapts to the caller's tone.
 
 ## Pages
 - [Home](https://harbor-ai.example/): product, live demo, ROI calculator, pricing, FAQ

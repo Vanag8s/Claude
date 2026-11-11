@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "npx --yes serve -l 4173 .",
+    "dev": "node scripts/dev-server.mjs",
     "check:links": "node scripts/check-links.mjs",
     "test:site": "node scripts/test-site.mjs",
     "test:voice": "node scripts/test-voice.mjs",

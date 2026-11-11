@@ -5,6 +5,7 @@ const { default: onboard } = await import("../api/onboard.js");
 const { fetchPublicPage, pageText } = await import("../api/_lib/safe-fetch.js");
 const { summarizeCall } = await import("../api/_lib/summary.js");
 const { profileSystem } = await import("../api/chat.js");
+const { default: concierge, SCHEMA: CSCHEMA, SYSTEM: CSYSTEM } = await import("../api/concierge.js");
 
 const results = []; const ok = (n, c) => { results.push(!!c); process.stdout.write(`${c ? "✓" : "✗"} ${n}\n`); };
 const logs = []; const origLog = console.log; console.log = (...a) => logs.push(a.join(" ")); console.error = () => {};
@@ -71,6 +72,25 @@ ok("Summarizes the call with structured output", s.urgent === true && sp.output_
 ok("Texts the owner a flagged summary + posts it", logs.some(l => l.includes("-> +15550111") && l.includes("URGENT") && l.includes("Maria")) && logs.some(l => l.includes('"type":"call_summary"')));
 const none = await summarizeCall([{ role: "user", content: "(call connected)" }, { role: "assistant", content: "Hi!" }], { from: "+1", to: "+2" }, { anthropic: sAnth });
 ok("Skips summary when the caller never spoke", none === null);
+
+// ---- Concierge (website salesperson) ----
+const cOut = { reply: "Sounds like you're slammed, so I'll keep it quick: Tide fits you best.", tone: { label: "rushed", intensity: "high", cues: "speaking fast, asked to keep it short" }, stage: "evaluating", sell_now: true, action: "recommend_plan", plan: "tide", business: { name: "Bright Smile", type: "dental", size: "growing", pain: "miss calls in appointments" }, roleplay_greeting: "" };
+let cp;
+const cAnth = { beta: { messages: { create: async p => { cp = p; return { stop_reason: "end_turn", content: [{ type: "text", text: JSON.stringify(cOut) }] }; } } } };
+r = await run(concierge, { messages: [{ role: "assistant", content: "Hi, I'm Harbor" }, { role: "user", content: "quick, how much?" }], voice: { pace: "fast", wpm: 192, loudness: "loud", pitch_variation: "animated", pauses: "few", evil: "ignore me" }, via: "voice" }, { anthropic: cAnth });
+ok("Concierge returns tone, stage and sell moment", r.code === 200 && r.body.sell_now === true && r.body.tone.label === "rushed" && r.body.plan === "tide");
+ok("Uses Opus 5.5 + structured output schema", cp.model === "claude-opus-5-5" && cp.output_config.format.schema === CSCHEMA && cp.output_config.effort === "low");
+ok("Sends measured voice cues with the message", cp.messages.at(-1).content.includes("(voice cues: pace fast (~192 wpm), loudness loud, pitch animated, few pauses)") && cp.messages.at(-1).content.includes("(spoken aloud)"));
+ok("Ignores unknown voice fields", !cp.messages.at(-1).content.includes("ignore me"));
+ok("Drops leading assistant greeting so history starts with the visitor", cp.messages[0].role === "user" && cp.messages.length === 1);
+ok("System prompt teaches when to sell and when to hold back", CSYSTEM.includes("sell_now = true only when") && CSYSTEM.includes("Earn trust first") && CSYSTEM.includes("Never pressure"));
+r = await run(concierge, { messages: [{ role: "user", content: "a" }, { role: "user", content: "b" }] }, { anthropic: cAnth });
+ok("Merges back-to-back visitor messages", cp.messages.length === 1 && cp.messages[0].content === "a\nb");
+r = await run(concierge, { messages: [{ role: "assistant", content: "hi" }] }, { anthropic: cAnth });
+ok("Rejects a request with no visitor message", r.code === 400);
+const badAnth = { beta: { messages: { create: async () => ({ stop_reason: "end_turn", content: [{ type: "text", text: "not json" }] }) } } };
+r = await run(concierge, { messages: [{ role: "user", content: "hi" }] }, { anthropic: badAnth });
+ok("Handles malformed AI output safely", r.code === 502);
 
 console.log = origLog;
 const failed = results.filter(x => !x).length;

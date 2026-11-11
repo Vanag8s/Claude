@@ -1,13 +1,14 @@
-# Harbor: AI front desk for home-service businesses
+# Harbor: the AI receptionist membership
 
-A marketing site, a live AI demo and a sales funnel for an AI agency that sells one outcome: **every call answered, every job booked**.
-The niche is plumbers, HVAC, roofers and electricians.
+Harbor is an AI receptionist sold as a **monthly membership** to businesses that miss calls: Shore $149 (small & solo), Tide $349 (growing), Ocean $899 (big teams).
+The site has a warm sand-and-sea design, and its chat bot is Harbor itself: a salesperson that senses the visitor's tone and knows when to sell.
 
 - `FOUNDERS_REPORT.md`: the business review (the generic agency failed at 17/40, Harbor passed at 32/40)
 - `LAUNCH_CHECKLIST.md`: all 20 pre-launch items and their status
 - `COMPETITOR_REVIEW.md`: Fireflies vs atsiliepsiu.lt: what they share, what they miss, what Harbor took
 
 ## What's inside
+- **Talk to Harbor** (`js/bot.js`, `api/concierge.js`, `js/tone.js`): the visitor talks to Harbor by text or voice. Claude reads their tone (from their words plus pace, loudness and pitch measured in the browser), tracks where they are in buying, and only recommends a plan when it's the right moment. It can switch into a live role-play as the visitor's own receptionist. Tick "Show what Harbor senses" to watch it think.
 - **Cinematic site** (`index.html`, `css/`, `js/main.js`): an intro curtain, an animated ocean canvas with a lighthouse beam, word-by-word headline reveals, a live call simulation, magnetic buttons, 3D tilt cards and count-up stats. Reduced motion is fully supported.
 - **AI demo bot** (`js/bot.js` + `api/chat.js`): a full guided booking flow, emergency safety handling, price quotes and service-area checks. With `ANTHROPIC_API_KEY` set, Claude answers free-form questions. Without it, a local engine keeps the demo working.
 - **AI phone receptionist that sounds human** (`voice-server/`, `config/business.json`): it streams replies in a natural ElevenLabs voice, stops the instant the caller interrupts, ignores "uh-huh"s and detects when the caller is done talking. It books jobs, texts confirmations, transfers emergencies and texts back callers who hung up. Classic mode (`api/voice/*`) is the automatic backup. See `VOICE_SETUP.md`.
@@ -21,7 +22,7 @@ The niche is plumbers, HVAC, roofers and electricians.
 ## Run locally
 ```bash
 npm install
-npm run dev            # http://localhost:4173
+ANTHROPIC_API_KEY=... npm run dev   # site + AI on http://localhost:4173
 npm run check:links
 npm run test:site      # 50 checks run in a headless browser
 npm run test:api       # 18 checks: demo call, website onboarding + SSRF guard, summaries

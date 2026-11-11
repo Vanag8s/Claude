@@ -39,32 +39,46 @@ try {
   await p.fill('#calls', '100');
   ok('ROI calculator updates', (await p.textContent('#recovered')) !== '$0');
 
-  // Bot booking flow
-  await p.locator('#demo').scrollIntoViewIfNeeded(); await p.waitForTimeout(1800);
-  ok('Bot greets', (await p.locator('.msg--ai').count()) >= 1);
-  const send = async t => { await p.fill('#botInput', t); await p.press('#botInput', 'Enter'); await p.waitForTimeout(1900); };
+  // Talk to Harbor (offline: local concierge, since /api/* returns 404 here)
+  await p.locator('#talk').scrollIntoViewIfNeeded(); await p.waitForTimeout(1600);
+  ok('Harbor greets and asks about the business', (await p.locator('.msg--ai').first().textContent()).includes('What kind of business'));
+  const send = async t => { await p.fill('#botInput', t); await p.press('#botInput', 'Enter'); await p.waitForTimeout(1700); };
+  const lastAi = async () => (await p.locator('.msg--ai').last().textContent());
+  await p.check('#showSense');
+  await send('I run a small dental clinic and we miss a lot of calls during appointments');
+  ok('Discovers first: no pitch on the first message', !(await lastAi()).includes('$') && (await p.textContent('#botSense')).includes('not yet'));
+  ok('Senses panel shows tone + stage', await p.isVisible('#botSense') && (await p.textContent('#botSense')).includes('Stage'));
+  await send('Honestly I do not trust AI on the phone, it sounds fake');
+  ok('Senses skepticism and offers proof, not a pitch', (await p.textContent('#botSense')).includes('skeptical') && (await p.locator('.quick button').last().textContent()).length > 0 && !(await lastAi()).includes('$149'));
+  await send('How much does it cost?');
+  ok('Right moment: recommends one plan for a small business', (await p.textContent('#botSense')).includes('yes') && (await lastAi()).includes('Shore') && await p.locator('.quick .is-cta').count() >= 1);
+  ok('Highlights the recommended membership', (await p.getAttribute('[data-plan-card=shore]', 'class')).includes('is-recommended'));
+  await send('Can you act as my receptionist so I can hear it?');
+  await p.waitForTimeout(900);
+  ok('Switches into receptionist role-play', (await p.textContent('#botSub')).includes('playing your receptionist'));
   await send('How much to unclog a drain?');
-  ok('Bot quotes price', (await p.locator('.msg--ai').last().textContent()).includes('$149'));
+  ok('Receptionist quotes a price', (await lastAi()).includes('$149'));
   await send('yes book it');
-  ok('Bot offers slots', (await p.locator('.slots button').count()) >= 4);
-  await p.locator('.slots button').first().click(); await p.waitForTimeout(1800);
+  ok('Receptionist offers time slots', (await p.locator('.slots button').count()) >= 4);
+  await p.locator('.slots button').first().click(); await p.waitForTimeout(1500);
   await send('jane doe'); await send('555 123 4567'); await send('12 Elm St, Oakwood');
-  await p.waitForTimeout(2000);
-  ok('Bot completes booking', await p.locator('.msg--card').count() === 1 && (await p.locator('.msg--card').textContent()).includes('Drain cleaning'));
-  if (shots) await p.locator('#demo').screenshot({ path: `${shots}/demo.png` });
-  await send('Is there gas smell danger?'); // safety path
-  await send('I smell gas in my basement');
-  ok('Bot gives gas safety first', (await p.locator('.msg--ai').last().textContent()).includes('leave the building'));
+  await p.waitForTimeout(1500);
+  ok('Receptionist completes a booking', (await p.locator('.msg--card').allTextContents()).some(t => t.includes('Drain cleaning') && t.includes('Jane Doe')));
+  if (shots) await p.locator('#talk').screenshot({ path: `${shots}/demo.png` });
+  await p.locator('.quick .is-cta').last().click(); await p.waitForTimeout(2200);
+  ok('Back to Harbor, ready to sign up', (await p.textContent('#botName')) === 'Harbor' && (await p.textContent('#botSense')).includes('ready to buy'));
+  await p.locator('.quick .is-cta').last().click(); await p.waitForTimeout(1400);
+  ok('Sign-up button opens the membership form with the plan picked', (await p.inputValue('#planSelect')) === 'shore');
 
   // Form validation + submit
-  await p.locator('#book').scrollIntoViewIfNeeded(); await p.waitForTimeout(600);
+  await p.locator('#join').scrollIntoViewIfNeeded(); await p.waitForTimeout(600);
   await p.click('#leadForm button[type=submit]');
   ok('Form blocks empty submit', (await p.locator('#leadForm .invalid').count()) >= 4 && await p.isHidden('#formDone'));
-  await p.fill('#name', 'Sam Lee'); await p.fill('#company', 'Lee HVAC'); await p.fill('#email', 'bad-email');
-  await p.fill('#phone', '555-010-1234'); await p.selectOption('#trade', 'HVAC'); await p.check('#consentBox');
+  await p.fill('#name', 'Sam Lee'); await p.fill('#company', 'Lee Dental'); await p.fill('#email', 'bad-email');
+  await p.fill('#phone', '555-010-1234'); await p.selectOption('#trade', 'Real estate'); await p.check('#consentBox');
   await p.click('#leadForm button[type=submit]');
   ok('Form rejects bad email', await p.isHidden('#formDone'));
-  await p.fill('#email', 'sam@leehvac.test'); await p.click('#leadForm button[type=submit]'); await p.waitForTimeout(800);
+  await p.fill('#email', 'sam@leedental.test'); await p.click('#leadForm button[type=submit]'); await p.waitForTimeout(800);
   ok('Form submits + success state', await p.isVisible('#formDone'));
   ok('No JS errors (desktop)', errors.length === 0); if (errors.length) console.log(errors);
 
@@ -85,15 +99,15 @@ try {
   });
   const vp = await vctx.newPage(); const verr = []; vp.on('pageerror', e => verr.push(e.message));
   await vp.goto(base + '/', { waitUntil: 'networkidle' });
-  await vp.locator('#demo').scrollIntoViewIfNeeded(); await vp.waitForTimeout(1800);
+  await vp.locator('#talk').scrollIntoViewIfNeeded(); await vp.waitForTimeout(1800);
   ok('Mic button shows when speech is supported', await vp.isVisible('#botMic'));
   await vp.click('#botMic'); await vp.waitForTimeout(200);
   ok('Voice mode speaks Harbor\'s greeting + listens', (await vp.evaluate(() => window.__voice.spoken.length)) >= 1 && await vp.evaluate(() => window.__rec.on));
-  await vp.evaluate(() => window.__hear("riverside plumbing virtual assistant", false));
+  await vp.evaluate(() => window.__hear("answer the calls your business can't", false));
   ok('Ignores its own voice (echo)', (await vp.evaluate(() => window.__voice.cancels)) === 0);
-  await vp.evaluate(() => window.__hear("how much for a drain", false));
+  await vp.evaluate(() => window.__hear("how much does it cost", false));
   ok('Caller can interrupt: speech stops instantly', (await vp.evaluate(() => window.__voice.cancels)) === 1);
-  await vp.evaluate(() => window.__hear("how much for a drain", true)); await vp.waitForTimeout(1900);
+  await vp.evaluate(() => window.__hear("how much does it cost", true)); await vp.waitForTimeout(1900);
   ok('Answers the interrupting question out loud', (await vp.evaluate(() => window.__voice.spoken.at(-1))).includes('149'));
   ok('No JS errors in voice mode', verr.length === 0); if (verr.length) console.log(verr);
   await vctx.close();
@@ -126,6 +140,31 @@ try {
   ok('No JS errors in growth features', gerr.length === 0); if (gerr.length) console.log(gerr);
   if (shots) { await gp.locator('.after').scrollIntoViewIfNeeded(); await gp.waitForTimeout(2200); await gp.locator('.after').screenshot({ path: `${shots}/after.png` }); }
   await gctx.close();
+
+  // Concierge with mocked Claude API: tone, sell moment, role-play as their business
+  const cctx = await b.newContext({ viewport: { width: 1440, height: 900 } });
+  const cp = await cctx.newPage(); const cerr = []; cp.on('pageerror', e => cerr.push(e.message));
+  const bodies = []; let chatProfile = null;
+  const replies = [
+    { reply: "Fair question. Want to hear me answer as your receptionist?", tone: { label: 'skeptical', intensity: 'medium', cues: 'doubted it sounds real' }, stage: 'objection', sell_now: false, action: 'offer_call_demo', plan: 'none', business: { name: 'Bright Smile Dental', type: 'dental clinic', size: 'growing', pain: 'miss calls during appointments' }, roleplay_greeting: '' },
+    { reply: "Switching now. Call me like a patient would!", tone: { label: 'curious', intensity: 'medium', cues: 'asked to hear it' }, stage: 'evaluating', sell_now: false, action: 'start_roleplay', plan: 'none', business: { name: 'Bright Smile Dental', type: 'dental clinic', size: 'growing', pain: '' }, roleplay_greeting: 'Thanks for calling Bright Smile Dental, this is Harbor, the virtual assistant. How can I help?' },
+  ];
+  await cp.route('**/api/concierge', r => { bodies.push(JSON.parse(r.request().postData())); r.fulfill({ json: replies.shift() }); });
+  await cp.route('**/api/chat', r => { chatProfile = JSON.parse(r.request().postData()).profile; r.fulfill({ json: { reply: 'Of course! We have a cleaning slot Thursday at 10.' } }); });
+  await cp.goto(base + '/', { waitUntil: 'networkidle' });
+  await cp.evaluate(() => localStorage.setItem('harbor_consent', 'reject'));
+  await cp.locator('#talk').scrollIntoViewIfNeeded(); await cp.waitForTimeout(1500);
+  await cp.check('#showSense');
+  await cp.fill('#botInput', 'We are Bright Smile Dental, does this really sound human?'); await cp.press('#botInput', 'Enter'); await cp.waitForTimeout(800);
+  ok('Concierge sends the conversation to Claude', bodies[0]?.messages.at(-1).content.includes('Bright Smile') && bodies[0].via === 'text');
+  ok('Shows the tone Claude sensed', (await cp.textContent('#botSense')).includes('skeptical') && (await cp.textContent('#botSense')).includes('doubted it sounds real'));
+  ok('Offers a phone demo button', (await cp.locator('.quick .is-cta').last().textContent()).includes('call my phone'));
+  await cp.fill('#botInput', 'Ok, play my receptionist'); await cp.press('#botInput', 'Enter'); await cp.waitForTimeout(3200);
+  ok('Role-plays as their own business', (await cp.textContent('#botName')) === 'Bright Smile Dental' && (await cp.locator('.msg--ai').last().textContent()).includes('Bright Smile Dental'));
+  await cp.fill('#botInput', 'Can I get a cleaning this week?'); await cp.press('#botInput', 'Enter'); await cp.waitForTimeout(800);
+  ok('Receptionist answers as their business', chatProfile?.company === 'Bright Smile Dental' && (await cp.locator('.msg--ai').last().textContent()).includes('Thursday'));
+  ok('No JS errors in concierge', cerr.length === 0); if (cerr.length) console.log(cerr);
+  await cctx.close();
 
   // Industry page
   const ip = await (await b.newContext()).newPage(); const ierr = []; ip.on('pageerror', e => ierr.push(e.message));
