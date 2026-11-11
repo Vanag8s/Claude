@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Harbor — AI Front Desk for Home-Service Businesses | Never Miss a Job</title>
+  <meta name="description" content="Harbor answers every call, text and web chat in under 2 rings, qualifies the lead and books the job on your calendar — 24/7. Built for plumbers, HVAC, roofers and electricians. Live in 7 days.">
+  <link rel="canonical" href="https://harbor-ai.example/">
+  <meta name="theme-color" content="#07111f">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+
+  <!-- Social share -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Harbor">
+  <meta property="og:title" content="Harbor — Every call answered. Every job booked.">
+  <meta property="og:description" content="The AI front desk for home-service businesses. Answers in 2 rings, books jobs 24/7, live in 7 days.">
+  <meta property="og:url" content="https://harbor-ai.example/">
+  <meta property="og:image" content="https://harbor-ai.example/assets/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Harbor — the AI front desk that books jobs while you work">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Harbor — Every call answered. Every job booked.">
+  <meta name="twitter:description" content="The AI front desk for home-service businesses. Live in 7 days.">
+  <meta name="twitter:image" content="https://harbor-ai.example/assets/og-image.png">
+
+  <!-- Favicon -->
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/icon-512.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <!-- Performance: preconnect + non-blocking fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="/css/style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {"@type": "Organization", "name": "Harbor", "url": "https://harbor-ai.example/", "logo": "https://harbor-ai.example/assets/icon-512.png"},
+      {"@type": "Service", "name": "Harbor AI Front Desk", "serviceType": "AI receptionist and lead booking for home-service businesses",
+       "offers": [
+         {"@type": "Offer", "name": "Starter", "price": "297", "priceCurrency": "USD"},
+         {"@type": "Offer", "name": "Growth", "price": "597", "priceCurrency": "USD"},
+         {"@type": "Offer", "name": "Fleet", "price": "1197", "priceCurrency": "USD"}
+       ]},
+      {"@type": "FAQPage", "mainEntity": [
+        {"@type": "Question", "name": "Will customers know they're talking to AI?", "acceptedAnswer": {"@type": "Answer", "text": "Harbor introduces itself as your virtual assistant. It sounds natural, but we never pretend it's a human — honesty builds trust and keeps you compliant."}},
+        {"@type": "Question", "name": "How long does setup take?", "acceptedAnswer": {"@type": "Answer", "text": "7 days from kickoff call to live. We build your knowledge base, pricing rules and calendar sync for you."}},
+        {"@type": "Question", "name": "What if it doesn't work for my business?", "acceptedAnswer": {"@type": "Answer", "text": "If Harbor doesn't book at least 10 extra jobs in your first 60 days, we refund every subscription dollar and keep working free until it does."}}
+      ]}
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- Cinematic intro curtain -->
+  <div class="curtain" aria-hidden="true"><div class="curtain__mark"><span>Harbor</span></div></div>
+
+  <header class="nav" id="nav">
+    <a href="/" class="brand" aria-label="Harbor home">
+      <img src="/assets/favicon.svg" alt="" width="28" height="28"> Harbor
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav__links">
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#demo">Live demo</a></li>
+        <li><a href="#roi">ROI</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </nav>
+    <a href="#book" class="btn btn--sm btn--primary magnetic" data-track="nav_cta">Book a free audit</a>
+    <button class="nav__toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><span></span><span></span></button>
+  </header>
+  <div class="mobile-menu" id="mobileMenu" hidden>
+    <a href="#how">How it works</a><a href="#demo">Live demo</a><a href="#roi">ROI</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
+    <a href="#book" class="btn btn--primary">Book a free audit</a>
+  </div>
+
+  <main id="main">
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <canvas id="sea" aria-hidden="true"></canvas>
+      <div class="hero__beam" aria-hidden="true"></div>
+      <div class="hero__inner">
+        <div class="hero__copy">
+          <p class="eyebrow reveal"><span class="pulse"></span> AI front desk for plumbers, HVAC, roofers &amp; electricians</p>
+          <h1 id="hero-title" class="split">Every call answered.<br><em>Every job booked.</em></h1>
+          <p class="lead reveal">While you're on a roof or under a sink, Harbor picks up in two rings, qualifies the customer, quotes from your price list and drops the job straight into your calendar. 24/7. Live in 7 days.</p>
+          <div class="hero__ctas reveal">
+            <a href="#book" class="btn btn--primary btn--lg magnetic" data-track="hero_cta">Get my free missed-call audit</a>
+            <a href="#demo" class="btn btn--ghost btn--lg" data-track="hero_demo">Talk to Harbor now →</a>
+          </div>
+          <ul class="hero__proof reveal" aria-label="Guarantees">
+            <li>✓ 10 extra jobs in 60 days or full refund</li>
+            <li>✓ No contracts</li>
+            <li>✓ Done-for-you setup</li>
+          </ul>
+        </div>
+
+        <!-- Live call simulation -->
+        <figure class="callcard reveal" aria-label="Example of Harbor answering a call at 9:47 PM">
+          <div class="callcard__top">
+            <div class="callcard__ring"><span></span></div>
+            <div>
+              <strong>Incoming · 9:47 PM</strong>
+              <small>(555) 014-2290 · Burst pipe</small>
+            </div>
+            <span class="badge">Answered in 1.4s</span>
+          </div>
+          <ol class="callcard__log" id="callLog" aria-live="off"></ol>
+          <div class="callcard__booked" id="callBooked" hidden>
+            <span>📅</span>
+            <div><strong>Job booked — Tue 7:30 AM</strong><small>Emergency call-out · $189 deposit captured · Tech notified by SMS</small></div>
+          </div>
+        </figure>
+      </div>
+      <a href="#problem" class="scrollcue" aria-label="Scroll to learn more"><span></span></a>
+    </section>
+
+    <!-- TRADES MARQUEE -->
+    <section class="marquee" aria-label="Trades we serve">
+      <div class="marquee__track">
+        <span>Plumbing</span><span>HVAC</span><span>Roofing</span><span>Electrical</span><span>Garage doors</span><span>Pest control</span><span>Landscaping</span><span>Pool service</span><span>Restoration</span><span>Locksmiths</span>
+        <span aria-hidden="true">Plumbing</span><span aria-hidden="true">HVAC</span><span aria-hidden="true">Roofing</span><span aria-hidden="true">Electrical</span><span aria-hidden="true">Garage doors</span><span aria-hidden="true">Pest control</span><span aria-hidden="true">Landscaping</span><span aria-hidden="true">Pool service</span><span aria-hidden="true">Restoration</span><span aria-hidden="true">Locksmiths</span>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="section problem" id="problem" aria-labelledby="problem-title">
+      <div class="wrap">
+        <p class="eyebrow reveal">The leak in your business</p>
+        <h2 id="problem-title" class="split">A missed call isn't a voicemail.<br><em>It's a job your competitor just booked.</em></h2>
+        <div class="stats">
+          <article class="stat reveal"><b data-count="85" data-suffix="%">0</b><p>of callers who reach voicemail won't leave a message — they just dial the next company on Google.</p></article>
+          <article class="stat reveal"><b data-count="5" data-prefix="&lt;" data-suffix=" min">0</b><p>is the window to respond to a web lead before your odds of winning it drop off a cliff.</p></article>
+          <article class="stat reveal"><b data-count="24" data-suffix="/7">0</b><p>emergencies don't keep office hours. Burst pipes and dead AC units happen at 10 PM on a Sunday.</p></article>
+        </div>
+        <p class="footnote reveal">Figures reflect widely cited industry surveys on small-business call handling; your audit shows <em>your</em> real numbers.</p>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS (scroll-pinned) -->
+    <section class="section how" id="how" aria-labelledby="how-title">
+      <div class="wrap">
+        <p class="eyebrow reveal">How it works</p>
+        <h2 id="how-title" class="split">Live in seven days.<br><em>You do one 45-minute call.</em></h2>
+        <ol class="steps">
+          <li class="step reveal"><span class="step__n">01</span><h3>Audit &amp; kickoff</h3><p>We call-test your business, measure missed calls and response times, and learn your services, prices, service area and booking rules.</p></li>
+          <li class="step reveal"><span class="step__n">02</span><h3>We build your Harbor</h3><p>A custom-trained AI that knows your trade, sounds like your brand, syncs with your calendar (Google, Jobber, Housecall Pro, ServiceTitan) and escalates real emergencies to your cell.</p></li>
+          <li class="step reveal"><span class="step__n">03</span><h3>Go live &amp; grow</h3><p>Forward your overflow line. Harbor answers calls, texts back every missed call in 60 seconds, chats on your site and reports every booked dollar weekly.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- LIVE DEMO BOT -->
+    <section class="section demo" id="demo" aria-labelledby="demo-title">
+      <div class="wrap demo__grid">
+        <div>
+          <p class="eyebrow reveal">Live demo</p>
+          <h2 id="demo-title" class="split">Don't take our word for it.<br><em>Try to stump it.</em></h2>
+          <p class="lead reveal">This is Harbor configured for a sample plumbing company, "Riverside Plumbing". Ask about prices, emergencies, service areas, or try booking a job. Then imagine it trained on <em>your</em> business.</p>
+          <ul class="chips reveal" aria-label="Suggested questions">
+            <li><button type="button" class="chip" data-ask="My water heater is leaking, can someone come tonight?">💧 Leaking water heater tonight</button></li>
+            <li><button type="button" class="chip" data-ask="How much do you charge to unclog a drain?">💲 Drain unclog price</button></li>
+            <li><button type="button" class="chip" data-ask="Do you service Oakwood?">📍 Service area</button></li>
+            <li><button type="button" class="chip" data-ask="I want to book a quote for a bathroom remodel">📅 Book a quote</button></li>
+          </ul>
+        </div>
+        <div class="bot reveal" id="bot" role="region" aria-label="Harbor chat demo">
+          <div class="bot__head">
+            <div class="bot__avatar" aria-hidden="true"></div>
+            <div><strong>Riverside Plumbing</strong><small><span class="dot"></span> Harbor assistant · replies instantly</small></div>
+            <button type="button" class="bot__reset" id="botReset" aria-label="Restart conversation">↺</button>
+          </div>
+          <div class="bot__log" id="botLog" aria-live="polite"></div>
+          <form class="bot__form" id="botForm" autocomplete="off">
+            <label for="botInput" class="sr-only">Message Harbor</label>
+            <input id="botInput" name="q" type="text" placeholder="Type your message…" maxlength="500" required>
+            <button type="submit" class="btn btn--primary" aria-label="Send message">Send</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="section features" aria-labelledby="features-title">
+      <div class="wrap">
+        <p class="eyebrow reveal">Everything a great front desk does</p>
+        <h2 id="features-title" class="split">One hire that never sleeps,<br><em>never calls in sick.</em></h2>
+        <div class="grid">
+          <article class="card tilt reveal"><span class="card__icon" aria-hidden="true">📞</span><h3>Answers in 2 rings</h3><p>Natural voice AI handles calls day and night — or only overflow and after-hours. Your choice.</p></article>
+          <article class="card tilt reveal"><span class="card__icon" aria-hidden="true">💬</span><h3>Missed-call text-back</h3><p>Every call you miss gets a friendly text within 60 seconds that turns into a booked job.</p></article>
+          <article class="card tilt reveal"><span class="card__icon" aria-hidden="true">🧠</span><h3>Knows your business</h3><p>Trained on your services, prices, service area, warranties and policies. Never makes up a price.</p></article>
+          <article class="card tilt reveal"><span class="card__icon" aria-hidden="true">📅</span><h3>Books into your calendar</h3><p>Real-time sync with Google Calendar, Jobber, Housecall Pro and ServiceTitan. No double-booking.</p></article>
+          <article class="card tilt reveal"><span class="card__icon" aria-hidden="true">🚨</span><h3>Smart emergency routing</h3><p>Flooding, gas smell, no heat in winter? It patches the call to your on-call tech instantly.</p></article>
+          <article class="card tilt reveal"><span class="card__icon" aria-hidden="true">⭐</span><h3>Review engine</h3><p>After each job, Harbor asks happy customers for a Google review. More reviews, more calls.</p></article>
+          <article class="card tilt reveal"><span class="card__icon" aria-hidden="true">🔁</span><h3>Quote follow-up</h3><p>Chases every unsigned estimate on day 2, 5 and 10. Most shops leave this money on the table.</p></article>
+          <article class="card tilt reveal"><span class="card__icon" aria-hidden="true">📈</span><h3>Revenue dashboard</h3><p>See every call, every booking and every dollar Harbor brought in. Weekly report to your inbox.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROI CALCULATOR -->
+    <section class="section roi" id="roi" aria-labelledby="roi-title">
+      <div class="wrap roi__grid">
+        <div>
+          <p class="eyebrow reveal">ROI calculator</p>
+          <h2 id="roi-title" class="split">What are missed calls<br><em>costing you?</em></h2>
+          <p class="lead reveal">Move the sliders. Conservative assumption: Harbor recovers half the calls you miss today.</p>
+        </div>
+        <form class="roi__calc reveal" id="roiForm" aria-describedby="roiOut">
+          <div class="field">
+            <label for="calls">Calls per week <output id="callsOut">40</output></label>
+            <input type="range" id="calls" min="5" max="300" value="40" step="5">
+          </div>
+          <div class="field">
+            <label for="missed">% you miss today <output id="missedOut">30%</output></label>
+            <input type="range" id="missed" min="5" max="70" value="30" step="5">
+          </div>
+          <div class="field">
+            <label for="ticket">Average job value <output id="ticketOut">$450</output></label>
+            <input type="range" id="ticket" min="100" max="5000" value="450" step="50">
+          </div>
+          <div class="field">
+            <label for="close">% of answered calls you book <output id="closeOut">50%</output></label>
+            <input type="range" id="close" min="10" max="90" value="50" step="5">
+          </div>
+          <div class="roi__out" id="roiOut" aria-live="polite">
+            <div><small>Revenue you're losing / month</small><b id="lost">$0</b></div>
+            <div><small>Harbor recovers (est.) / month</small><b id="recovered" class="glow">$0</b></div>
+            <div><small>Return on Growth plan</small><b id="multiple">0×</b></div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- PRICING -->
+    <section class="section pricing" id="pricing" aria-labelledby="pricing-title">
+      <div class="wrap">
+        <p class="eyebrow reveal">Pricing</p>
+        <h2 id="pricing-title" class="split">Costs less than one booked job.<br><em>Pays for itself in week one.</em></h2>
+        <div class="toggle reveal" role="group" aria-label="Billing period">
+          <button type="button" class="is-on" data-billing="monthly" aria-pressed="true">Monthly</button>
+          <button type="button" data-billing="annual" aria-pressed="false">Annual <small>2 months free</small></button>
+        </div>
+        <div class="plans">
+          <article class="plan reveal">
+            <h3>Starter</h3><p class="plan__for">Solo operators</p>
+            <p class="plan__price"><b data-m="297" data-a="247">$297</b>/mo</p>
+            <ul><li>Web chat + missed-call text-back</li><li>Up to 300 conversations/mo</li><li>Calendar booking</li><li>Weekly report</li></ul>
+            <a href="#book" class="btn btn--ghost" data-plan="starter" data-track="plan_starter">Start with Starter</a>
+          </article>
+          <article class="plan plan--hot reveal">
+            <span class="plan__tag">Most popular</span>
+            <h3>Growth</h3><p class="plan__for">2–10 trucks</p>
+            <p class="plan__price"><b data-m="597" data-a="497">$597</b>/mo</p>
+            <ul><li>Everything in Starter</li><li>24/7 AI voice answering</li><li>Emergency call routing</li><li>Quote follow-up + review engine</li><li>Unlimited conversations</li></ul>
+            <a href="#book" class="btn btn--primary magnetic" data-plan="growth" data-track="plan_growth">Get Growth</a>
+          </article>
+          <article class="plan reveal">
+            <h3>Fleet</h3><p class="plan__for">10+ trucks, multi-location</p>
+            <p class="plan__price"><b data-m="1197" data-a="997">$1,197</b>/mo</p>
+            <ul><li>Everything in Growth</li><li>ServiceTitan deep integration</li><li>Multi-location routing</li><li>Dedicated success manager</li><li>Custom voice &amp; scripts</li></ul>
+            <a href="#book" class="btn btn--ghost" data-plan="fleet" data-track="plan_fleet">Talk to sales</a>
+          </article>
+        </div>
+        <div class="guarantee reveal">
+          <div class="guarantee__seal" aria-hidden="true">60<small>DAY</small></div>
+          <div>
+            <h3>The "10 Jobs" Guarantee</h3>
+            <p>If Harbor doesn't book at least 10 extra jobs in your first 60 days, we refund every subscription dollar <strong>and</strong> keep working for free until it does. Setup is $0 for our first 25 founding clients (normally $997).</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section faq" id="faq" aria-labelledby="faq-title">
+      <div class="wrap wrap--narrow">
+        <p class="eyebrow reveal">FAQ</p>
+        <h2 id="faq-title" class="split">Questions owners<br><em>actually ask.</em></h2>
+        <div class="faq__list">
+          <details class="reveal"><summary>Will customers know they're talking to AI?</summary><p>Harbor introduces itself as your virtual assistant. It sounds natural and friendly, but we never pretend it's a human — honesty builds trust and keeps you compliant with disclosure laws.</p></details>
+          <details class="reveal"><summary>How long does setup take, and what do I have to do?</summary><p>7 days. You do one 45-minute kickoff call. We build your knowledge base, pricing rules, voice, and calendar sync, then run test calls with you before going live.</p></details>
+          <details class="reveal"><summary>Will it quote wrong prices or promise things I can't do?</summary><p>No. Harbor only quotes from the price ranges you approve and says "a technician will confirm on site" for anything else. Every conversation is logged so you can review it.</p></details>
+          <details class="reveal"><summary>Do I need to change my phone number?</summary><p>No. Keep your number and forward overflow or after-hours calls to Harbor. Takes two minutes with any carrier.</p></details>
+          <details class="reveal"><summary>What software does it work with?</summary><p>Google Calendar, Outlook, Jobber, Housecall Pro, ServiceTitan, and most CRMs via Zapier. If you use pen and paper, Harbor texts you every booking.</p></details>
+          <details class="reveal"><summary>What if it doesn't work for my business?</summary><p>The 10 Jobs Guarantee: if Harbor doesn't book at least 10 extra jobs in 60 days, you get a full refund and we keep working free until it does. No contracts, cancel any time.</p></details>
+          <details class="reveal"><summary>What happens to my customers' data?</summary><p>Encrypted in transit and at rest, never sold, never used to train public AI models. See our <a href="/legal/privacy.html">Privacy Policy</a>.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOOK / FORM -->
+    <section class="section book" id="book" aria-labelledby="book-title">
+      <div class="wrap book__grid">
+        <div>
+          <p class="eyebrow reveal">Free missed-call audit</p>
+          <h2 id="book-title" class="split">Find out exactly how much<br><em>you're leaving on the table.</em></h2>
+          <p class="lead reveal">We'll secretly call-test your business 10 times at different hours, then send you a 1-page report: calls missed, response time and revenue at risk. Free, no obligation, delivered in 48 hours.</p>
+          <ul class="checks reveal"><li>Mystery-shop calls at 10 different times</li><li>Web-form response-time test</li><li>Custom revenue-at-risk estimate</li><li>Personal Harbor demo on your own business</li></ul>
+        </div>
+        <form class="leadform reveal" id="leadForm" novalidate>
+          <div class="field">
+            <label for="name">Your name</label>
+            <input id="name" name="name" type="text" autocomplete="name" required minlength="2">
+            <span class="err" aria-live="polite"></span>
+          </div>
+          <div class="field">
+            <label for="company">Business name</label>
+            <input id="company" name="company" type="text" autocomplete="organization" required minlength="2">
+            <span class="err" aria-live="polite"></span>
+          </div>
+          <div class="row">
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required>
+              <span class="err" aria-live="polite"></span>
+            </div>
+            <div class="field">
+              <label for="phone">Business phone</label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel" required pattern="[0-9 \+\.\(\)\-]{7,20}">
+              <span class="err" aria-live="polite"></span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="trade">Trade</label>
+            <select id="trade" name="trade" required>
+              <option value="">Choose one…</option>
+              <option>Plumbing</option><option>HVAC</option><option>Roofing</option><option>Electrical</option><option>Other home service</option>
+            </select>
+            <span class="err" aria-live="polite"></span>
+          </div>
+          <input type="hidden" name="plan" id="planField" value="">
+          <div class="hp" aria-hidden="true"><label for="website">Website</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
+          <label class="consent"><input type="checkbox" name="consent" id="consentBox" required> I agree to be contacted about my audit and accept the <a href="/legal/privacy.html">Privacy Policy</a>.</label>
+          <span class="err" id="consentErr" aria-live="polite"></span>
+          <button class="btn btn--primary btn--lg btn--block magnetic" type="submit" data-track="form_submit">Get my free audit</button>
+          <p class="formnote">No spam. We reply within one business day.</p>
+          <div class="formdone" id="formDone" hidden role="status">
+            <b>You're in. 🎉</b>
+            <p>We'll start your call-test this week and send your report within 48 hours. Keep an eye on your inbox.</p>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer__grid">
+      <div>
+        <a href="/" class="brand"><img src="/assets/favicon.svg" alt="" width="28" height="28"> Harbor</a>
+        <p>The AI front desk for home-service businesses.</p>
+      </div>
+      <nav aria-label="Footer">
+        <a href="#how">How it works</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a>
+        <a href="/legal/privacy.html">Privacy Policy</a><a href="/legal/terms.html">Terms of Service</a><a href="/legal/cookies.html">Cookie Policy</a>
+        <button type="button" class="linkish" id="cookieSettings">Cookie settings</button>
+      </nav>
+    </div>
+    <p class="footer__legal wrap">© <span id="yr">2026</span> Harbor. All rights reserved.</p>
+  </footer>
+
+  <!-- Cookie consent -->
+  <div class="cookie" id="cookie" role="dialog" aria-labelledby="cookieTitle" aria-describedby="cookieDesc" hidden>
+    <h2 id="cookieTitle">We use cookies 🍪</h2>
+    <p id="cookieDesc">Essential cookies keep the site working. With your OK we also use analytics cookies to see which pages help owners most. <a href="/legal/cookies.html">Learn more</a></p>
+    <div class="cookie__btns">
+      <button type="button" class="btn btn--ghost btn--sm" data-consent="reject">Essential only</button>
+      <button type="button" class="btn btn--primary btn--sm" data-consent="accept">Accept all</button>
+    </div>
+  </div>
+
+  <!-- Sticky mobile CTA -->
+  <a href="#book" class="stickycta" data-track="sticky_cta">Get my free audit</a>
+
+  <script src="/js/analytics.js" defer></script>
+  <script src="/js/main.js" defer></script>
+  <script src="/js/bot.js" defer></script>
+</body>
+</html>

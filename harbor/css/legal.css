@@ -1,0 +1,10 @@
+.legal{padding:140px 0 80px}
+.legal h1{font-size:clamp(40px,6vw,64px)}
+.legal h2{font-size:22px;margin:40px 0 10px}
+.legal p,.legal li{color:var(--muted)}
+.legal a{color:var(--teal)}
+.legal__date{font-size:14px}
+.legal__note{padding:12px 16px;border-radius:12px;border:1px dashed rgba(251,191,36,.45);background:rgba(251,191,36,.06);font-size:14px}
+.lost{min-height:70vh;display:flex;flex-direction:column;justify-content:center}
+.lost__code{font:400 clamp(120px,22vw,240px)/1 var(--serif);font-style:italic;margin:0;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;animation:bob 4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-12px) rotate(-2deg)}}
