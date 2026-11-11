@@ -10,8 +10,8 @@ const srv = createServer(async (req, res) => {
   if (p.startsWith('/api/')) { res.writeHead(404); return res.end(); } // simulate static hosting: bot + form must still work
   try { const b = await readFile(join('.', p)); res.writeHead(200, { 'Content-Type': types[extname(p)] || 'application/octet-stream' }); res.end(b); }
   catch { res.writeHead(404, { 'Content-Type': 'text/html' }); res.end(await readFile('404.html')); }
-}).listen(4173);
-const base = 'http://localhost:4173';
+}).listen(4180);
+const base = 'http://localhost:4180';
 const results = []; const ok = (n, c) => { results.push([n, !!c]); console.log(`${c ? '✓' : '✗'} ${n}`); };
 const shots = process.argv[2];
 const b = await chromium.launch();

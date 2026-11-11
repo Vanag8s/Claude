@@ -398,15 +398,68 @@ details a{color:var(--sea)}
   linear-gradient(180deg,rgba(255,250,242,.35) 0%,rgba(255,250,242,0) 30%,rgba(244,233,216,0) 80%,var(--sand) 100%)}
 .hero{padding-bottom:120px}
 .people{background:var(--shell)}
-.people__grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:48px}
+.people__grid{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center}
 .photo{margin:0;border-radius:var(--r);overflow:hidden;background:var(--paper);box-shadow:var(--shadow)}
-.photo img{width:100%;aspect-ratio:4/5;object-fit:cover;transition:transform 1.2s var(--ease)}
+.photo img{width:100%;aspect-ratio:4/3;object-fit:cover;transition:transform 1.2s var(--ease)}
 .photo:hover img{transform:scale(1.04)}
 .photo figcaption{padding:14px 16px 18px;font-size:15px;color:var(--ink-2);line-height:1.45}
 .photo figcaption b{display:block;font:600 17px var(--serif);color:var(--ink);margin-bottom:2px}
-@media (max-width:1000px){.people__grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:1000px){.people__grid{grid-template-columns:1fr;gap:32px}}
 @media (max-width:760px){
   .hero__shade{background:linear-gradient(180deg,rgba(255,250,242,.9) 0%,rgba(255,250,242,.82) 55%,rgba(255,250,242,.35) 80%,var(--sand) 100%)}
   .hero{padding-bottom:80px}
 }
 @media (prefers-reduced-motion:reduce){.hero__photo img{animation:none;transform:none}}
+
+/* Hero over a real photo: white type on a warm, darkened sunset */
+.hero--photo .hero__photo img{object-position:30% 70%}
+.hero--photo .hero__shade{background:
+  linear-gradient(90deg,rgba(18,30,40,.72) 0%,rgba(18,30,40,.5) 38%,rgba(18,30,40,.12) 68%,rgba(18,30,40,0) 85%),
+  linear-gradient(180deg,rgba(18,30,40,.35) 0%,rgba(18,30,40,0) 25%,rgba(18,30,40,0) 82%,var(--sand) 100%)}
+.hero--photo h1,.hero--photo .hero__copy .lead{color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.25)}
+.hero--photo h1 em{color:#ffd8a8}
+.hero--photo .eyebrow{color:#ffe3c2}
+.hero--photo .hand{color:#ffd8a8}
+.hero--photo .btn--ghost{color:#fff;border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.12)}
+.hero--photo .btn--ghost:hover{background:rgba(255,255,255,.22);border-color:#fff}
+.hero--photo .pulse{background:#ffd8a8}
+.nav:not(.is-scrolled) .brand,.nav:not(.is-scrolled) .nav__links a{color:#fff}
+.nav:not(.is-scrolled) .nav__toggle span{background:#fff}
+.hero--photo{padding-bottom:140px}
+
+/* Moments list */
+.moments{list-style:none;padding:0;margin:28px 0 0}
+.moments li{display:flex;gap:16px;align-items:baseline;padding:14px 0;border-bottom:1px solid var(--line)}
+.moments b{flex:none;width:175px;font:600 19px var(--serif)}
+.moments span{color:var(--ink-2)}
+
+/* Full-bleed photo break */
+.breaker{position:relative;min-height:72vh;display:grid;align-items:end;overflow:hidden;isolation:isolate}
+.breaker img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.breaker::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(18,30,40,0) 35%,rgba(18,30,40,.6) 100%)}
+.breaker__text{padding:0 0 64px;color:#fff}
+.breaker h2{color:#fff;font-size:clamp(36px,5vw,64px)}
+.breaker h2 em{color:#ffd8a8}
+.breaker p{font-size:19px;max-width:46ch;margin:0;color:#fff}
+@media (max-width:760px){
+  .hero--photo .hero__shade{background:linear-gradient(180deg,rgba(18,30,40,.66) 0%,rgba(18,30,40,.55) 60%,rgba(18,30,40,.25) 85%,var(--sand) 100%)}
+  .hero--photo .hero__photo img{object-position:20% 70%}
+  .moments b{width:120px}
+  .breaker{min-height:60vh}
+}
+
+/* Mobile: sharp photo band at the bottom of the hero, text on sand above */
+@media (max-width:760px){
+  .hero--photo{background:var(--sand);padding-bottom:calc(62vw + 40px)}
+  .hero--photo .hero__photo{top:auto;bottom:0;height:calc(62vw + 120px);background:var(--sand)}
+  .hero--photo .hero__photo img{object-position:20% 75%;animation:none;transform:none}
+  .hero--photo .hero__shade{background:linear-gradient(180deg,var(--sand) 0%,rgba(244,233,216,0) 32%,rgba(244,233,216,0) 100%)}
+  .hero--photo h1,.hero--photo .hero__copy .lead{color:var(--ink);text-shadow:none}
+  .hero--photo h1 em{color:var(--sea)}
+  .hero--photo .eyebrow{color:var(--sea)}
+  .hero--photo .hand{color:var(--coral-2)}
+  .hero--photo .btn--ghost{color:var(--ink);border-color:rgba(22,50,74,.25);background:rgba(255,253,248,.6)}
+  .nav:not(.is-scrolled) .brand,.nav:not(.is-scrolled) .nav__links a{color:var(--ink)}
+  .nav:not(.is-scrolled) .nav__toggle span{background:var(--ink)}
+  .hero--photo .callcard{position:relative;z-index:1}
+}

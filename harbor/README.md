@@ -33,3 +33,11 @@ npm run voice:live     # run the live voice server locally on :8080
 
 ## Deploy
 Push the `harbor/` folder to Vercel (set the root directory to `harbor`). See `LAUNCH_CHECKLIST.md` for the environment variables.
+
+## Photo credits
+All photos are public domain (CC0) via Wikimedia Commons, originally from Unsplash. No attribution is required, but here's where they came from:
+- `assets/photos/hero.jpg`: "Sunset rolling waves", https://commons.wikimedia.org/wiki/File:Sunset_rolling_waves.jpg
+- `assets/photos/surf.jpg`: "54th Street, Newport Beach, United States (Unsplash)", https://commons.wikimedia.org/wiki/File:54th_Street,_Newport_Beach,_United_States_(Unsplash).jpg
+- `assets/photos/barber.jpg`: "Head shaved by barber (Unsplash)", https://commons.wikimedia.org/wiki/File:Head_shaved_by_barber_(Unsplash).jpg
+
+To make the site feel even more like *your* business, replace these with your own photos (same file names, landscape, at least 1280px wide).
