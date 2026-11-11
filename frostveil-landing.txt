@@ -1,0 +1,1595 @@
+{%- comment -%}
+  FROSTVEIL LANDING – one-file Shopify section.
+  Install: Online Store → Themes → … → Edit code → Sections → "Add a new section"
+  → name it  frostveil-landing  → delete everything in it → paste this whole file → Save.
+  Then Customize → open your product page (or home page) → Add section → "Frostveil landing"
+  → choose your product in the section settings → Save.
+  Photos load from: https://cdn.jsdelivr.net/gh/Vanag8s/Claude@d4b33720d890ab6c3ddc7f8112e389ba39014518/assets/
+{%- endcomment -%}
+{%- liquid
+  assign p = section.settings.product
+  if product
+    assign p = product
+  endif
+  if p
+    assign v = p.selected_or_first_available_variant
+  endif
+-%}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="https://cdn.jsdelivr.net/gh/Vanag8s/Claude@d4b33720d890ab6c3ddc7f8112e389ba39014518/assets/fv-cover-cutout.webp">
+<style>
+{% raw %}.fv{
+  --bg: #05070b;
+  --bg-2: #0a0f17;
+  --panel: rgba(16, 22, 32, 0.62);
+  --panel-solid: #0e141e;
+  --line: rgba(160, 190, 220, 0.14);
+  --text: #eaf0f7;
+  --muted: #8f9cb0;
+  --ice: #9fd8ff;
+  --ice-2: #5fb6ff;
+  --lime: #c8ff2e;
+  --lime-ink: #0b1200;
+  --warm: #ffb347;
+  --radius: 22px;
+  --radius-sm: 12px;
+  --gutter: clamp(16px, 4vw, 48px);
+  --maxw: 1240px;
+  --ease: cubic-bezier(.2, .7, .1, 1);
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  color-scheme: dark;
+}
+.fv *, .fv *::before, .fv *::after{ box-sizing: border-box; }
+.fv{ scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+.fv-never{ overflow: hidden; }
+.fv{
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 400 16px/1.6 var(--font-body);
+  -webkit-font-smoothing: antialiased; overflow-x: hidden;
+}
+.fv img{ max-width: 100%; height: auto; display: block; }
+.fv a{ color: inherit; }
+.fv button{ font: inherit; color: inherit; }
+.fv h1, .fv h2, .fv h3{ font-family: var(--font-display); line-height: 1.05; letter-spacing: -0.02em; margin: 0 0 .5em; font-weight: 600; }
+.fv p{ margin: 0 0 1em; }
+.fv .skip-link{ position: absolute; left: -999px; top: 8px; z-index: 100; background: var(--lime); color: var(--lime-ink); padding: 8px 14px; border-radius: 8px; }
+.fv .skip-link:focus{ left: 8px; }
+.fv :focus-visible{ outline: 2px solid var(--lime); outline-offset: 3px; }
+.fv .container{ width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
+.fv .container--narrow{ max-width: 860px; }
+.fv .section{ position: relative; padding: clamp(80px, 12vw, 160px) 0; }
+.fv .section-head{ max-width: 760px; margin-bottom: clamp(40px, 6vw, 72px); }
+.fv .muted{ color: var(--muted); }
+.fv .small{ font-size: 13px; }
+.fv .display{ font-size: clamp(44px, 8.2vw, 116px); font-weight: 700; letter-spacing: -0.045em; line-height: .95; }
+.fv .h1{ font-size: clamp(34px, 5.2vw, 68px); letter-spacing: -0.035em; }
+.fv .h2{ font-size: clamp(28px, 3.6vw, 44px); }
+.fv .h3{ font-size: 22px; }
+.fv .lead{ font-size: clamp(17px, 1.5vw, 20px); color: #b9c5d6; max-width: 620px; }
+.fv .eyebrow{
+  display: inline-flex; align-items: center; gap: 10px;
+  font: 600 12px/1 var(--font-body); letter-spacing: .18em; text-transform: uppercase; color: var(--ice); margin-bottom: 18px;
+}
+.fv .eyebrow::before{ content: ''; width: 22px; height: 1px; background: currentColor; opacity: .7; }
+.fv .fx-grain{
+  position: fixed; inset: -50%; z-index: 90; pointer-events: none; opacity: .055;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation: fv-grain 1.2s steps(6) infinite;
+}
+@keyframes fv-grain{ 0%,100% { transform: translate(0,0); } 20% { transform: translate(-3%,2%); } 40% { transform: translate(2%,-3%); } 60% { transform: translate(-2%,-1%); } 80% { transform: translate(3%,3%); } }
+.fv .btn{
+  --b: var(--line);
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 52px; padding: 0 28px; border-radius: 999px; border: 1px solid var(--b);
+  background: rgba(255,255,255,.04); color: var(--text); text-decoration: none; cursor: pointer;
+  font: 600 15px/1 var(--font-body); letter-spacing: .01em;
+  transition: transform .4s var(--ease), box-shadow .4s var(--ease), background .3s, opacity .3s;
+}
+.fv .btn:hover{ transform: translateY(-2px); }
+.fv .btn:disabled{ opacity: .45; cursor: not-allowed; transform: none; }
+.fv .btn--lime{ background: var(--lime); color: var(--lime-ink); border-color: transparent; }
+.fv .btn--glow{ box-shadow: 0 0 0 0 rgba(200,255,46,.5), 0 10px 40px -8px rgba(200,255,46,.55); }
+.fv .btn--glow:hover{ box-shadow: 0 0 0 6px rgba(200,255,46,.12), 0 16px 60px -6px rgba(200,255,46,.7); }
+.fv .btn--ghost{ background: transparent; }
+.fv .btn--small{ min-height: 40px; padding: 0 18px; font-size: 14px; }
+.fv .btn--large{ min-height: 64px; padding: 0 44px; font-size: 17px; }
+.fv .btn--block{ width: 100%; }
+.fv .btn.is-loading{ position: relative; color: transparent; }
+.fv .btn.is-loading::after{ content: ''; position: absolute; width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--lime-ink); border-right-color: transparent; animation: fv-spin .7s linear infinite; }
+@keyframes fv-spin{ to { transform: rotate(360deg); } }
+.fv.fv-js [data-reveal]{ opacity: 0; transform: translate3d(0, 34px, 0); filter: blur(6px); transition: opacity 1s var(--ease), transform 1.1s var(--ease), filter 1s var(--ease); transition-delay: var(--d, 0ms); }
+.fv.fv-js [data-reveal].is-in{ opacity: 1; transform: none; filter: none; }
+.fv .site-header{ position: fixed; inset: 0 0 auto; z-index: 50; transition: transform .5s var(--ease), background .4s, backdrop-filter .4s; }
+.fv .site-header.is-scrolled{ background: rgba(5,7,11,.62); backdrop-filter: blur(16px) saturate(140%); -webkit-backdrop-filter: blur(16px) saturate(140%); border-bottom: 1px solid var(--line); }
+.fv .site-header.is-hidden{ transform: translateY(-100%); }
+.fv .site-header__inner{ display: flex; align-items: center; justify-content: space-between; gap: 20px; height: 72px; padding: 0 var(--gutter); max-width: 1440px; margin: 0 auto; }
+.fv .logo{ display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); }
+.fv .logo__mark{ color: var(--lime); display: inline-flex; }
+.fv .logo__text{ font: 700 18px/1 var(--font-display); letter-spacing: .14em; margin: 0; }
+.fv .site-nav{ display: flex; gap: 30px; }
+.fv .site-nav a{ text-decoration: none; font-size: 14px; color: #c3cedd; position: relative; }
+.fv .site-nav a::after{ content: ''; position: absolute; left: 0; right: 0; bottom: -6px; height: 1px; background: var(--lime); transform: scaleX(0); transition: transform .4s var(--ease); transform-origin: left; }
+.fv .site-nav a:hover::after{ transform: scaleX(1); }
+.fv .site-header__actions{ display: flex; align-items: center; gap: 12px; }
+.fv .cart-btn{ position: relative; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: rgba(255,255,255,.04); display: grid; place-items: center; cursor: pointer; }
+.fv .cart-btn__count{ position: absolute; top: -4px; right: -4px; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 10px; background: var(--lime); color: var(--lime-ink); font-size: 11px; font-weight: 700; display: grid; place-items: center; transform: scale(0); transition: transform .4s var(--ease); }
+.fv .cart-btn__count.has-items{ transform: scale(1); }
+@media (max-width: 900px){.fv .site-nav{ display: none; }
+}
+.fv .story{ position: relative; height: var(--story-length, 700vh); background: var(--bg); }
+.fv .story__stage{ position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+.fv .story__vignette{ position: absolute; inset: 0; pointer-events: none; background:
+  radial-gradient(120% 90% at 50% 40%, transparent 40%, rgba(2,3,6,.75) 100%),
+  linear-gradient(to bottom, rgba(5,7,11,.6), transparent 18%, transparent 75%, var(--bg)); }
+.fv .story.is-summer .story__vignette{ background:
+  radial-gradient(120% 90% at 70% 20%, rgba(255,170,60,.12), transparent 45%, rgba(10,5,2,.7) 100%),
+  linear-gradient(to bottom, rgba(5,7,11,.5), transparent 18%, transparent 75%, var(--bg)); }
+.fv .story__chapters{ position: absolute; inset: 0; pointer-events: none; }
+.fv .chapter{ position: absolute; opacity: 0; will-change: opacity, transform; }
+.fv .chapter--intro{ left: var(--gutter); bottom: clamp(60px, 12vh, 140px); max-width: 760px; opacity: 1; }
+.fv .chapter--intro .lead{ max-width: 520px; }
+.fv .chapter__cta{ display: flex; align-items: center; gap: 24px; flex-wrap: wrap; margin-top: 30px; }
+.fv .scroll-hint{ display: inline-flex; align-items: center; gap: 10px; font-size: 13px; color: var(--muted); }
+.fv .scroll-hint span{ width: 22px; height: 34px; border: 1.5px solid var(--muted); border-radius: 12px; position: relative; }
+.fv .scroll-hint span::after{ content: ''; position: absolute; left: 50%; top: 6px; width: 3px; height: 7px; margin-left: -1.5px; border-radius: 2px; background: var(--lime); animation: fv-wheel 1.6s var(--ease) infinite; }
+@keyframes fv-wheel{ 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(12px); opacity: 0; } }
+.fv .chapter--side{
+  top: 50%; left: var(--gutter); translate: 0 -50%; width: min(440px, calc(100% - 2 * var(--gutter)));
+  padding: 30px 32px; border-radius: var(--radius);
+  background: linear-gradient(160deg, rgba(20,28,40,.72), rgba(8,12,18,.55));
+  border: 1px solid var(--line); backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%);
+  box-shadow: 0 30px 80px -30px rgba(0,0,0,.8);
+}
+.fv .chapter--side .h1{ font-size: clamp(28px, 3.2vw, 44px); }
+.fv .chapter--side .lead{ font-size: 16px; }
+.fv .chapter__num{ color: var(--lime); font-family: var(--font-display); letter-spacing: .05em; }
+.fv .stat{ display: flex; align-items: baseline; gap: 12px; margin: 18px 0 0; padding-top: 18px; border-top: 1px solid var(--line); }
+.fv .stat strong{ font: 700 40px/1 var(--font-display); color: var(--lime); letter-spacing: -0.03em; }
+.fv .stat span{ color: var(--muted); font-size: 14px; }
+.fv .story.is-summer .chapter__num, .fv .story.is-summer .stat strong{ color: var(--warm); }
+.fv .story__hud{ position: absolute; top: 96px; right: var(--gutter); display: flex; flex-direction: column; align-items: flex-end; gap: 10px; pointer-events: none; font-variant-numeric: tabular-nums; }
+.fv .hud-chip{ display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 999px; background: rgba(8,12,18,.6); border: 1px solid var(--line); font: 600 11px/1 var(--font-body); letter-spacing: .14em; text-transform: uppercase; backdrop-filter: blur(10px); }
+.fv .hud-chip__dot{ width: 7px; height: 7px; border-radius: 50%; background: #ff4b4b; box-shadow: 0 0 10px #ff4b4b; animation: fv-blink 1.4s infinite; }
+@keyframes fv-blink{ 50% { opacity: .3; } }
+.fv .hud-readout{ display: flex; gap: 6px; }
+.fv .hud-readout div{ min-width: 86px; padding: 10px 12px; border-radius: 12px; background: rgba(8,12,18,.55); border: 1px solid var(--line); backdrop-filter: blur(10px); }
+.fv .hud-readout small{ display: block; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.fv .hud-readout strong{ font: 600 18px/1.2 var(--font-display); color: var(--ice); }
+.fv .story.is-summer .hud-readout strong{ color: var(--warm); }
+.fv .story__progress{ position: absolute; left: 14px; top: 50%; transform: translateY(-50%); list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.fv .story__progress li{ width: 3px; height: 22px; border-radius: 2px; background: rgba(255,255,255,.15); transition: background .4s, height .4s var(--ease); }
+.fv .story__progress li.is-active{ background: var(--lime); height: 40px; }
+@media (max-width: 899px){.fv .chapter--side{ top: auto; bottom: 22px; left: 16px; right: 16px; width: auto; translate: none; padding: 22px; }
+.fv .chapter--intro{ bottom: 40px; left: 16px; right: 16px; }
+.fv .story__hud{ top: 84px; right: 16px; }
+.fv .hud-readout div{ min-width: 0; padding: 8px 10px; }
+.fv .hud-readout strong{ font-size: 15px; }
+.fv .story__progress{ display: none; }
+.fv .stat strong{ font-size: 30px; }
+}
+.fv .layers{ position: relative; height: 320vh; background: radial-gradient(80% 60% at 30% 50%, #0c1522, var(--bg) 70%); }
+.fv .layers__stage{ position: sticky; top: 0; height: 100vh; display: flex; align-items: center; overflow: hidden; }
+.fv .layers__grid{ display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(24px, 4vw, 64px); align-items: center; }
+.fv .layers__visual{ position: relative; aspect-ratio: 1 / 1; max-height: 80vh; }
+.fv .layers__ring{ position: absolute; inset: 12%; border-radius: 50%; border: 1px dashed rgba(159,216,255,.16); animation: fv-spin 60s linear infinite; pointer-events: none; }
+.fv .layer-list{ list-style: none; padding: 0; margin: 30px 0 0; display: grid; gap: 12px; }
+.fv .layer-item{ display: grid; grid-template-columns: 48px 1fr; gap: 16px; padding: 18px 20px; border-radius: 16px; border: 1px solid var(--line); background: rgba(255,255,255,.02); transition: background .5s, border-color .5s, transform .5s var(--ease); }
+.fv .layer-item h3{ font-size: 20px; margin: 0 0 4px; }
+.fv .layer-item p{ margin: 0; font-size: 14px; }
+.fv .layer-item .muted{ margin-top: 6px; max-height: 0; overflow: hidden; opacity: 0; transition: max-height .6s var(--ease), opacity .5s; }
+.fv .layer-item__idx{ font: 700 15px/1 var(--font-display); color: var(--muted); width: 44px; height: 44px; border-radius: 12px; border: 1px solid var(--line); display: grid; place-items: center; transition: .5s; }
+.fv .layer-item__role{ color: var(--ice); font-weight: 500; }
+.fv .layer-item.is-active{ background: linear-gradient(120deg, rgba(200,255,46,.08), rgba(255,255,255,.02)); border-color: rgba(200,255,46,.4); transform: translateX(8px); }
+.fv .layer-item.is-active .layer-item__idx{ background: var(--lime); color: var(--lime-ink); border-color: transparent; }
+.fv .layer-item.is-active .muted{ max-height: 120px; opacity: 1; }
+@media (max-width: 899px){.fv .layers{ height: auto; padding: 90px 0; }
+.fv .layers__stage{ position: relative; height: auto; }
+.fv .layers__grid{ grid-template-columns: 1fr; }
+.fv .layers__visual{ max-height: none; }
+.fv .layer-item .muted{ max-height: none; opacity: 1; }
+}
+.fv .features{ background: linear-gradient(to bottom, var(--bg), var(--bg-2)); }
+.fv .feature-grid{ display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; perspective: 1200px; }
+.fv .feature-card{
+  --rx: 0deg; --ry: 0deg; --mx: 50%; --my: 0%;
+  position: relative; padding: 28px; border-radius: var(--radius); border: 1px solid var(--line); overflow: hidden;
+  background: linear-gradient(170deg, rgba(22,30,44,.8), rgba(10,14,20,.8));
+  transform: rotateX(var(--rx)) rotateY(var(--ry)); transform-style: preserve-3d;
+  transition: transform .5s var(--ease), border-color .4s, opacity 1s var(--ease), filter 1s var(--ease);
+}
+.fv.fv-js .feature-card[data-reveal]{ transform: translate3d(0, 34px, 0); }
+.fv.fv-js .feature-card[data-reveal].is-in{ transform: rotateX(var(--rx)) rotateY(var(--ry)); }
+.fv .feature-card:hover{ border-color: rgba(200,255,46,.35); }
+.fv .feature-card__glow{ position: absolute; inset: 0; background: radial-gradient(400px circle at var(--mx) var(--my), rgba(200,255,46,.12), transparent 40%); opacity: 0; transition: opacity .4s; pointer-events: none; }
+.fv .feature-card:hover .feature-card__glow{ opacity: 1; }
+.fv .feature-card__icon{ width: 54px; height: 54px; border-radius: 16px; display: grid; place-items: center; color: var(--lime); background: rgba(200,255,46,.08); border: 1px solid rgba(200,255,46,.2); margin-bottom: 22px; transform: translateZ(40px); }
+.fv .feature-card h3{ font-size: 21px; transform: translateZ(30px); }
+.fv .feature-card p{ color: var(--muted); margin: 0; font-size: 15px; transform: translateZ(20px); }
+.fv .coverage__grid{ display: grid; grid-template-columns: 1.25fr 1fr; gap: clamp(24px, 4vw, 56px); align-items: start; }
+.fv .coverage__media{ position: relative; margin: 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); aspect-ratio: 1 / 1; }
+.fv .coverage__img{ width: 100%; height: 100%; object-fit: cover; transform: scale(1.12); will-change: transform; }
+.fv .hotspot{ position: absolute; width: 36px; height: 36px; margin: -18px 0 0 -18px; border-radius: 50%; border: 0; background: var(--lime); color: var(--lime-ink); font-weight: 700; cursor: pointer; display: grid; place-items: center; box-shadow: 0 6px 24px rgba(0,0,0,.5); transition: transform .4s var(--ease); }
+.fv .hotspot:hover, .fv .hotspot.is-active{ transform: scale(1.18); }
+.fv .hotspot__pulse{ position: absolute; inset: -6px; border-radius: 50%; border: 2px solid var(--lime); animation: fv-pulse 2s var(--ease) infinite; }
+.fv .hotspot__num{ position: relative; font-size: 14px; }
+@keyframes fv-pulse{ 0% { transform: scale(.8); opacity: 1; } 100% { transform: scale(1.9); opacity: 0; } }
+.fv .zone-list{ list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.fv .zone{ border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,.02); overflow: hidden; transition: border-color .4s, background .4s; }
+.fv .zone.is-active{ border-color: rgba(200,255,46,.4); background: rgba(200,255,46,.04); }
+.fv .zone__head{ display: flex; width: 100%; align-items: center; gap: 14px; padding: 18px 20px; background: none; border: 0; cursor: pointer; text-align: left; }
+.fv .zone__num{ width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line); font-weight: 700; font-size: 13px; }
+.fv .zone.is-active .zone__num{ background: var(--lime); color: var(--lime-ink); border-color: transparent; }
+.fv .zone__title{ font: 600 20px/1.2 var(--font-display); }
+.fv .zone__body p{ padding: 0 20px; margin: 0; color: var(--muted); }
+.fv .zone__body img{ margin: 14px 20px 20px; width: calc(100% - 40px); border-radius: 12px; aspect-ratio: 16/9; object-fit: cover; }
+.fv .zone__body{ display: block; max-height: 0; overflow: hidden; transition: max-height .7s var(--ease); }
+.fv .zone.is-active .zone__body{ max-height: 520px; }
+.fv .morning{ background: var(--bg-2); }
+.fv .morning__grid{ display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; }
+.fv .morning__col{ padding: 32px; border-radius: var(--radius); border: 1px solid var(--line); background: rgba(255,255,255,.02); }
+.fv .morning__col--good{ border-color: rgba(200,255,46,.35); background: linear-gradient(160deg, rgba(200,255,46,.07), transparent 60%); }
+.fv .morning__label{ text-transform: uppercase; letter-spacing: .16em; font-size: 12px; font-weight: 600; color: var(--muted); }
+.fv .morning__big{ font: 700 clamp(64px, 8vw, 104px)/1 var(--font-display); letter-spacing: -0.05em; margin: 10px 0 24px; font-variant-numeric: tabular-nums; }
+.fv .morning__big small{ font-size: .3em; letter-spacing: 0; margin-left: 8px; color: var(--muted); }
+.fv .morning__col--bad .morning__big{ color: #ff8a8a; }
+.fv .morning__col--good .morning__big{ color: var(--lime); }
+.fv .ticks{ list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.fv .ticks li{ position: relative; padding-left: 30px; color: #c9d4e2; }
+.fv .ticks li::before{ content: ''; position: absolute; left: 0; top: 4px; width: 18px; height: 18px; border-radius: 50%; background: var(--lime) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='m6 12.5 4 4 8-9' fill='none' stroke='%230b1200' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/12px no-repeat; }
+.fv .ticks--bad li::before{ background: rgba(255,120,120,.18) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M7 7l10 10M17 7 7 17' fill='none' stroke='%23ff8a8a' stroke-width='3' stroke-linecap='round'/></svg>") center/10px no-repeat; }
+@media (max-width: 760px){.fv .morning__grid{ grid-template-columns: 1fr; }
+}
+.fv .seasons{ overflow: hidden; transition: background 1s var(--ease); background: radial-gradient(90% 80% at 50% 0%, #0d1a2b, var(--bg) 70%); }
+.fv .seasons[data-season="summer"]{ background: radial-gradient(90% 80% at 70% 0%, #3a2108, var(--bg) 70%); }
+.fv .seasons__sky{ position: absolute; inset: 0; pointer-events: none; }
+.fv .seasons__sun{ position: absolute; right: 10%; top: -120px; width: 360px; height: 360px; border-radius: 50%; background: radial-gradient(circle, rgba(255,200,90,.9), rgba(255,150,40,.25) 40%, transparent 70%); opacity: 0; transform: translateY(-60px) scale(.8); transition: opacity 1s, transform 1.2s var(--ease); }
+.fv .seasons[data-season="summer"] .seasons__sun{ opacity: 1; transform: none; }
+.fv .seasons__flakes{ position: absolute; inset: 0; transition: opacity .8s; }
+.fv .seasons[data-season="summer"] .seasons__flakes{ opacity: 0; }
+.fv .seasons__flakes i, .fv .cta__bg i{ position: absolute; top: -10px; width: 4px; height: 4px; border-radius: 50%; background: #fff; animation: fv-fall linear infinite; }
+@keyframes fv-fall{ to { transform: translate3d(40px, 110vh, 0); } }
+.fv .season-toggle{ position: relative; display: inline-grid; grid-template-columns: 1fr 1fr; padding: 6px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.04); margin-top: 18px; }
+.fv .season-toggle button{ position: relative; z-index: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 150px; height: 48px; border: 0; background: none; cursor: pointer; font-weight: 600; border-radius: 999px; transition: color .4s; }
+.fv .season-toggle button svg{ width: 20px; height: 20px; }
+.fv .season-toggle button[aria-selected="true"]{ color: var(--lime-ink); }
+.fv .season-toggle__pill{ position: absolute; top: 6px; bottom: 6px; left: 6px; width: calc(50% - 6px); border-radius: 999px; background: var(--ice); transition: transform .6s var(--ease), background .6s; }
+.fv .seasons[data-season="summer"] .season-toggle__pill{ transform: translateX(100%); background: var(--warm); }
+.fv .seasons__panels{ position: relative; }
+.fv .season-panel{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; animation: fv-panelIn .8s var(--ease); }
+.fv .season-panel[hidden]{ display: none; }
+@keyframes fv-panelIn{ from { opacity: 0; transform: translateY(20px); filter: blur(6px); } }
+.fv .season-card{ display: flex; gap: 16px; padding: 26px; border-radius: var(--radius); border: 1px solid var(--line); background: rgba(10,14,22,.6); backdrop-filter: blur(10px); }
+.fv .season-card__icon{ flex: 0 0 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; color: var(--ice); background: rgba(159,216,255,.1); }
+.fv .seasons[data-season="summer"] .season-card__icon{ color: var(--warm); background: rgba(255,179,71,.12); }
+.fv .season-card h3{ font-size: 19px; margin-bottom: 6px; }
+.fv .season-card p{ margin: 0; color: var(--muted); font-size: 15px; }
+@media (max-width: 860px){.fv .season-panel{ grid-template-columns: 1fr; }
+.fv .season-toggle button{ min-width: 0; padding: 0 18px; }
+}
+.fv .steps{ position: relative; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.fv .steps__line{ position: absolute; left: 22px; right: 22px; top: 22px; height: 2px; background: var(--line); }
+.fv .steps__line span{ position: absolute; inset: 0; background: linear-gradient(90deg, var(--ice), var(--lime)); transform: scaleX(0); transform-origin: left; }
+.fv .step{ position: relative; padding-top: 70px; }
+.fv .step__num{ position: absolute; top: 0; left: 0; width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; background: var(--bg); border: 2px solid var(--lime); color: var(--lime); font: 700 18px/1 var(--font-display); box-shadow: 0 0 30px rgba(200,255,46,.25); }
+.fv .step__time{ display: inline-block; font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--ice); margin-bottom: 8px; }
+.fv .step h3{ font-size: 22px; }
+.fv .step p{ color: var(--muted); margin: 0; }
+@media (max-width: 860px){.fv .steps{ grid-template-columns: 1fr; gap: 34px; }
+.fv .steps__line{ left: 22px; right: auto; top: 0; bottom: 0; width: 2px; height: auto; }
+.fv .steps__line span{ transform: none !important; }
+.fv .step{ padding: 0 0 0 70px; }
+}
+.fv .buy{ overflow: hidden; background: var(--bg-2); scroll-margin-top: 40px; }
+.fv .buy__aura{ position: absolute; width: 900px; height: 900px; left: -300px; top: -200px; background: radial-gradient(circle, rgba(95,182,255,.16), transparent 60%); pointer-events: none; filter: blur(10px); }
+.fv .buy__grid{ position: relative; display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(24px, 5vw, 72px); align-items: start; }
+.fv .gallery{ position: sticky; top: 96px; }
+.fv .gallery__main{ --rx: 0deg; --ry: 0deg; position: relative; aspect-ratio: 1/1; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); background: #fff; transform: perspective(1200px) rotateX(var(--rx)) rotateY(var(--ry)); transition: transform .5s var(--ease); }
+.fv .gallery__img{ position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.04); transition: opacity .7s var(--ease), transform 1.2s var(--ease); }
+.fv .gallery__img.is-active{ opacity: 1; transform: none; }
+.fv .gallery__badge{ position: absolute; left: 16px; top: 16px; padding: 8px 14px; border-radius: 999px; background: var(--lime); color: var(--lime-ink); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.fv .gallery__thumbs{ display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 12px; }
+.fv .gallery__thumb{ padding: 0; border-radius: 12px; overflow: hidden; border: 2px solid transparent; background: #fff; cursor: pointer; aspect-ratio: 1/1; opacity: .6; transition: opacity .3s, border-color .3s; }
+.fv .gallery__thumb img{ width: 100%; height: 100%; object-fit: cover; }
+.fv .gallery__thumb.is-active, .fv .gallery__thumb:hover{ opacity: 1; border-color: var(--lime); }
+.fv .buy__title{ margin-bottom: 12px; }
+.fv .buy__rating{ display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 14px; }
+.fv .price{ display: flex; align-items: baseline; flex-wrap: wrap; gap: 14px; margin: 18px 0 22px; }
+.fv .price__now{ font: 700 44px/1 var(--font-display); letter-spacing: -0.03em; }
+.fv .price__was{ color: var(--muted); font-size: 20px; }
+.fv .price__save{ padding: 6px 12px; border-radius: 999px; background: rgba(200,255,46,.12); color: var(--lime); font-size: 13px; font-weight: 700; }
+.fv .buy__bullets{ list-style: none; margin: 0 0 26px; padding: 0; display: grid; gap: 10px; }
+.fv .buy__bullets li{ position: relative; padding-left: 26px; color: #c9d4e2; }
+.fv .buy__bullets li::before{ content: ''; position: absolute; left: 0; top: 9px; width: 12px; height: 2px; background: var(--lime); box-shadow: 0 0 10px var(--lime); }
+.fv .option{ border: 0; padding: 0; margin: 0 0 22px; }
+.fv .option legend{ font-weight: 600; margin-bottom: 10px; }
+.fv .option legend span{ color: var(--muted); font-weight: 400; }
+.fv .option__pills{ display: flex; flex-wrap: wrap; gap: 10px; }
+.fv .pill input{ position: absolute; opacity: 0; pointer-events: none; }
+.fv .pill span{ display: inline-flex; align-items: center; min-height: 48px; padding: 0 20px; border-radius: 14px; border: 1px solid var(--line); background: rgba(255,255,255,.03); cursor: pointer; transition: .3s; }
+.fv .pill input:checked + span{ border-color: var(--lime); background: rgba(200,255,46,.1); box-shadow: inset 0 0 0 1px var(--lime); }
+.fv .pill input:focus-visible + span{ outline: 2px solid var(--lime); outline-offset: 2px; }
+.fv .buy__row{ display: grid; grid-template-columns: auto 1fr; gap: 12px; }
+.fv .qty{ display: flex; align-items: center; border: 1px solid var(--line); border-radius: 999px; height: 52px; }
+.fv .qty button{ width: 44px; height: 100%; border: 0; background: none; cursor: pointer; font-size: 20px; }
+.fv .qty input{ width: 40px; text-align: center; border: 0; background: none; color: var(--text); font: 600 16px var(--font-body); -moz-appearance: textfield; }
+.fv .qty input::-webkit-outer-spin-button, .fv .qty input::-webkit-inner-spin-button{ -webkit-appearance: none; margin: 0; }
+.fv .form-error{ color: #ff8a8a; margin-top: 12px; }
+.fv .notice{ padding: 14px 16px; border-radius: 12px; border: 1px dashed var(--line); color: var(--muted); }
+.fv .trust{ list-style: none; margin: 26px 0 0; padding: 22px 0 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.fv .trust li{ display: flex; flex-direction: column; align-items: flex-start; gap: 8px; font-size: 13px; color: var(--muted); }
+.fv .trust li span{ color: var(--ice); }
+.fv .trust svg{ width: 24px; height: 24px; }
+.fv .buy__desc{ margin-top: 22px; border-top: 1px solid var(--line); padding-top: 18px; }
+.fv .buy__desc summary{ cursor: pointer; font-weight: 600; }
+.fv .rte{ color: #c3cedd; }
+.fv .rte img{ border-radius: 12px; }
+@media (max-width: 900px){.fv .buy__grid{ grid-template-columns: 1fr; }
+.fv .gallery{ position: relative; top: 0; }
+}
+.fv .sticky-buy{ position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 40; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 10px 10px 18px; border-radius: 999px; background: rgba(10,14,20,.85); border: 1px solid var(--line); backdrop-filter: blur(14px); transform: translateY(140%); transition: transform .6s var(--ease); }
+.fv .sticky-buy.is-visible{ transform: none; }
+.fv .sticky-buy__info{ display: flex; flex-direction: column; line-height: 1.2; font-size: 13px; }
+.fv .sticky-buy__info span{ color: var(--lime); font-weight: 700; }
+@media (min-width: 900px){.fv .sticky-buy{ left: auto; right: 24px; bottom: 24px; width: 380px; }
+}
+.fv .specs__grid{ display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(24px, 5vw, 80px); align-items: start; }
+.fv .specs__fit{ margin: 28px 0 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); background: #fff; max-width: 460px; }
+.fv .spec-table{ margin: 0; border-top: 1px solid var(--line); }
+.fv .spec-row{ display: grid; grid-template-columns: 180px 1fr; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--line); }
+.fv .spec-row dt{ color: var(--muted); font-size: 14px; text-transform: uppercase; letter-spacing: .1em; }
+.fv .spec-row dd{ margin: 0; }
+@media (max-width: 860px){.fv .specs__grid{ grid-template-columns: 1fr; }
+.fv .spec-row{ grid-template-columns: 1fr; gap: 4px; }
+}
+.fv .faq__list{ display: grid; gap: 12px; }
+.fv .faq-item{ border: 1px solid var(--line); border-radius: 18px; background: rgba(255,255,255,.02); transition: border-color .3s, background .3s; }
+.fv .faq-item[open]{ border-color: rgba(200,255,46,.35); background: rgba(200,255,46,.03); }
+.fv .faq-item summary{ list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 22px 24px; cursor: pointer; font: 600 18px/1.3 var(--font-display); }
+.fv .faq-item summary::-webkit-details-marker{ display: none; }
+.fv .faq-item__icon{ position: relative; flex: 0 0 28px; height: 28px; border-radius: 50%; border: 1px solid var(--line); }
+.fv .faq-item__icon::before, .fv .faq-item__icon::after{ content: ''; position: absolute; left: 50%; top: 50%; width: 12px; height: 2px; margin: -1px 0 0 -6px; background: var(--lime); transition: transform .4s var(--ease); }
+.fv .faq-item__icon::after{ transform: rotate(90deg); }
+.fv .faq-item[open] .faq-item__icon::after{ transform: rotate(0); }
+.fv .faq-item__a{ padding: 0 24px 22px; color: var(--muted); }
+.fv .faq-item__a p:last-child{ margin: 0; }
+.fv .review-grid{ display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.fv .review{ margin: 0; padding: 28px; border-radius: var(--radius); border: 1px solid var(--line); background: rgba(255,255,255,.02); }
+.fv .review blockquote{ margin: 14px 0 18px; font-size: 17px; }
+.fv .review__stars span{ color: rgba(255,255,255,.2); }
+.fv .review__stars span.on{ color: var(--lime); }
+.fv .review-app{ grid-column: 1 / -1; }
+.fv .cta{ position: relative; padding: clamp(120px, 18vw, 240px) 0; overflow: hidden; text-align: center; background: radial-gradient(70% 70% at 50% 100%, #10233a, var(--bg) 70%); }
+.fv .cta__bg{ position: absolute; inset: 0; pointer-events: none; }
+.fv .cta__inner{ position: relative; display: flex; flex-direction: column; align-items: center; }
+.fv .cta .lead{ margin: 0 auto 40px; }
+.fv .cta .eyebrow::before{ display: none; }
+.fv .cta .btn{ transition: transform .25s var(--ease), box-shadow .4s; }
+.fv .site-footer{ border-top: 1px solid var(--line); padding: 48px 0 calc(48px + env(safe-area-inset-bottom)); }
+.fv .site-footer__grid{ display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 24px; }
+.fv .site-footer nav{ display: flex; gap: 24px; flex-wrap: wrap; }
+.fv .site-footer nav a{ text-decoration: none; color: var(--muted); }
+.fv .site-footer nav a:hover{ color: var(--text); }
+.fv .drawer{ position: fixed; inset: 0; z-index: 80; visibility: hidden; }
+.fv .drawer.is-open{ visibility: visible; }
+.fv .drawer__backdrop{ position: absolute; inset: 0; background: rgba(0,0,0,.55); opacity: 0; transition: opacity .4s; backdrop-filter: blur(4px); }
+.fv .drawer.is-open .drawer__backdrop{ opacity: 1; }
+.fv .drawer__panel{ position: absolute; top: 0; right: 0; bottom: 0; width: min(440px, 100%); display: flex; flex-direction: column; background: var(--panel-solid); border-left: 1px solid var(--line); transform: translateX(100%); transition: transform .55s var(--ease); }
+.fv .drawer.is-open .drawer__panel{ transform: none; }
+.fv .drawer__head{ display: flex; justify-content: space-between; align-items: center; padding: 22px 24px; border-bottom: 1px solid var(--line); }
+.fv .drawer__head h2{ margin: 0; }
+.fv .drawer__close{ width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: none; cursor: pointer; }
+.fv .drawer__items{ flex: 1; overflow: auto; padding: 20px 24px; display: grid; align-content: start; gap: 16px; }
+.fv .drawer-line{ display: grid; grid-template-columns: 72px 1fr auto; gap: 14px; align-items: center; }
+.fv .drawer-line img{ width: 72px; height: 72px; object-fit: cover; border-radius: 12px; background: #fff; }
+.fv .drawer-line__info{ display: flex; flex-direction: column; gap: 2px; font-size: 14px; }
+.fv .drawer-line__info a{ text-decoration: none; font-weight: 600; }
+.fv .drawer-line__qty{ display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 999px; padding: 4px; }
+.fv .drawer-line__qty button{ width: 28px; height: 28px; border: 0; background: none; cursor: pointer; border-radius: 50%; }
+.fv .drawer__foot{ padding: 20px 24px calc(20px + env(safe-area-inset-bottom)); border-top: 1px solid var(--line); }
+.fv .drawer__total{ display: flex; justify-content: space-between; font-size: 18px; margin-bottom: 6px; }
+.fv .drawer__link{ display: block; text-align: center; margin-top: 12px; color: var(--muted); font-size: 14px; }
+.fv .page-simple{ padding-top: 140px; }
+.fv .cart-line{ display: grid; grid-template-columns: 80px 1fr 80px 100px; gap: 16px; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.fv .cart-line img{ border-radius: 10px; }
+.fv .cart-line input{ width: 70px; padding: 10px; border-radius: 10px; border: 1px solid var(--line); background: none; color: var(--text); }
+.fv .cart-page__foot{ margin-top: 24px; text-align: right; }
+.fv .cart-page__btns{ display: flex; gap: 12px; justify-content: flex-end; }
+.fv .product-grid{ display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+.fv .product-card{ display: grid; gap: 8px; text-decoration: none; padding: 14px; border: 1px solid var(--line); border-radius: 16px; }
+.fv .product-card img{ border-radius: 10px; }
+.fv .search-form{ display: flex; gap: 12px; margin-bottom: 30px; }
+.fv .search-form input{ flex: 1; min-height: 52px; padding: 0 20px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.04); color: var(--text); font: inherit; }
+.fv .blog-item{ padding: 20px 0; border-bottom: 1px solid var(--line); }
+@media (prefers-reduced-motion: reduce){.fv *, .fv *::before, .fv *::after{ animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+.fv .fx-grain{ display: none; }
+}
+.fv .story__stage{ --summer: 0; --night: 0; --cover-snow: 0; --wipe: 0; isolation: isolate; }
+.fv .story__bg{ position: absolute; inset: 0; z-index: -2; overflow: hidden;
+  background: radial-gradient(120% 80% at 70% 45%, #0f1e33 0%, #070c15 45%, var(--bg) 80%); }
+.fv .story__bg::after{ content: ''; position: absolute; inset: 0; background: #010205; opacity: calc(var(--night) * .55); transition: opacity .2s; }
+.fv .aurora{ position: absolute; border-radius: 50%; filter: blur(80px); will-change: transform; }
+.fv .aurora--a{ width: 70vw; height: 60vh; right: -10vw; top: 10vh; background: radial-gradient(closest-side, rgba(95,182,255,.32), transparent); animation: fv-drift 18s ease-in-out infinite alternate; opacity: calc(1 - var(--summer) * .8); }
+.fv .aurora--b{ width: 50vw; height: 50vh; right: 20vw; bottom: -10vh; background: radial-gradient(closest-side, rgba(200,255,46,.10), transparent); animation: fv-drift 22s ease-in-out -6s infinite alternate-reverse; }
+.fv .story__sun{ position: absolute; right: 8vw; top: -18vh; width: 70vh; height: 70vh; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,214,140,.95) 0%, rgba(255,160,60,.45) 22%, rgba(255,120,30,.12) 48%, transparent 70%);
+  opacity: var(--summer); transform: scale(calc(.7 + var(--summer) * .3)); mix-blend-mode: screen; }
+.fv .story__sun::after{ content: ''; position: absolute; inset: -60%; background: conic-gradient(from 0deg, transparent 0 8%, rgba(255,200,120,.08) 10%, transparent 13% 30%, rgba(255,200,120,.07) 33%, transparent 36% 60%, rgba(255,200,120,.06) 63%, transparent 66%); animation: fv-spin 80s linear infinite; }
+@keyframes fv-drift{ to { transform: translate3d(-8vw, 6vh, 0) scale(1.15); } }
+.fv .story.is-summer .story__bg{ background: radial-gradient(120% 80% at 70% 30%, #2b1a0c 0%, #120b07 45%, var(--bg) 80%); }
+.fv .story__snow{ position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+.fv .story__vignette{ z-index: 3; }
+.fv .story__hud, .fv .story__chapters, .fv .story__progress{ z-index: 4; }
+.fv .scenes{ position: absolute; inset: 0; z-index: 1; perspective: 1800px; }
+.fv .scene{ position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; will-change: opacity; }
+.fv .product-float{ position: relative; width: min(56vw, 920px); transform-style: preserve-3d; will-change: transform; }
+.fv .product-float__img{ position: relative; width: 100%; height: auto;
+  filter: drop-shadow(0 34px 40px rgba(0,0,0,.7)) saturate(.92);
+  -webkit-mask-image: linear-gradient(to bottom, #000 92%, transparent); mask-image: linear-gradient(to bottom, #000 92%, transparent); }
+.fv .product-float__glow{ position: absolute; left: 8%; right: 8%; bottom: -14%; height: 40%; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(200,255,46,.28), rgba(95,182,255,.12) 55%, transparent); filter: blur(30px); transform: translateZ(-80px); }
+.fv .product-float__snow, .fv .product-float__shine{ position: absolute; inset: 0; pointer-events: none;
+  -webkit-mask: url('https://cdn.jsdelivr.net/gh/Vanag8s/Claude@d4b33720d890ab6c3ddc7f8112e389ba39014518/assets/fv-cover-cutout.webp') center / 100% 100% no-repeat; mask: url('https://cdn.jsdelivr.net/gh/Vanag8s/Claude@d4b33720d890ab6c3ddc7f8112e389ba39014518/assets/fv-cover-cutout.webp') center / 100% 100% no-repeat; }
+.fv .product-float__snow{ opacity: var(--cover-snow);
+  background:
+    radial-gradient(circle, rgba(255,255,255,.95) 0 1.4px, transparent 2px) 0 0 / 19px 17px,
+    radial-gradient(circle, rgba(255,255,255,.8) 0 2px, transparent 2.6px) 7px 5px / 33px 29px,
+    radial-gradient(circle, rgba(235,245,255,.9) 0 3px, transparent 4px) 13px 11px / 57px 47px,
+    linear-gradient(170deg, rgba(240,248,255,.78), rgba(225,238,250,.55) 60%, rgba(225,238,250,.3)); }
+.fv .product-float__shine{ background: linear-gradient(105deg, transparent 38%, rgba(255,255,255,.10) 48%, transparent 58%) 0 0 / 250% 100% no-repeat; animation: fv-shine 6s var(--ease) infinite; mix-blend-mode: screen; }
+@keyframes fv-shine{ 0% { background-position: 120% 0; } 55%, 100% { background-position: -120% 0; } }
+.fv .callouts{ position: absolute; left: 50%; top: 50%; width: min(56vw, 920px); aspect-ratio: 1501 / 764; transform: translate(calc(-50% + 19vw), calc(-50% + 2vh)) scale(1.04, .95); --in: 0; pointer-events: none; }
+.fv .callout{ position: absolute; display: flex; flex-direction: column; align-items: center; opacity: var(--in); }
+.fv .callout--up{ flex-direction: column-reverse; }
+.fv .callout__dot{ width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 6px rgba(200,255,46,.18), 0 0 24px var(--lime); }
+.fv .callout__line{ width: 1px; height: 56px; margin-left: -8px; background: linear-gradient(var(--lime), rgba(200,255,46,0)); transform-origin: top; transform: scaleY(var(--in)); }
+.fv .callout--up .callout__line{ background: linear-gradient(rgba(200,255,46,0), var(--lime)); transform-origin: bottom; }
+.fv .callout__label{ margin-left: -8px; padding: 10px 14px; border-radius: 12px; white-space: nowrap; font-size: 12px; color: var(--muted); line-height: 1.35;
+  background: rgba(8,12,18,.72); border: 1px solid var(--line); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transform: translateY(calc((1 - var(--in)) * 14px)); }
+.fv .callout__label b{ display: block; color: var(--text); font: 600 14px/1.2 var(--font-display); }
+.fv .callout--mirror{ left: 5%; top: 40%; }
+.fv .callout--trim{ left: 30%; top: 3%; }
+.fv .callout--quilt{ left: 52%; top: 52%; }
+.fv .callout--flap{ left: 88%; top: 44%; }
+.fv .callout--mirror, .fv .callout--trim{ flex-direction: column-reverse; }
+.fv .callout--mirror .callout__line, .fv .callout--trim .callout__line{ background: linear-gradient(rgba(200,255,46,0), var(--lime)); transform-origin: bottom; }
+.fv .callout--flap .callout__label{ transform: translate(-40%, calc((1 - var(--in)) * 14px)); }
+.fv .glass-frame{ position: relative; width: min(62vw, 1040px); aspect-ratio: 1392 / 492; border-radius: 26px; overflow: hidden;
+  transform: translateX(16vw) rotateY(-9deg) rotateX(3deg); border: 1px solid rgba(255,255,255,.14);
+  box-shadow: 0 60px 120px -30px rgba(0,0,0,.9), 0 0 0 10px rgba(255,255,255,.02), 0 0 80px rgba(95,182,255,.15); }
+.fv .glass-frame__img{ position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.fv .glass-frame__after{ position: absolute; inset: 0; clip-path: inset(0 calc((1 - var(--wipe)) * 100%) 0 0); }
+.fv .glass-frame__wipe{ position: absolute; top: 0; bottom: 0; left: calc(var(--wipe) * 100%); width: 2px; margin-left: -1px; background: var(--lime); box-shadow: 0 0 24px 4px rgba(200,255,46,.6);
+  opacity: calc(min(var(--wipe) * 30, 1) * min((1 - var(--wipe)) * 30, 1)); }
+.fv .glass-frame__tag{ position: absolute; top: 16px; padding: 7px 12px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; backdrop-filter: blur(8px); }
+.fv .glass-frame__tag--before{ right: 16px; background: rgba(8,12,18,.7); color: var(--ice); opacity: calc(1 - var(--wipe)); }
+.fv .glass-frame__tag--after{ left: 16px; background: var(--lime); color: var(--lime-ink); opacity: var(--wipe); }
+.fv .glass-frame::after{ content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(115deg, rgba(255,255,255,.12), transparent 35%, transparent 70%, rgba(255,255,255,.05)); }
+@media (max-width: 899px){.fv .product-float{ width: 108vw; }
+.fv .callouts{ display: none; }
+.fv .glass-frame{ width: 94vw; transform: translateY(-13vh); border-radius: 18px; }
+.fv .story__sun{ right: -20vw; }
+}
+.fv .stack{ position: absolute; inset: 0; display: grid; place-items: center; perspective: 1400px; --explode: 0; --tilt-x: 0deg; --tilt-z: 0deg; }
+.fv .sheet{ position: absolute; width: 62%; aspect-ratio: 1.6; border-radius: 22px; background: #0c0e11 var(--tex) center / cover;
+  transform: translateY(var(--ty)) rotateX(calc(60deg + var(--tilt-x))) rotateZ(calc(-34deg + var(--tilt-z))) translateZ(var(--lift, 0px));
+  box-shadow: 0 2px 0 #24282e, 0 9px 0 #07080a, 0 50px 60px -10px rgba(0,0,0,.7);
+  transition: box-shadow .5s, filter .5s; filter: brightness(1.9) contrast(1.15); }
+.fv .sheet::before{ content: ''; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(120deg, rgba(255,255,255,.18), transparent 30%, transparent 60%, rgba(159,216,255,.12)); }
+.fv .sheet::after{ content: ''; position: absolute; inset: 0; border-radius: inherit; border: 2px solid var(--lime); opacity: 0; transition: opacity .5s; box-shadow: 0 0 40px rgba(200,255,46,.35), inset 0 0 40px rgba(200,255,46,.12); }
+.fv .sheet--1{ --ty: calc(var(--explode) * -52%); z-index: 3; }
+.fv .sheet--2{ --ty: 0%; z-index: 2; }
+.fv .sheet--3{ --ty: calc(var(--explode) * 52%); z-index: 1; }
+.fv .sheet.is-active{ --lift: 60px; filter: brightness(2.4) contrast(1.2); }
+.fv .sheet.is-active::after{ opacity: 1; }
+.fv .sheet__tag{ position: absolute; left: 18px; top: 16px; padding: 6px 12px; border-radius: 999px; background: rgba(8,12,18,.75); border: 1px solid var(--line); font: 600 13px/1 var(--font-body); letter-spacing: .04em; color: var(--text); }
+.fv .sheet.is-active .sheet__tag{ background: var(--lime); color: var(--lime-ink); border-color: transparent; }
+.fv .sheet__drops{ position: absolute; inset: 0; border-radius: inherit; opacity: 0; transition: opacity .6s;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.9) 0 1.5px, rgba(180,220,255,.35) 2.5px 5px, transparent 6px) 0 0 / 46px 38px,
+              radial-gradient(circle at 30% 30%, rgba(255,255,255,.9) 0 1px, rgba(180,220,255,.3) 2px 3.5px, transparent 4.5px) 17px 21px / 29px 33px; }
+.fv .sheet--1.is-active .sheet__drops{ opacity: 1; animation: fv-bead 3s linear infinite; }
+@keyframes fv-bead{ to { background-position: 40px 30px, 60px 70px; } }
+.fv .compare{ position: relative; grid-column: 1 / -1; order: -1; margin: 0 0 4px; aspect-ratio: 1392 / 492; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); --pos: 50%; box-shadow: 0 40px 100px -40px rgba(0,0,0,.9); user-select: none; }
+.fv .compare img{ position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.fv .compare__after{ position: absolute; inset: 0; clip-path: inset(0 0 0 var(--pos)); }
+.fv .compare__handle{ position: absolute; top: 0; bottom: 0; left: var(--pos); width: 2px; margin-left: -1px; background: var(--lime); box-shadow: 0 0 20px rgba(200,255,46,.6); pointer-events: none; }
+.fv .compare__handle span{ position: absolute; top: 50%; left: 50%; width: 52px; height: 52px; margin: -26px 0 0 -26px; border-radius: 50%; display: grid; place-items: center; background: var(--lime); color: var(--lime-ink); font-weight: 700; font-size: 20px; box-shadow: 0 10px 30px rgba(0,0,0,.5); }
+.fv .compare__tag{ position: absolute; top: 16px; padding: 7px 12px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; background: rgba(8,12,18,.72); pointer-events: none; }
+.fv .compare__tag--l{ left: 16px; color: var(--ice); }
+.fv .compare__tag--r{ right: 16px; background: var(--lime); color: var(--lime-ink); }
+.fv .compare__range{ position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; }
+.fv .morning__col{ display: flex; flex-direction: column; }
+
+
+.fv { position: relative; isolation: isolate; overflow-x: clip; background: var(--bg); color: var(--text); font: 400 16px/1.6 var(--font-body); -webkit-font-smoothing: antialiased; }
+.fv img { max-width: 100%; height: auto; }
+.fv .container { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
+.fv .btn { text-decoration: none; }
+.fv .chapter--intro { bottom: clamp(40px, 10vh, 120px); }
+.fv .story__hud { top: 24px; }
+{% endraw %}
+</style>
+
+<div class="fv" id="fv-landing">
+<section id="story" class="story" data-story style="--story-length: 650vh">
+  <div class="story__stage">
+    <div class="story__bg" aria-hidden="true">
+      <div class="aurora aurora--a"></div>
+      <div class="aurora aurora--b"></div>
+      <div class="story__sun"></div>
+    </div>
+    <canvas class="story__snow" data-snow aria-hidden="true"></canvas>
+
+    <div class="scenes" aria-hidden="true"><div class="scene scene--product" data-scene="0,0.135|0.30,0.64|0.78,1">
+        <div class="product-float" data-float>
+          <div class="product-float__glow"></div>
+          <img class="product-float__img" src="https://cdn.jsdelivr.net/gh/Vanag8s/Claude@d4b33720d890ab6c3ddc7f8112e389ba39014518/assets/fv-cover-cutout.webp" alt="" width="1501" height="764" fetchpriority="high">
+          <div class="product-float__snow"></div>
+          <div class="product-float__shine"></div>
+          <div class="product-float__reflection"></div>
+        </div>
+
+        <div class="callouts" data-scene-inner="0.33,0.49">
+          <div class="callout callout--mirror"><span class="callout__dot"></span><span class="callout__line"></span><span class="callout__label"><b>Mirror pockets</b>Elastic fit + reflective band</span></div>
+          <div class="callout callout--trim"><span class="callout__dot"></span><span class="callout__line"></span><span class="callout__label"><b>Hi-vis lime trim</b>Easy to spot, easy to center</span></div>
+          <div class="callout callout--quilt"><span class="callout__dot"></span><span class="callout__line"></span><span class="callout__label"><b>3-layer quilted shell</b>Nano-coat · Oxford · PVC</span></div>
+          <div class="callout callout--flap"><span class="callout__dot"></span><span class="callout__line"></span><span class="callout__label"><b>Door-tuck flaps</b>Locked in by your doors</span></div>
+        </div>
+      </div><div class="scene scene--glass" data-scene="0.135,0.30|0.64,0.78">
+        <div class="glass-frame" data-wipe-range="0.655,0.755">
+          <img class="glass-frame__img" src="https://cdn.jsdelivr.net/gh/Vanag8s/Claude@d4b33720d890ab6c3ddc7f8112e389ba39014518/assets/fv-before.webp" alt="" width="1392" height="492" loading="lazy">
+          <div class="glass-frame__after">
+            <img class="glass-frame__img" src="https://cdn.jsdelivr.net/gh/Vanag8s/Claude@d4b33720d890ab6c3ddc7f8112e389ba39014518/assets/fv-after.webp" alt="" width="1392" height="492" loading="lazy">
+          </div>
+          <div class="glass-frame__wipe"><span></span></div>
+          <span class="glass-frame__tag glass-frame__tag--before">Without cover</span>
+          <span class="glass-frame__tag glass-frame__tag--after">With Frostveil</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="story__vignette" aria-hidden="true"></div>
+
+    <div class="story__hud" aria-hidden="true">
+      <div class="hud-chip"><span class="hud-chip__dot"></span><span data-hud-label>Tonight</span></div>
+      <div class="hud-readout">
+        <div><small>Outside</small><strong data-hud-temp>-12°C</strong></div>
+        <div><small>Time</small><strong data-hud-time>22:00</strong></div>
+        <div><small>Glass</small><strong data-hud-glass>Clear</strong></div>
+      </div>
+    </div>
+
+    <div class="story__chapters">
+      <div class="chapter chapter--intro" data-chapter="0" data-from="0" data-to="0.13">
+        <p class="eyebrow">3-Layer All-Season Windshield Cover</p>
+        <h1 class="display">Wake up to clear glass.</h1>
+        <p class="lead">No scraping. No de-icer. No waiting for the defrost. Frostveil wraps your windshield, front side windows and mirrors — and peels off in seconds.</p>
+        <div class="chapter__cta">
+          <a href="#buy" class="btn btn--lime btn--glow">Get yours</a>
+          <span class="scroll-hint"><span></span>Scroll to see it work</span>
+        </div>
+      </div><div class="chapter chapter--side" data-chapter="1" data-from="0.14" data-to="0.29" >
+          <p class="eyebrow"><span class="chapter__num">01</span> The problem</p>
+          <h2 class="h1">Overnight, your glass turns to stone.</h2>
+          <p class="lead">At −12°C, moisture freezes into a hard crust on the windshield, side windows and mirrors. Every morning starts with a scraper.</p><p class="stat"><strong>15 min</strong><span>of scraping & defrosting — gone</span></p></div><div class="chapter chapter--side" data-chapter="2" data-from="0.31" data-to="0.49" >
+          <p class="eyebrow"><span class="chapter__num">02</span> The fix</p>
+          <h2 class="h1">Lay it on. Tuck it in. Done.</h2>
+          <p class="lead">Spread Frostveil over the windshield, slip the elastic pockets over your mirrors and close the doors on the side flaps. It locks in place — no tools, no clips.</p><p class="stat"><strong>30 sec</strong><span>to install</span></p></div><div class="chapter chapter--side" data-chapter="3" data-from="0.51" data-to="0.63" >
+          <p class="eyebrow"><span class="chapter__num">03</span> Overnight</p>
+          <h2 class="h1">Snow lands on the cover. Not on your car.</h2>
+          <p class="lead">The nano-coated outer layer sheds water and snow, the Oxford core isolates the cold, and the non-slip PVC backing stays put on the glass.</p><p class="stat"><strong>3 layers</strong><span>between the weather and your glass</span></p></div><div class="chapter chapter--side" data-chapter="4" data-from="0.65" data-to="0.77" >
+          <p class="eyebrow"><span class="chapter__num">04</span> 7:00 a.m.</p>
+          <h2 class="h1">Peel. Shake. Drive.</h2>
+          <p class="lead">Open the door, pull the cover away and the ice goes with it. Clear windshield, clear side glass, clear mirrors.</p><p class="stat"><strong>2 sec</strong><span>to clear glass</span></p></div><div class="chapter chapter--side" data-chapter="5" data-from="0.79" data-to="1" >
+          <p class="eyebrow"><span class="chapter__num">05</span> Then summer arrives</p>
+          <h2 class="h1">It blocks the sun, too.</h2>
+          <p class="lead">Flip the season — the same cover shields your dashboard from UV and heat, so the cabin and steering wheel stay cooler in the parking lot.</p><p class="stat"><strong>UV</strong><span>blocking outer layer</span></p></div></div>
+
+    <ol class="story__progress" aria-hidden="true">
+      <li data-dot="0"></li><li data-dot="1"></li><li data-dot="2"></li><li data-dot="3"></li><li data-dot="4"></li><li data-dot="5"></li></ol>
+  </div>
+</section>
+
+
+
+<section id="layers" class="layers" data-layers>
+  <div class="layers__stage">
+    <div class="container layers__grid">
+      <div class="layers__visual" aria-hidden="true">
+        <div class="stack" data-stack>
+          <div class="sheet sheet--1" style="--tex: url('https://cdn.jsdelivr.net/gh/Vanag8s/Claude@d4b33720d890ab6c3ddc7f8112e389ba39014518/assets/fv-tex-nano.webp')"><span class="sheet__tag">L1 · Nano-coating</span><i class="sheet__drops"></i></div>
+          <div class="sheet sheet--2" style="--tex: url('https://cdn.jsdelivr.net/gh/Vanag8s/Claude@d4b33720d890ab6c3ddc7f8112e389ba39014518/assets/fv-tex-oxford.webp')"><span class="sheet__tag">L2 · Oxford</span></div>
+          <div class="sheet sheet--3" style="--tex: url('https://cdn.jsdelivr.net/gh/Vanag8s/Claude@d4b33720d890ab6c3ddc7f8112e389ba39014518/assets/fv-tex-pvc.webp')"><span class="sheet__tag">L3 · Non-slip PVC</span></div>
+        </div>
+        <div class="layers__ring"></div>
+      </div>
+
+      <div class="layers__copy">
+        <p class="eyebrow" data-reveal>The technology</p>
+        <h2 class="h1" data-reveal>Three layers. Zero bulk.</h2>
+        <p class="lead" data-reveal>Not thick cotton or sponge that soaks up water and freezes stiff. Frostveil insulates through its structure — a light, laminated composite that folds flat for storage.</p>
+
+        <ol class="layer-list"><li class="layer-item" data-layer-item="0" >
+              <span class="layer-item__idx">L1</span>
+              <div>
+                <h3>Nano-coating</h3>
+                <p class="layer-item__role">Sun & snow shield · UV block</p>
+                <p class="muted">A water-repellent outer skin. Snow, sleet and rain slide off instead of soaking in, and UV rays are reflected before they reach your dashboard.</p>
+              </div>
+            </li><li class="layer-item" data-layer-item="1" >
+              <span class="layer-item__idx">L2</span>
+              <div>
+                <h3>Oxford layer</h3>
+                <p class="layer-item__role">Isolates heat & cold</p>
+                <p class="muted">A tightly woven, tear-resistant core that adds strength and creates an insulating barrier between the weather and your glass.</p>
+              </div>
+            </li><li class="layer-item" data-layer-item="2" >
+              <span class="layer-item__idx">L3</span>
+              <div>
+                <h3>Non-slip PVC</h3>
+                <p class="layer-item__role">Grip & wear resistance</p>
+                <p class="muted">The soft backing grips the glass so the cover won't shift in wind, and protects the windshield from scratches.</p>
+              </div>
+            </li></ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section id="benefits" class="section features">
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow" data-reveal>Every benefit</p>
+      <h2 class="h1" data-reveal>Built for the worst mornings of the year.</h2></header>
+
+    <div class="feature-grid"><article class="feature-card" data-tilt data-reveal style="--d: 0ms" >
+          <div class="feature-card__glow" aria-hidden="true"></div>
+          <div class="feature-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M4.9 6.5l14.2 11M4.9 17.5l14.2-11"/><path d="m9 3.5 3 2 3-2M9 20.5l3-2 3 2M3.4 10l3.4.7-1 3.3M20.6 14l-3.4-.7 1-3.3"/></svg>
+</div>
+          <h3>No more scraping</h3>
+          <p>Ice forms on the cover, not the glass. Pull it off and the frost comes with it.</p>
+        </article><article class="feature-card" data-tilt data-reveal style="--d: 60ms" >
+          <div class="feature-card__glow" aria-hidden="true"></div>
+          <div class="feature-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+</div>
+          <h3>Summer sun & UV shield</h3>
+          <p>Reflects sunlight and UV to keep the dashboard, seats and steering wheel cooler and protect interior trim from fading.</p>
+        </article><article class="feature-card" data-tilt data-reveal style="--d: 120ms" >
+          <div class="feature-card__glow" aria-hidden="true"></div>
+          <div class="feature-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5c0-2 1.6-3.5 3.6-3.5h9.8a3.6 3.6 0 0 1 3.6 3.6v3.8c0 2-1.6 3.6-3.6 3.6H8.4c-2.7 0-4.9-2.2-4.9-4.9V8.5Z"/><path d="M9 16v3.5M6.5 19.5h5"/></svg>
+</div>
+          <h3>Mirror pockets</h3>
+          <p>Elastic covers for both side mirrors — no more frozen mirror glass in the morning.</p>
+        </article><article class="feature-card" data-tilt data-reveal style="--d: 180ms" >
+          <div class="feature-card__glow" aria-hidden="true"></div>
+          <div class="feature-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5 4.5 5.5v6c0 4.8 3.2 8.4 7.5 10 4.3-1.6 7.5-5.2 7.5-10v-6L12 2.5Z"/><path d="m8.8 12 2.2 2.2 4.4-4.6"/></svg>
+</div>
+          <h3>Side window protection</h3>
+          <p>Extra-wide flaps wrap over the front side windows for a clear view on both sides.</p>
+        </article><article class="feature-card" data-tilt data-reveal style="--d: 240ms" >
+          <div class="feature-card__glow" aria-hidden="true"></div>
+          <div class="feature-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.5" r="1.3"/></svg>
+</div>
+          <h3>Wind-proof & theft-resistant</h3>
+          <p>Flaps tuck inside the closed doors, holding the cover in strong wind and stopping it from being pulled off.</p>
+        </article><article class="feature-card" data-tilt data-reveal style="--d: 300ms" >
+          <div class="feature-card__glow" aria-hidden="true"></div>
+          <div class="feature-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h18M3 16h18"/><path d="m7 8-2 8M12 8l-2 8M17 8l-2 8"/></svg>
+</div>
+          <h3>Reflective safety bands</h3>
+          <p>High-visibility bands on the mirror pockets catch headlights when you're parked at night.</p>
+        </article><article class="feature-card" data-tilt data-reveal style="--d: 360ms" >
+          <div class="feature-card__glow" aria-hidden="true"></div>
+          <div class="feature-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s6.5 7 6.5 11.2A6.5 6.5 0 0 1 5.5 14.2C5.5 10 12 3 12 3Z"/><path d="M9 14.5a3 3 0 0 0 3 3"/></svg>
+</div>
+          <h3>Waterproof, never soggy</h3>
+          <p>No cotton or sponge to absorb water and freeze stiff. It stays light and flexible in deep cold.</p>
+        </article><article class="feature-card" data-tilt data-reveal style="--d: 420ms" >
+          <div class="feature-card__glow" aria-hidden="true"></div>
+          <div class="feature-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10l6 6-6 6H4z"/><path d="M14 6v12M4 12h10"/></svg>
+</div>
+          <h3>Folds flat</h3>
+          <p>Light composite folds down small enough for the trunk or door pocket.</p>
+        </article><article class="feature-card" data-tilt data-reveal style="--d: 480ms" >
+          <div class="feature-card__glow" aria-hidden="true"></div>
+          <div class="feature-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15.5v-3l2-5h14l2 5v3"/><path d="M3 15.5h18v2.5H3z"/><circle cx="7" cy="18.5" r="1.6"/><circle cx="17" cy="18.5" r="1.6"/><path d="M6.5 11.5h11"/></svg>
+</div>
+          <h3>Universal fit</h3>
+          <p>One oversized cut for hatchbacks, sedans, SUVs and MPVs — choose Standard or XL.</p>
+        </article><article class="feature-card" data-tilt data-reveal style="--d: 540ms" >
+          <div class="feature-card__glow" aria-hidden="true"></div>
+          <div class="feature-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-9 6-14 15-14 0 9-5 15-14 15"/><path d="M5 19c3-4 6-6.5 10-8.5"/></svg>
+</div>
+          <h3>Leaves, sap & droppings</h3>
+          <p>Parking under trees? The cover catches leaves, sap, pollen and bird droppings instead of your glass.</p>
+        </article><article class="feature-card" data-tilt data-reveal style="--d: 600ms" >
+          <div class="feature-card__glow" aria-hidden="true"></div>
+          <div class="feature-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg>
+</div>
+          <h3>Save your mornings</h3>
+          <p>Skip the idling, de-icer spray and scraping. Your morning gets 15 minutes back.</p>
+        </article><article class="feature-card" data-tilt data-reveal style="--d: 660ms" >
+          <div class="feature-card__glow" aria-hidden="true"></div>
+          <div class="feature-card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h11.5a2.5 2.5 0 1 0-2.5-2.5M3 15h15.5a2.5 2.5 0 1 1-2.5 2.5M3 12h8"/></svg>
+</div>
+          <h3>Protects wipers</h3>
+          <p>Wiper blades stay under the cover, so they don't freeze to the glass or tear on ice.</p>
+        </article></div>
+  </div>
+</section>
+
+
+
+<section id="coverage" class="section coverage">
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow" data-reveal>Full coverage</p>
+      <h2 class="h1" data-reveal>Windshield. Side glass. Mirrors.</h2>
+      <p class="lead" data-reveal>An oversized cut that protects every surface you need to see through before you drive.</p>
+    </header>
+
+    <div class="coverage__grid">
+      <figure class="coverage__media" data-reveal data-parallax-frame><img class="coverage__img" src="https://cdn.jsdelivr.net/gh/Vanag8s/Claude@d4b33720d890ab6c3ddc7f8112e389ba39014518/assets/fv-coverage-wide.webp" alt="Cover installed on a car showing windshield, side window and mirror protection" loading="lazy" width="2000" height="900"><button type="button" class="hotspot" style="left: 45%; top: 52%" data-hotspot="0" aria-label="Front windshield" >
+            <span class="hotspot__pulse"></span><span class="hotspot__num">1</span>
+          </button><button type="button" class="hotspot" style="left: 84%; top: 44%" data-hotspot="1" aria-label="Side window glass" >
+            <span class="hotspot__pulse"></span><span class="hotspot__num">2</span>
+          </button><button type="button" class="hotspot" style="left: 24%; top: 30%" data-hotspot="2" aria-label="Rearview mirrors" >
+            <span class="hotspot__pulse"></span><span class="hotspot__num">3</span>
+          </button></figure>
+
+      <ol class="zone-list"><li class="zone is-active" data-zone="0" data-reveal style="--d: 0ms">
+            <button type="button" class="zone__head" data-zone-btn="0">
+              <span class="zone__num">1</span>
+              <span class="zone__title">Front windshield</span>
+            </button>
+            <div class="zone__body">
+              <p>Oversized panel covers the whole windshield edge to edge, including the wiper area.</p><img src="https://cdn.jsdelivr.net/gh/Vanag8s/Claude@d4b33720d890ab6c3ddc7f8112e389ba39014518/assets/fv-zone-front.webp" alt="Front windshield" loading="lazy" width="800" height="800"></div>
+          </li><li class="zone" data-zone="1" data-reveal style="--d: 80ms">
+            <button type="button" class="zone__head" data-zone-btn="1">
+              <span class="zone__num">2</span>
+              <span class="zone__title">Side window glass</span>
+            </button>
+            <div class="zone__body">
+              <p>Wrap-around flaps cover the front side windows and tuck into the doors to hold the cover tight.</p><img src="https://cdn.jsdelivr.net/gh/Vanag8s/Claude@d4b33720d890ab6c3ddc7f8112e389ba39014518/assets/fv-zone-side.webp" alt="Side window glass" loading="lazy" width="800" height="800"></div>
+          </li><li class="zone" data-zone="2" data-reveal style="--d: 160ms">
+            <button type="button" class="zone__head" data-zone-btn="2">
+              <span class="zone__num">3</span>
+              <span class="zone__title">Rearview mirrors</span>
+            </button>
+            <div class="zone__body">
+              <p>Elastic mirror pockets with reflective bands keep both mirrors ice-free and visible at night.</p><img src="https://cdn.jsdelivr.net/gh/Vanag8s/Claude@d4b33720d890ab6c3ddc7f8112e389ba39014518/assets/fv-zone-mirror.webp" alt="Rearview mirrors" loading="lazy" width="800" height="800"></div>
+          </li></ol>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section morning">
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow" data-reveal>Your 7:00 a.m.</p>
+      <h2 class="h1" data-reveal>Scrape for minutes, or peel for seconds.</h2>
+    </header>
+
+    <div class="morning__grid">
+      <div class="morning__col morning__col--bad" data-reveal>
+        <p class="morning__label">Without a cover</p>
+        <p class="morning__big"><span data-count-to="15">0</span><small>min</small></p>
+        <ul class="ticks ticks--bad"><li>Idling the engine to defrost</li><li>Scraping thick ice by hand</li><li>Scratches from the scraper</li><li>De-icer spray every morning</li><li>Frozen wiper blades and mirrors</li></ul>
+      </div>
+
+      <figure class="compare" data-compare-slider data-reveal style="--pos: 50%">
+        <img src="https://cdn.jsdelivr.net/gh/Vanag8s/Claude@d4b33720d890ab6c3ddc7f8112e389ba39014518/assets/fv-before.webp" alt="Frozen windshield seen from the driver's seat" loading="lazy" width="1392" height="492">
+        <div class="compare__after"><img src="https://cdn.jsdelivr.net/gh/Vanag8s/Claude@d4b33720d890ab6c3ddc7f8112e389ba39014518/assets/fv-after.webp" alt="Clear windshield after removing the Frostveil cover" loading="lazy" width="1392" height="492"></div>
+        <span class="compare__tag compare__tag--l">Before</span><span class="compare__tag compare__tag--r">After</span>
+        <div class="compare__handle" aria-hidden="true"><span>⟷</span></div>
+        <input class="compare__range" type="range" min="0" max="100" value="50" aria-label="Drag to compare before and after">
+      </figure>
+
+      <div class="morning__col morning__col--good" data-reveal>
+        <p class="morning__label">With Frostveil</p>
+        <p class="morning__big"><span data-count-to="30">0</span><small>sec</small></p>
+        <ul class="ticks"><li>Open the door, pull the cover</li><li>Shake off the snow, fold it away</li><li>Clear windshield and side glass</li><li>Ice-free mirrors</li><li>Drive off immediately</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section id="seasons" class="section seasons" data-seasons data-season="winter">
+  <div class="seasons__sky" aria-hidden="true"><div class="seasons__sun"></div><div class="seasons__flakes"></div></div>
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow" data-reveal>365 days a year</p>
+      <h2 class="h1" data-reveal>One cover. Every season.</h2>
+      <div class="season-toggle" role="tablist" aria-label="Season" data-reveal>
+        <button type="button" role="tab" aria-selected="true" data-season-btn="winter"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M4.9 6.5l14.2 11M4.9 17.5l14.2-11"/><path d="m9 3.5 3 2 3-2M9 20.5l3-2 3 2M3.4 10l3.4.7-1 3.3M20.6 14l-3.4-.7 1-3.3"/></svg>
+ Winter</button>
+        <button type="button" role="tab" aria-selected="false" data-season-btn="summer"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+ Summer</button>
+        <span class="season-toggle__pill" aria-hidden="true"></span>
+      </div>
+    </header>
+
+    <div class="seasons__panels"><div class="season-panel" data-season-panel="winter" ><div class="season-card" >
+                <span class="season-card__icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M4.9 6.5l14.2 11M4.9 17.5l14.2-11"/><path d="m9 3.5 3 2 3-2M9 20.5l3-2 3 2M3.4 10l3.4.7-1 3.3M20.6 14l-3.4-.7 1-3.3"/></svg>
+</span>
+                <div><h3>Snow & ice</h3><p>Heavy snowfall and thick ice stay on the cover — sweep it off in one pull.</p></div>
+              </div><div class="season-card" >
+                <span class="season-card__icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s6.5 7 6.5 11.2A6.5 6.5 0 0 1 5.5 14.2C5.5 10 12 3 12 3Z"/><path d="M9 14.5a3 3 0 0 0 3 3"/></svg>
+</span>
+                <div><h3>Frost & freezing rain</h3><p>No more frozen crust. The nano-coating sheds sleet before it can bond.</p></div>
+              </div><div class="season-card" >
+                <span class="season-card__icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h11.5a2.5 2.5 0 1 0-2.5-2.5M3 15h15.5a2.5 2.5 0 1 1-2.5 2.5M3 12h8"/></svg>
+</span>
+                <div><h3>Frozen wipers & mirrors</h3><p>Wipers and mirror glass stay protected underneath.</p></div>
+              </div></div><div class="season-panel" data-season-panel="summer" hidden><div class="season-card" >
+                <span class="season-card__icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+</span>
+                <div><h3>Sun & heat</h3><p>Reflects direct sunlight off the windshield so the cabin heats up less.</p></div>
+              </div><div class="season-card" >
+                <span class="season-card__icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5 4.5 5.5v6c0 4.8 3.2 8.4 7.5 10 4.3-1.6 7.5-5.2 7.5-10v-6L12 2.5Z"/><path d="m8.8 12 2.2 2.2 4.4-4.6"/></svg>
+</span>
+                <div><h3>UV damage</h3><p>Protects dashboard, leather and trim from UV fading and cracking.</p></div>
+              </div><div class="season-card" >
+                <span class="season-card__icon"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-9 6-14 15-14 0 9-5 15-14 15"/><path d="M5 19c3-4 6-6.5 10-8.5"/></svg>
+</span>
+                <div><h3>Dust, pollen & sap</h3><p>Keeps tree sap, bird droppings and dust off the glass.</p></div>
+              </div></div></div>
+  </div>
+</section>
+
+
+
+<section id="install" class="section install" data-install>
+  <div class="container">
+    <header class="section-head">
+      <p class="eyebrow" data-reveal>Install in 30 seconds</p>
+      <h2 class="h1" data-reveal>No tools. No clips. No stress.</h2>
+      <p class="lead" data-reveal>Works the same on hatchbacks, sedans, SUVs and MPVs.</p>
+    </header>
+
+    <ol class="steps">
+      <span class="steps__line" aria-hidden="true"><span data-install-progress></span></span><li class="step" data-reveal style="--d: 0ms" >
+          <span class="step__num">1</span>
+          <span class="step__time">5 sec</span>
+          <h3>Unfold</h3>
+          <p>Shake out the cover, soft PVC side down, lime trim facing out.</p>
+        </li><li class="step" data-reveal style="--d: 90ms" >
+          <span class="step__num">2</span>
+          <span class="step__time">10 sec</span>
+          <h3>Lay it on</h3>
+          <p>Center it over the windshield and let the side panels fall over the front side windows.</p>
+        </li><li class="step" data-reveal style="--d: 180ms" >
+          <span class="step__num">3</span>
+          <span class="step__time">10 sec</span>
+          <h3>Mirror pockets</h3>
+          <p>Slip the elastic pockets over both side mirrors.</p>
+        </li><li class="step" data-reveal style="--d: 270ms" >
+          <span class="step__num">4</span>
+          <span class="step__time">5 sec</span>
+          <h3>Close the doors</h3>
+          <p>Tuck the side flaps inside the doors and close them. Locked in place.</p>
+        </li></ol>
+  </div>
+</section>
+
+
+
+
+<section id="buy" class="section buy" data-buy>
+  <div class="buy__aura" aria-hidden="true"></div>
+  <div class="container buy__grid">
+    <div class="gallery" data-gallery>
+      <div class="gallery__main" data-tilt>
+        {%- if p and p.images.size > 0 -%}
+          {%- for image in p.images -%}<img class="gallery__img" src="{{ image | image_url: width: 1400 }}" alt="{{ image.alt | default: p.title | escape }}" loading="lazy">{%- endfor -%}
+        {%- else -%}
+          <img class="gallery__img" src="https://cdn.jsdelivr.net/gh/Vanag8s/Claude@d4b33720d890ab6c3ddc7f8112e389ba39014518/assets/fv-zones.webp" alt="Frostveil windshield cover" loading="lazy">
+          <img class="gallery__img" src="https://cdn.jsdelivr.net/gh/Vanag8s/Claude@d4b33720d890ab6c3ddc7f8112e389ba39014518/assets/fv-coverage.webp" alt="Frostveil windshield cover" loading="lazy">
+          <img class="gallery__img" src="https://cdn.jsdelivr.net/gh/Vanag8s/Claude@d4b33720d890ab6c3ddc7f8112e389ba39014518/assets/fv-layers.webp" alt="Frostveil windshield cover" loading="lazy">
+          <img class="gallery__img" src="https://cdn.jsdelivr.net/gh/Vanag8s/Claude@d4b33720d890ab6c3ddc7f8112e389ba39014518/assets/fv-before-after.webp" alt="Frostveil windshield cover" loading="lazy">
+          <img class="gallery__img" src="https://cdn.jsdelivr.net/gh/Vanag8s/Claude@d4b33720d890ab6c3ddc7f8112e389ba39014518/assets/fv-fit.webp" alt="Frostveil windshield cover" loading="lazy">
+        {%- endif -%}
+        <span class="gallery__badge">All-season</span>
+      </div>
+      <div class="gallery__thumbs">
+        {%- if p and p.images.size > 0 -%}
+          {%- for image in p.images -%}<button type="button" class="gallery__thumb" data-gallery-thumb aria-label="Image {{ forloop.index }}"><img src="{{ image | image_url: width: 240 }}" alt="" loading="lazy"></button>{%- endfor -%}
+        {%- else -%}
+          <button type="button" class="gallery__thumb" data-gallery-thumb aria-label="Image 1"><img src="https://cdn.jsdelivr.net/gh/Vanag8s/Claude@d4b33720d890ab6c3ddc7f8112e389ba39014518/assets/fv-zones.webp" alt="" loading="lazy"></button>
+          <button type="button" class="gallery__thumb" data-gallery-thumb aria-label="Image 2"><img src="https://cdn.jsdelivr.net/gh/Vanag8s/Claude@d4b33720d890ab6c3ddc7f8112e389ba39014518/assets/fv-coverage.webp" alt="" loading="lazy"></button>
+          <button type="button" class="gallery__thumb" data-gallery-thumb aria-label="Image 3"><img src="https://cdn.jsdelivr.net/gh/Vanag8s/Claude@d4b33720d890ab6c3ddc7f8112e389ba39014518/assets/fv-layers.webp" alt="" loading="lazy"></button>
+          <button type="button" class="gallery__thumb" data-gallery-thumb aria-label="Image 4"><img src="https://cdn.jsdelivr.net/gh/Vanag8s/Claude@d4b33720d890ab6c3ddc7f8112e389ba39014518/assets/fv-before-after.webp" alt="" loading="lazy"></button>
+          <button type="button" class="gallery__thumb" data-gallery-thumb aria-label="Image 5"><img src="https://cdn.jsdelivr.net/gh/Vanag8s/Claude@d4b33720d890ab6c3ddc7f8112e389ba39014518/assets/fv-fit.webp" alt="" loading="lazy"></button>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="buy__panel">
+      <p class="eyebrow">Limited winter stock</p>
+      <h2 class="h2 buy__title">{% if p %}{{ p.title }}{% else %}Frostveil 3-Layer All-Season Windshield Cover{% endif %}</h2>
+      <div class="price">
+        {%- if p -%}
+          <span class="price__now" data-price>{{ v.price | money }}</span>
+          <s class="price__was" data-compare {% unless v.compare_at_price > v.price %}hidden{% endunless %}>{{ v.compare_at_price | money }}</s>
+          <span class="price__save" data-save {% unless v.compare_at_price > v.price %}hidden{% endunless %}>Save {{ v.compare_at_price | minus: v.price | money }}</span>
+        {%- else -%}
+          <span class="price__now">$59.99</span><s class="price__was">$89.99</s>
+        {%- endif -%}
+      </div>
+      <ul class="buy__bullets">
+        <li>Covers windshield, front side windows and both mirrors</li>
+        <li>3-layer composite: nano-coating, Oxford, non-slip PVC</li>
+        <li>Door-tuck flaps hold it in wind and deter theft</li>
+        <li>Reflective mirror bands for night visibility</li>
+        <li>Folds flat for storage</li>
+      </ul>
+      {%- if p -%}
+        {%- form 'product', p, class: 'product-form', data-product-form: '' -%}
+          <script type="application/json" data-product-json>{{ p | json }}</script>
+          <input type="hidden" name="id" value="{{ v.id }}" data-variant-id>
+          {%- unless p.has_only_default_variant -%}
+            {%- for option in p.options_with_values -%}
+              {%- assign opt_idx = forloop.index0 -%}
+              <fieldset class="option" data-option-index="{{ opt_idx }}">
+                <legend>{{ option.name }}: <span data-option-value>{{ option.selected_value }}</span></legend>
+                <div class="option__pills">
+                  {%- for value in option.values -%}
+                    <label class="pill"><input type="radio" name="fv-option-{{ opt_idx }}" value="{{ value | escape }}" {% if option.selected_value == value %}checked{% endif %}><span>{{ value }}</span></label>
+                  {%- endfor -%}
+                </div>
+              </fieldset>
+            {%- endfor -%}
+          {%- endunless -%}
+          <div class="buy__row">
+            <div class="qty" data-qty>
+              <button type="button" data-qty-minus aria-label="Decrease quantity">−</button>
+              <input type="number" name="quantity" value="1" min="1" max="10" aria-label="Quantity">
+              <button type="button" data-qty-plus aria-label="Increase quantity">+</button>
+            </div>
+            <button type="submit" class="btn btn--lime btn--glow btn--block" data-add-btn {% unless v.available %}disabled{% endunless %}>
+              <span data-add-label>{% if v.available %}Add to cart{% else %}Sold out{% endif %}</span>
+            </button>
+          </div>
+          <p class="form-error" data-form-error hidden></p>
+        {%- endform -%}
+      {%- else -%}
+        <p class="notice">Pick your product in this section's settings (Customize → Frostveil landing → Product) to turn on checkout.</p>
+      {%- endif -%}
+      <ul class="trust">
+        <li><span><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15.5v-3l2-5h14l2 5v3"/><path d="M3 15.5h18v2.5H3z"/><circle cx="7" cy="18.5" r="1.6"/><circle cx="17" cy="18.5" r="1.6"/><path d="M6.5 11.5h11"/></svg>
+</span>Fast, tracked shipping</li>
+        <li><span><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.5 4.5 5.5v6c0 4.8 3.2 8.4 7.5 10 4.3-1.6 7.5-5.2 7.5-10v-6L12 2.5Z"/><path d="m8.8 12 2.2 2.2 4.4-4.6"/></svg>
+</span>30-day returns</li>
+        <li><span><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.5" r="1.3"/></svg>
+</span>Secure checkout</li>
+      </ul>
+    </div>
+  </div>
+</section>
+<section id="specs" class="section specs">
+  <div class="container specs__grid">
+    <header>
+      <p class="eyebrow" data-reveal>Specifications</p>
+      <h2 class="h1" data-reveal>Universal fit, honest specs.</h2>
+      <p class="lead" data-reveal>Fits most hatchbacks, sedans, SUVs and MPVs. Measure your windshield and pick the size that covers it with a little to spare.</p>
+      <figure class="specs__fit" data-reveal>
+        <img src="https://cdn.jsdelivr.net/gh/Vanag8s/Claude@d4b33720d890ab6c3ddc7f8112e389ba39014518/assets/fv-fit.webp" alt="Cover shape with compatible vehicle types: hatchback, sedan, SUV, MPV" loading="lazy" width="800" height="800">
+      </figure>
+    </header>
+    <dl class="spec-table" data-reveal><div class="spec-row" ><dt>Material</dt><dd>3-layer composite: nano-coated surface, Oxford core, non-slip PVC backing</dd></div><div class="spec-row" ><dt>Coverage</dt><dd>Windshield, front side windows, both side mirrors</dd></div><div class="spec-row" ><dt>Sizes</dt><dd>Standard (hatchback, sedan) · XL (SUV, MPV)</dd></div><div class="spec-row" ><dt>Fixing</dt><dd>Door-tuck side flaps + elastic mirror pockets</dd></div><div class="spec-row" ><dt>Protects against</dt><dd>Snow, ice, frost, sleet, sun, UV, dust, sap, bird droppings</dd></div><div class="spec-row" ><dt>Visibility</dt><dd>Reflective bands on mirror pockets</dd></div><div class="spec-row" ><dt>Colour</dt><dd>Black with silver quilting and lime trim</dd></div><div class="spec-row" ><dt>Care</dt><dd>Shake off, wipe or rinse with water, air dry before folding</dd></div></dl>
+  </div>
+</section>
+
+
+
+<section id="faq" class="section faq">
+  <div class="container container--narrow">
+    <header class="section-head">
+      <p class="eyebrow" data-reveal>Questions</p>
+      <h2 class="h1" data-reveal>Everything you might ask.</h2>
+    </header>
+    <div class="faq__list"><details class="faq-item" data-reveal >
+          <summary><span>Will it fit my car?</span><span class="faq-item__icon" aria-hidden="true"></span></summary>
+          <div class="faq-item__a"><p>Frostveil is designed to fit most hatchbacks, sedans, SUVs and MPVs. Choose <strong>Standard</strong> for cars and hatchbacks and <strong>XL</strong> for SUVs, MPVs and vans. If you're between sizes, choose XL — extra overlap is better than too little.</p></div>
+        </details><details class="faq-item" data-reveal >
+          <summary><span>How does it stay on in the wind?</span><span class="faq-item__icon" aria-hidden="true"></span></summary>
+          <div class="faq-item__a"><p>The side flaps tuck inside the front doors and are held when you close them, and the elastic mirror pockets anchor both sides. The non-slip PVC backing keeps it from sliding on the glass.</p></div>
+        </details><details class="faq-item" data-reveal >
+          <summary><span>Can someone steal it?</span><span class="faq-item__icon" aria-hidden="true"></span></summary>
+          <div class="faq-item__a"><p>With the flaps shut inside locked doors, the cover can't simply be lifted off the car.</p></div>
+        </details><details class="faq-item" data-reveal >
+          <summary><span>Will it scratch my windshield or paint?</span><span class="faq-item__icon" aria-hidden="true"></span></summary>
+          <div class="faq-item__a"><p>No. The inner layer is a soft PVC that sits gently on glass. Make sure the glass is free of grit before laying it on.</p></div>
+        </details><details class="faq-item" data-reveal >
+          <summary><span>What if snow freezes onto the cover?</span><span class="faq-item__icon" aria-hidden="true"></span></summary>
+          <div class="faq-item__a"><p>Pull it off and give it a shake — the nano-coated surface stops ice from bonding strongly. Let it dry before folding it away.</p></div>
+        </details><details class="faq-item" data-reveal >
+          <summary><span>Can I use it in summer?</span><span class="faq-item__icon" aria-hidden="true"></span></summary>
+          <div class="faq-item__a"><p>Yes. The outer layer reflects sunlight and UV, helping keep your dashboard and steering wheel cooler when parked.</p></div>
+        </details><details class="faq-item" data-reveal >
+          <summary><span>Can I put it on a wet or frosted windshield?</span><span class="faq-item__icon" aria-hidden="true"></span></summary>
+          <div class="faq-item__a"><p>Yes. It's waterproof. For best results, install it the evening before frost is forecast.</p></div>
+        </details><details class="faq-item" data-reveal >
+          <summary><span>How do I clean it?</span><span class="faq-item__icon" aria-hidden="true"></span></summary>
+          <div class="faq-item__a"><p>Rinse with water or wipe with a damp cloth and mild soap, then air dry. Don't machine wash or tumble dry.</p></div>
+        </details></div>
+  </div>
+</section>
+
+
+
+<section class="cta" data-cta>
+  <div class="cta__bg" aria-hidden="true" data-snowfield></div>
+  <div class="container cta__inner">
+    <p class="eyebrow" data-reveal>Tonight, it freezes again</p>
+    <h2 class="display" data-reveal>Tomorrow, just drive.</h2>
+    <p class="lead" data-reveal>Put it on in 30 seconds tonight. Pull it off in 2 tomorrow.</p>
+    <a href="#buy" class="btn btn--lime btn--glow btn--large" data-reveal data-magnetic>Get Frostveil</a>
+  </div>
+</section>
+
+
+
+
+</div>
+
+<script>
+  window.Frost = {
+    routes: { cartAdd: {{ routes.cart_add_url | json }}, cartChange: {{ routes.cart_change_url | json }}, cart: {{ routes.cart_url | json }} },
+    moneyFormat: {{ shop.money_format | json }},
+    snow: true,
+    preview: false
+  };
+  document.getElementById('fv-landing').classList.add('fv-js');
+</script>
+<script>
+{% raw %}/* Frostveil – cinematic scroll story, depth-of-field snow, layer stack, compare slider.
+   Plain JS, no dependencies. */
+(function () {
+  'use strict';
+  var F = window.Frost || {};
+  var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var clamp = function (v, a, b) { return Math.min(b === undefined ? 1 : b, Math.max(a || 0, v)); };
+  var lerp = function (a, b, t) { return a + (b - a) * t; };
+  var smooth = function (e0, e1, x) { var t = clamp((x - e0) / (e1 - e0)); return t * t * (3 - 2 * t); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+  /* Visibility of a "a,b|c,d" range list at progress p */
+  function rangeOpacity(spec, p, fade) {
+    fade = fade || 0.022;
+    return spec.split('|').reduce(function (best, r) {
+      var ab = r.split(',').map(Number), a = ab[0], b = ab[1];
+      var fin = a <= 0.001 ? 1 : smooth(a - fade, a + fade, p);
+      var fout = b >= 0.999 ? 1 : 1 - smooth(b - fade, b + fade, p);
+      return Math.max(best, fin * fout);
+    }, 0);
+  }
+
+  /* ---------------- Depth-of-field snow ---------------- */
+  function Snow(canvas) {
+    var ctx = canvas.getContext('2d'), W = 0, H = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var flakes = [], sprites = [];
+    // pre-render soft sprites: near flakes are big & blurry, far flakes are tiny & crisp
+    for (var k = 0; k < 6; k++) {
+      var s = document.createElement('canvas'), r = 6 + k * 7; s.width = s.height = r * 2;
+      var g = s.getContext('2d'), grd = g.createRadialGradient(r, r, 0, r, r, r);
+      var core = 0.55 - k * 0.07;
+      grd.addColorStop(0, 'rgba(255,255,255,1)'); grd.addColorStop(core, 'rgba(255,255,255,' + (0.9 - k * 0.1) + ')'); grd.addColorStop(1, 'rgba(255,255,255,0)');
+      g.fillStyle = grd; g.fillRect(0, 0, r * 2, r * 2); sprites.push(s);
+    }
+    function resize() {
+      W = canvas.clientWidth; H = canvas.clientHeight;
+      canvas.width = W * dpr; canvas.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var n = Math.round((W * H) / (W < 700 ? 5200 : 6500));
+      flakes = [];
+      for (var i = 0; i < n; i++) flakes.push(spawn(true));
+    }
+    function spawn(any) {
+      var z = Math.pow(Math.random(), 2.2); // most flakes far away
+      return { x: Math.random() * W, y: any ? Math.random() * H : -20, z: z, size: lerp(1.2, 26, z * z), speed: lerp(18, 120, z), drift: Math.random() * Math.PI * 2, a: lerp(0.35, 0.75, Math.random()) };
+    }
+    window.addEventListener('resize', resize); resize();
+    this.amount = 1; this.wind = 0;
+    var self = this;
+    this.step = function (dt, t) {
+      ctx.clearRect(0, 0, W, H);
+      if (self.amount < 0.01) return;
+      for (var i = 0; i < flakes.length; i++) {
+        var f = flakes[i];
+        f.y += f.speed * dt;
+        f.x += (Math.sin(t * 0.6 + f.drift) * 12 + self.wind * 40) * dt * (0.4 + f.z);
+        if (f.y > H + 30 || f.x < -40 || f.x > W + 40) { flakes[i] = spawn(false); flakes[i].x = Math.random() * W; continue; }
+        var spr = sprites[Math.min(5, Math.floor(f.z * 6))];
+        ctx.globalAlpha = f.a * self.amount * (f.z > 0.75 ? 0.55 : 1);
+        ctx.drawImage(spr, f.x - f.size / 2, f.y - f.size / 2, f.size, f.size);
+      }
+      ctx.globalAlpha = 1;
+    };
+  }
+
+  /* ---------------- Scroll story ---------------- */
+  function initStory(root) {
+    var stage = root.querySelector('.story__stage');
+    var scenes = $$('[data-scene]', root).map(function (el) { return { el: el, spec: el.getAttribute('data-scene') }; });
+    var inner = $$('[data-scene-inner]', root).map(function (el) { return { el: el, spec: el.getAttribute('data-scene-inner') }; });
+    var chapters = $$('[data-chapter]', root).map(function (el) { return { el: el, from: +el.dataset.from || 0, to: +el.dataset.to || 1 }; });
+    var dots = $$('[data-dot]', root);
+    var float = root.querySelector('[data-float]');
+    var frame = root.querySelector('[data-wipe-range]');
+    var wipeR = frame ? frame.getAttribute('data-wipe-range').split(',').map(Number) : [0, 1];
+    var hud = { temp: root.querySelector('[data-hud-temp]'), time: root.querySelector('[data-hud-time]'), glass: root.querySelector('[data-hud-glass]'), label: root.querySelector('[data-hud-label]') };
+    var snowCanvas = root.querySelector('[data-snow]');
+    var snow = snowCanvas && F.snow !== false && !REDUCED ? new Snow(snowCanvas) : null;
+
+    // product pose keyframes: x/y in % of stage, scale, rotateX, rotateZ
+    var KEYS = [
+      { p: 0.00, x: 21, y: 3, s: 1.0, rx: 50, rz: -7 },
+      { p: 0.13, x: 21, y: -2, s: 0.92, rx: 58, rz: -4 },
+      { p: 0.30, x: 19, y: 4, s: 0.95, rx: 30, rz: 2 },
+      { p: 0.40, x: 19, y: 2, s: 1.04, rx: 24, rz: 0 },
+      { p: 0.50, x: 20, y: 3, s: 1.0, rx: 48, rz: 5 },
+      { p: 0.64, x: 20, y: 6, s: 0.96, rx: 56, rz: 3 },
+      { p: 0.78, x: 20, y: 2, s: 0.96, rx: 44, rz: -5 },
+      { p: 1.00, x: 19, y: -1, s: 1.06, rx: 30, rz: -2 }
+    ];
+    function pose(p) {
+      var i = 0; while (i < KEYS.length - 2 && p > KEYS[i + 1].p) i++;
+      var a = KEYS[i], b = KEYS[i + 1], t = smooth(a.p, b.p, p);
+      return { x: lerp(a.x, b.x, t), y: lerp(a.y, b.y, t), s: lerp(a.s, b.s, t), rx: lerp(a.rx, b.rx, t), rz: lerp(a.rz, b.rz, t) };
+    }
+
+    var target = 0, p = 0, mx = 0, my = 0, smx = 0, smy = 0, last = performance.now(), visible = true;
+    function read() { var r = root.getBoundingClientRect(); target = clamp(-r.top / ((r.height - window.innerHeight) || 1)); }
+    window.addEventListener('scroll', read, { passive: true }); read();
+    window.addEventListener('pointermove', function (e) { mx = e.clientX / window.innerWidth - 0.5; my = e.clientY / window.innerHeight - 0.5; }, { passive: true });
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { visible = en[0].isIntersecting; }).observe(root);
+
+    function fmt(h) { var hh = Math.floor(h) % 24, mm = Math.floor((h % 1) * 60); return (hh < 10 ? '0' : '') + hh + ':' + (mm < 10 ? '0' : '') + mm; }
+
+    function tick(now) {
+      requestAnimationFrame(tick);
+      var dt = Math.min((now - last) / 1000, 0.05); last = now;
+      if (!visible) return;
+      p += (target - p) * (REDUCED ? 1 : Math.min(1, dt * 6));
+      smx += (mx - smx) * Math.min(1, dt * 4); smy += (my - smy) * Math.min(1, dt * 4);
+      var t = now / 1000;
+
+      // scenes
+      scenes.forEach(function (s) { var o = rangeOpacity(s.spec, p); s.el.style.opacity = o.toFixed(3); s.el.style.visibility = o < 0.005 ? 'hidden' : 'visible'; });
+      inner.forEach(function (s) { var o = rangeOpacity(s.spec, p, 0.015); s.el.style.setProperty('--in', o.toFixed(3)); s.el.classList.toggle('is-in', o > 0.5); });
+
+      // product pose
+      if (float) {
+        var mobile = window.innerWidth < 900, q = pose(p);
+        var bob = REDUCED ? 0 : Math.sin(t * 1.1) * 8;
+        var x = mobile ? 0 : q.x, y = mobile ? -17 + q.y * 0.3 : q.y;
+        float.style.transform = 'translate3d(' + x + 'vw,calc(' + y + 'vh + ' + bob.toFixed(1) + 'px),0) scale(' + (q.s * (mobile ? 0.92 : 1)).toFixed(3) + ') rotateX(' + (q.rx - smy * 10).toFixed(2) + 'deg) rotateY(' + (smx * 14).toFixed(2) + 'deg) rotateZ(' + q.rz.toFixed(2) + 'deg)';
+      }
+
+      // mood
+      var summer = smooth(0.78, 0.86, p);
+      var night = smooth(0.48, 0.54, p) * (1 - smooth(0.62, 0.67, p));
+      var overnightSnow = smooth(0.5, 0.6, p) * (1 - smooth(0.63, 0.66, p));
+      var wipe = smooth(wipeR[0], wipeR[1], p);
+      stage.style.setProperty('--summer', summer.toFixed(3));
+      stage.style.setProperty('--night', night.toFixed(3));
+      stage.style.setProperty('--cover-snow', overnightSnow.toFixed(3));
+      stage.style.setProperty('--wipe', wipe.toFixed(4));
+      root.classList.toggle('is-summer', summer > 0.5);
+      if (snow) { snow.amount = (1 - summer) * (0.55 + night * 0.9 + smooth(0.14, 0.2, p) * 0.3 * (1 - smooth(0.29, 0.31, p))); snow.wind = night * 0.8 + smx * 0.6; snow.step(dt, t); }
+
+      // chapters
+      var best = 0, bi = 0;
+      chapters.forEach(function (c, i) {
+        var fin = c.from <= 0.001 ? 1 : smooth(c.from, c.from + 0.025, p);
+        var fout = c.to >= 0.999 ? 1 : 1 - smooth(c.to - 0.025, c.to, p);
+        var o = fin * fout;
+        c.el.style.opacity = o.toFixed(3);
+        c.el.style.transform = 'translate3d(0,' + ((1 - fin) * 46 - (1 - fout) * 46).toFixed(1) + 'px,0)';
+        c.el.style.filter = o < 0.99 ? 'blur(' + ((1 - o) * 8).toFixed(1) + 'px)' : 'none';
+        c.el.style.pointerEvents = o > 0.5 ? 'auto' : 'none';
+        if (o > best) { best = o; bi = i; }
+      });
+      dots.forEach(function (d, i) { d.classList.toggle('is-active', i === bi); });
+
+      // HUD
+      var temp = '-12°C', time = '22:00', glass = 'Clear', label = 'Tonight';
+      if (p < 0.13) { time = '21:58'; glass = 'Clear'; label = 'Tonight −12°C'; }
+      else if (p < 0.30) { time = '07:00'; glass = 'Frozen'; label = 'Without cover'; }
+      else if (p < 0.49) { time = '22:00'; glass = 'Covered'; label = 'With Frostveil'; }
+      else if (p < 0.64) { time = fmt(22 + smooth(0.49, 0.64, p) * 9); glass = 'Protected'; label = 'Overnight'; temp = Math.round(-12 - smooth(0.49, 0.6, p) * 4) + '°C'; }
+      else if (p < 0.78) { time = '07:00'; glass = wipe > 0.5 ? 'Clear ✓' : 'Peeling…'; label = 'Morning'; temp = '-16°C'; }
+      else { temp = Math.round(lerp(-16, 34, summer)) + '°C'; time = '14:00'; glass = 'Shaded'; label = 'Summer'; }
+      if (hud.temp) hud.temp.textContent = temp;
+      if (hud.time) hud.time.textContent = time;
+      if (hud.glass) hud.glass.textContent = glass;
+      if (hud.label) hud.label.textContent = label;
+    }
+    requestAnimationFrame(tick);
+    root.classList.add('is-ready');
+  }
+
+  /* ---------------- Layer stack (CSS 3D) ---------------- */
+  function initLayers(root) {
+    var stage = root.querySelector('.layers__stage'), stack = root.querySelector('[data-stack]');
+    var sheets = $$('.sheet', root), items = $$('[data-layer-item]', root);
+    var target = 0, q = 0, last = performance.now(), mx = 0, my = 0;
+    function read() {
+      var r = root.getBoundingClientRect(), vh = window.innerHeight;
+      var sticky = getComputedStyle(stage).position === 'sticky';
+      target = sticky ? clamp(-r.top / ((r.height - vh) || 1)) : clamp((vh * 0.9 - r.top) / (r.height + vh * 0.1));
+    }
+    window.addEventListener('scroll', read, { passive: true }); read();
+    root.addEventListener('pointermove', function (e) { mx = e.clientX / window.innerWidth - 0.5; my = e.clientY / window.innerHeight - 0.5; });
+    (function tick(now) {
+      requestAnimationFrame(tick);
+      var dt = Math.min((now - last) / 1000, 0.05); last = now;
+      q += (target - q) * (REDUCED ? 1 : Math.min(1, dt * 6));
+      var explode = smooth(0.02, 0.3, q);
+      var active = q < 0.3 ? -1 : Math.min(2, Math.floor((q - 0.3) / 0.7 * 3));
+      stack.style.setProperty('--explode', explode.toFixed(3));
+      stack.style.setProperty('--tilt-x', (my * -8).toFixed(2) + 'deg');
+      stack.style.setProperty('--tilt-z', (mx * 10).toFixed(2) + 'deg');
+      sheets.forEach(function (s, i) { s.classList.toggle('is-active', i === active); });
+      items.forEach(function (el, i) { el.classList.toggle('is-active', i === active); });
+    })(last);
+  }
+
+  /* ---------------- Before / after slider ---------------- */
+  function initCompare(el) {
+    var range = el.querySelector('.compare__range');
+    var set = function (v) { el.style.setProperty('--pos', v + '%'); };
+    range.addEventListener('input', function () { set(range.value); });
+    // gentle intro sweep once visible
+    if ('IntersectionObserver' in window && !REDUCED) {
+      var io = new IntersectionObserver(function (en) {
+        if (!en[0].isIntersecting) return; io.disconnect();
+        var start = performance.now();
+        (function a(now) {
+          var t = clamp((now - start) / 1800);
+          var v = 50 + Math.sin(t * Math.PI * 2) * 30 * (1 - t);
+          set(v.toFixed(1)); range.value = v;
+          if (t < 1) requestAnimationFrame(a);
+        })(start);
+      }, { threshold: 0.6 });
+      io.observe(el);
+    }
+  }
+
+  function boot() {
+    $$('[data-story]').forEach(initStory);
+    $$('[data-layers]').forEach(initLayers);
+    $$('[data-compare-slider]').forEach(initCompare);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+
+/* Frostveil theme – UI, motion & AJAX cart (no dependencies) */
+(function () {
+  'use strict';
+  var F = window.Frost || {};
+  var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var clamp = function (v, a, b) { return Math.min(b, Math.max(a, v)); };
+  var smooth = function (e0, e1, x) { var t = clamp((x - e0) / (e1 - e0), 0, 1); return t * t * (3 - 2 * t); };
+
+  /* ---------------- Money ---------------- */
+  function formatMoney(cents, format) {
+    if (typeof cents === 'string') cents = cents.replace('.', '');
+    format = format || F.moneyFormat || '${{amount}}';
+    var re = /\{\{\s*(\w+)\s*\}\}/;
+    function withDelims(n, prec, thou, dec) {
+      thou = thou || ','; dec = dec || '.';
+      if (isNaN(n) || n == null) return 0;
+      n = (n / 100.0).toFixed(prec);
+      var parts = n.split('.');
+      return parts[0].replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1' + thou) + (parts[1] ? dec + parts[1] : '');
+    }
+    var m = format.match(re), v = '';
+    switch (m ? m[1] : 'amount') {
+      case 'amount_no_decimals': v = withDelims(cents, 0); break;
+      case 'amount_with_comma_separator': v = withDelims(cents, 2, '.', ','); break;
+      case 'amount_no_decimals_with_comma_separator': v = withDelims(cents, 0, '.', ','); break;
+      case 'amount_with_apostrophe_separator': v = withDelims(cents, 2, "'", '.'); break;
+      default: v = withDelims(cents, 2);
+    }
+    return format.replace(re, v);
+  }
+  F.formatMoney = formatMoney;
+
+  /* ---------------- Header ---------------- */
+  var header = $('[data-header]');
+  var lastY = 0;
+  function onScrollHeader() {
+    var y = window.scrollY;
+    if (header) {
+      header.classList.toggle('is-scrolled', y > 40);
+      header.classList.toggle('is-hidden', y > lastY && y > 600);
+    }
+    lastY = y;
+  }
+  window.addEventListener('scroll', onScrollHeader, { passive: true }); onScrollHeader();
+
+  /* ---------------- Reveal on scroll ---------------- */
+  if ('IntersectionObserver' in window && !REDUCED) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+    }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+    $$('[data-reveal]').forEach(function (el) { io.observe(el); });
+  } else {
+    $$('[data-reveal]').forEach(function (el) { el.classList.add('is-in'); });
+  }
+
+  /* ---------------- Count-up numbers ---------------- */
+  var cio = 'IntersectionObserver' in window ? new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      cio.unobserve(e.target);
+      var el = e.target, to = parseFloat(el.getAttribute('data-count-to')) || 0, start = performance.now(), dur = 1400;
+      (function tick(now) {
+        var t = clamp((now - start) / dur, 0, 1), eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = Math.round(to * eased);
+        if (t < 1) requestAnimationFrame(tick);
+      })(start);
+    });
+  }, { threshold: 0.6 }) : null;
+  $$('[data-count-to]').forEach(function (el) { if (cio && !REDUCED) cio.observe(el); else el.textContent = el.getAttribute('data-count-to'); });
+
+  /* ---------------- 3D tilt cards ---------------- */
+  if (!REDUCED && window.matchMedia('(hover: hover)').matches) {
+    $$('[data-tilt]').forEach(function (el) {
+      el.addEventListener('pointermove', function (e) {
+        var r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+        el.style.setProperty('--rx', (-y * 10).toFixed(2) + 'deg');
+        el.style.setProperty('--ry', (x * 12).toFixed(2) + 'deg');
+        el.style.setProperty('--mx', ((x + 0.5) * 100).toFixed(1) + '%');
+        el.style.setProperty('--my', ((y + 0.5) * 100).toFixed(1) + '%');
+      });
+      el.addEventListener('pointerleave', function () { el.style.setProperty('--rx', '0deg'); el.style.setProperty('--ry', '0deg'); });
+    });
+    $$('[data-magnetic]').forEach(function (el) {
+      el.addEventListener('pointermove', function (e) {
+        var r = el.getBoundingClientRect();
+        el.style.transform = 'translate(' + ((e.clientX - r.left - r.width / 2) * 0.25) + 'px,' + ((e.clientY - r.top - r.height / 2) * 0.35) + 'px)';
+      });
+      el.addEventListener('pointerleave', function () { el.style.transform = ''; });
+    });
+  }
+
+  /* ---------------- Parallax image + install progress ---------------- */
+  var par = $$('.coverage__img');
+  var steps = $('[data-install]'), stepBar = $('[data-install-progress]');
+  function onScrollFx() {
+    var vh = window.innerHeight;
+    par.forEach(function (img) {
+      var r = img.parentElement.getBoundingClientRect();
+      var k = clamp((vh - r.top) / (vh + r.height), 0, 1);
+      img.style.transform = 'scale(1.12) translate3d(0,' + ((k - 0.5) * -40).toFixed(1) + 'px,0)';
+    });
+    if (steps && stepBar) {
+      var r = steps.getBoundingClientRect();
+      stepBar.style.transform = 'scaleX(' + clamp((vh * 0.75 - r.top) / (r.height), 0, 1).toFixed(3) + ')';
+    }
+  }
+  if (!REDUCED) { window.addEventListener('scroll', onScrollFx, { passive: true }); onScrollFx(); }
+
+  /* ---------------- Season switcher ---------------- */
+  $$('[data-seasons]').forEach(function (sec) {
+    $$('[data-season-btn]', sec).forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var key = btn.getAttribute('data-season-btn');
+        sec.setAttribute('data-season', key);
+        $$('[data-season-btn]', sec).forEach(function (b) { b.setAttribute('aria-selected', b === btn ? 'true' : 'false'); });
+        $$('[data-season-panel]', sec).forEach(function (p) { p.hidden = p.getAttribute('data-season-panel') !== key; });
+      });
+    });
+  });
+
+  /* ---------------- Coverage zones + hotspots ---------------- */
+  $$('.coverage').forEach(function (sec) {
+    function activate(i) {
+      $$('[data-zone]', sec).forEach(function (z) { z.classList.toggle('is-active', z.getAttribute('data-zone') === String(i)); });
+      $$('[data-hotspot]', sec).forEach(function (h) { h.classList.toggle('is-active', h.getAttribute('data-hotspot') === String(i)); });
+    }
+    $$('[data-zone-btn]', sec).forEach(function (b) { b.addEventListener('click', function () { activate(b.getAttribute('data-zone-btn')); }); });
+    $$('[data-hotspot]', sec).forEach(function (b) { b.addEventListener('click', function () { activate(b.getAttribute('data-hotspot')); }); });
+    activate(0);
+  });
+
+  /* ---------------- Gallery ---------------- */
+  $$('[data-gallery]').forEach(function (g) {
+    var imgs = $$('.gallery__img', g), thumbs = $$('[data-gallery-thumb]', g);
+    function show(i) {
+      imgs.forEach(function (im, k) { im.classList.toggle('is-active', k === i); });
+      thumbs.forEach(function (t, k) { t.classList.toggle('is-active', k === i); });
+    }
+    thumbs.forEach(function (t, i) { t.addEventListener('click', function () { show(i); }); });
+    show(0);
+    g._show = show;
+  });
+
+  /* ---------------- Product form: variants, qty ---------------- */
+  $$('[data-product-form]').forEach(function (form) {
+    var jsonEl = $('[data-product-json]', form);
+    var product = jsonEl ? JSON.parse(jsonEl.textContent) : null;
+    var idInput = $('[data-variant-id]', form);
+    var addBtn = $('[data-add-btn]', form), addLabel = $('[data-add-label]', form);
+    var section = form.closest('[data-buy]');
+
+    function currentOptions() {
+      return $$('[data-option-index]', form).map(function (fs) {
+        var c = $('input:checked', fs); return c ? c.value : null;
+      });
+    }
+    function update() {
+      if (!product) return;
+      var opts = currentOptions();
+      var v = product.variants.find(function (vr) { return vr.options.every(function (o, i) { return opts[i] == null || o === opts[i]; }); });
+      $$('[data-option-index]', form).forEach(function (fs, i) { var lab = $('[data-option-value]', fs); if (lab) lab.textContent = opts[i]; });
+      if (!v) { addBtn.disabled = true; addLabel.textContent = 'Unavailable'; return; }
+      idInput.value = v.id;
+      addBtn.disabled = !v.available; addLabel.textContent = v.available ? 'Add to cart' : 'Sold out';
+      $$('[data-price]').forEach(function (el) { el.textContent = formatMoney(v.price); });
+      var cmp = $('[data-compare]', section), save = $('[data-save]', section);
+      if (cmp && save) {
+        var on = v.compare_at_price && v.compare_at_price > v.price;
+        cmp.hidden = save.hidden = !on;
+        if (on) { cmp.textContent = formatMoney(v.compare_at_price); save.textContent = 'Save ' + formatMoney(v.compare_at_price - v.price); }
+      }
+      if (v.featured_image && product.images) {
+        var idx = product.images.findIndex(function (src) { return String(src).split('?')[0].split('/').pop() === String(v.featured_image.src).split('?')[0].split('/').pop(); });
+        var gal = section && $('[data-gallery]', section);
+        if (idx >= 0 && gal && gal._show) gal._show(idx);
+      }
+      if (window.history.replaceState && !F.preview && /\/products\//.test(location.pathname)) {
+        var url = new URL(location.href); url.searchParams.set('variant', v.id); history.replaceState({}, '', url.toString());
+      }
+    }
+    $$('[data-option-index] input', form).forEach(function (inp) { inp.addEventListener('change', update); });
+
+    var qty = $('[data-qty] input', form);
+    $$('[data-qty-minus]', form).forEach(function (b) { b.addEventListener('click', function () { qty.value = Math.max(1, (+qty.value || 1) - 1); }); });
+    $$('[data-qty-plus]', form).forEach(function (b) { b.addEventListener('click', function () { qty.value = Math.min(10, (+qty.value || 1) + 1); }); });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var err = $('[data-form-error]', form); if (err) err.hidden = true;
+      addBtn.classList.add('is-loading'); addBtn.disabled = true;
+      Cart.add(+idInput.value, Math.max(1, +qty.value || 1)).then(function () {
+        addLabel.textContent = 'Added ✓';
+        if (!drawer) { window.location.href = (F.routes && F.routes.cart) || '/cart'; return; }
+        Cart.open();
+        setTimeout(function () { addLabel.textContent = 'Add to cart'; }, 1800);
+      }).catch(function (ex) {
+        if (err) { err.textContent = ex.message || 'Could not add to cart.'; err.hidden = false; }
+      }).then(function () { addBtn.classList.remove('is-loading'); addBtn.disabled = false; });
+    });
+    update();
+  });
+
+  /* ---------------- Cart (AJAX API + drawer) ---------------- */
+  var drawer = $('[data-cart-drawer]');
+  var root = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
+  var mock = { items: [], item_count: 0, total_price: 0 };
+  var Cart = {
+    fetch: function () {
+      if (F.preview) return Promise.resolve(mock);
+      return fetch(root + 'cart.js', { headers: { Accept: 'application/json' } }).then(function (r) { return r.json(); });
+    },
+    add: function (id, quantity) {
+      if (F.preview) {
+        var p = F.previewProduct, v = p && p.variants.find(function (x) { return x.id === id; });
+        var line = mock.items.find(function (i) { return i.variant_id === id; });
+        if (line) line.quantity += quantity;
+        else mock.items.push({ key: String(id), variant_id: id, quantity: quantity, product_title: p.title, variant_title: v.title, final_price: v.price, image: p.featured_image, url: '#buy' });
+        return Promise.resolve(recalc());
+      }
+      return fetch((F.routes && F.routes.cartAdd || '/cart/add') + '.js', {
+        method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ items: [{ id: id, quantity: quantity }] })
+      }).then(function (r) { return r.json().then(function (j) { if (!r.ok) throw new Error(j.description || j.message); return j; }); });
+    },
+    change: function (key, quantity) {
+      if (F.preview) {
+        mock.items = mock.items.filter(function (i) { if (i.key === key) i.quantity = quantity; return i.quantity > 0; });
+        return Promise.resolve(recalc());
+      }
+      return fetch((F.routes && F.routes.cartChange || '/cart/change') + '.js', {
+        method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ id: key, quantity: quantity })
+      }).then(function (r) { return r.json(); });
+    },
+    open: function () { if (!drawer) return; Cart.render().then(function () { drawer.classList.add('is-open'); drawer.setAttribute('aria-hidden', 'false'); document.documentElement.classList.add('lock'); }); },
+    close: function () { drawer.classList.remove('is-open'); drawer.setAttribute('aria-hidden', 'true'); document.documentElement.classList.remove('lock'); },
+    render: function () {
+      return Cart.fetch().then(function (cart) {
+        $$('[data-cart-count]').forEach(function (el) { el.textContent = cart.item_count; el.classList.toggle('has-items', cart.item_count > 0); });
+        var total = $('[data-cart-total]'); if (total) total.textContent = formatMoney(cart.total_price);
+        var list = $('[data-cart-items]'); if (!list) return;
+        if (!cart.items.length) { list.innerHTML = '<p class="muted">Your cart is empty.</p>'; return; }
+        list.innerHTML = cart.items.map(function (i) {
+          var img = i.image ? '<img src="' + String(i.image).replace(/(\.\w+)(\?|$)/, '$1$2') + '" alt="" width="72" height="72">' : '';
+          var vt = i.variant_title && i.variant_title !== 'Default Title' ? '<span class="muted small">' + escapeHtml(i.variant_title) + '</span>' : '';
+          return '<div class="drawer-line" data-key="' + escapeHtml(i.key) + '">' + img +
+            '<div class="drawer-line__info"><a href="' + escapeHtml(i.url) + '">' + escapeHtml(i.product_title) + '</a>' + vt +
+            '<span>' + formatMoney(i.final_price) + '</span></div>' +
+            '<div class="drawer-line__qty"><button type="button" data-line-minus aria-label="Decrease">−</button><span>' + i.quantity + '</span><button type="button" data-line-plus aria-label="Increase">+</button></div></div>';
+        }).join('');
+      });
+    }
+  };
+  function recalc() {
+    mock.item_count = mock.items.reduce(function (a, i) { return a + i.quantity; }, 0);
+    mock.total_price = mock.items.reduce(function (a, i) { return a + i.quantity * i.final_price; }, 0);
+    return mock;
+  }
+  function escapeHtml(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  window.FrostCart = Cart;
+
+  if (drawer) {
+    $$('[data-cart-open]').forEach(function (b) { b.addEventListener('click', Cart.open); });
+    $$('[data-cart-close]', drawer).forEach(function (b) { b.addEventListener('click', Cart.close); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') Cart.close(); });
+    drawer.addEventListener('click', function (e) {
+      var line = e.target.closest('[data-key]'); if (!line) return;
+      var q = +line.querySelector('.drawer-line__qty span').textContent;
+      if (e.target.closest('[data-line-minus]')) Cart.change(line.getAttribute('data-key'), q - 1).then(Cart.render);
+      if (e.target.closest('[data-line-plus]')) Cart.change(line.getAttribute('data-key'), q + 1).then(Cart.render);
+    });
+    if (F.preview) { var chk = $('[data-checkout]'); if (chk) chk.addEventListener('click', function (e) { e.preventDefault(); chk.textContent = 'Preview – checkout runs on your Shopify store'; }); }
+  }
+
+  /* ---------------- Sticky mobile buy bar ---------------- */
+  var sticky = $('[data-sticky-buy]'), buy = $('[data-buy]');
+  if (sticky && buy && 'IntersectionObserver' in window) {
+    var past = false;
+    new IntersectionObserver(function (en) {
+      en.forEach(function (e) {
+        past = e.boundingClientRect.top < 0 || window.scrollY > 900;
+        var show = !e.isIntersecting && window.scrollY > 900;
+        sticky.classList.toggle('is-visible', show);
+        sticky.setAttribute('aria-hidden', show ? 'false' : 'true');
+      });
+    }, { threshold: 0 }).observe(buy);
+  }
+
+  /* ---------------- Snowfield (CTA) ---------------- */
+  $$('[data-snowfield]').forEach(function (el) {
+    var n = REDUCED ? 0 : 60, html = '';
+    for (var i = 0; i < n; i++) {
+      var s = (Math.random() * 3 + 1).toFixed(1);
+      html += '<i style="left:' + (Math.random() * 100).toFixed(2) + '%;width:' + s + 'px;height:' + s + 'px;animation-duration:' + (6 + Math.random() * 10).toFixed(1) + 's;animation-delay:-' + (Math.random() * 12).toFixed(1) + 's;opacity:' + (0.3 + Math.random() * 0.7).toFixed(2) + '"></i>';
+    }
+    el.innerHTML = html;
+  });
+  $$('.seasons__flakes').forEach(function (el) {
+    var html = '';
+    for (var i = 0; i < 40; i++) html += '<i style="left:' + (Math.random() * 100).toFixed(1) + '%;animation-duration:' + (5 + Math.random() * 8).toFixed(1) + 's;animation-delay:-' + (Math.random() * 10).toFixed(1) + 's"></i>';
+    el.innerHTML = html;
+  });
+
+  Cart.render();
+})();
+{% endraw %}
+</script>
+
+{% schema %}
+{
+  "name": "Frostveil landing",
+  "tag": "section",
+  "class": "section-frostveil",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Product" }
+  ],
+  "presets": [{ "name": "Frostveil landing" }]
+}
+{% endschema %}

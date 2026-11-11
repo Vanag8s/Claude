@@ -192,6 +192,7 @@
       addBtn.classList.add('is-loading'); addBtn.disabled = true;
       Cart.add(+idInput.value, Math.max(1, +qty.value || 1)).then(function () {
         addLabel.textContent = 'Added ✓';
+        if (!drawer) { window.location.href = (F.routes && F.routes.cart) || '/cart'; return; }
         Cart.open();
         setTimeout(function () { addLabel.textContent = 'Add to cart'; }, 1800);
       }).catch(function (ex) {
@@ -233,7 +234,7 @@
         body: JSON.stringify({ id: key, quantity: quantity })
       }).then(function (r) { return r.json(); });
     },
-    open: function () { Cart.render().then(function () { drawer.classList.add('is-open'); drawer.setAttribute('aria-hidden', 'false'); document.documentElement.classList.add('lock'); }); },
+    open: function () { if (!drawer) return; Cart.render().then(function () { drawer.classList.add('is-open'); drawer.setAttribute('aria-hidden', 'false'); document.documentElement.classList.add('lock'); }); },
     close: function () { drawer.classList.remove('is-open'); drawer.setAttribute('aria-hidden', 'true'); document.documentElement.classList.remove('lock'); },
     render: function () {
       return Cart.fetch().then(function (cart) {
