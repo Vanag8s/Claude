@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nordveil — All-Season Windshield Cover</title>
+<meta name="description" content="Nordveil 3-layer windshield, side-window and mirror cover. Frost, snow and sun protection for hatchbacks, sedans and SUVs.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Inter+Tight:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07090c;--bg2:#0d1117;--panel:#11161d;--line:rgba(255,255,255,.08);--line2:rgba(255,255,255,.14);
+  --text:#eef2f6;--muted:#8a95a3;--dim:#5b6573;--accent:#c6ff3d;--accent-ink:#0b0f05;--ice:#bfe3ff;
+  --radius:14px;--ease:cubic-bezier(.2,.7,.1,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html,body{overflow-x:clip}
+body{background:var(--bg);color:var(--text);font:15px/1.6 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:"Inter Tight",Inter,sans-serif;letter-spacing:-.025em;line-height:1.05}
+.eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.grain{pointer-events:none;position:fixed;inset:0;overflow:hidden;z-index:90;opacity:.06;background-size:160px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");animation:grain 1s steps(6) infinite}
+@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}60%{transform:translate(-2%,-1%)}80%{transform:translate(3%,3%)}100%{transform:translate(0,0)}}
+
+/* announcement + header */
+.announce{background:#000;border-bottom:1px solid var(--line);font-size:12px;color:var(--muted);height:36px;overflow:hidden;position:relative}
+.announce .track{display:flex;gap:64px;white-space:nowrap;position:absolute;top:0;line-height:36px;animation:marquee 38s linear infinite}
+.announce b{color:var(--text);font-weight:600}
+@keyframes marquee{to{transform:translateX(-50%)}}
+header{position:sticky;top:0;z-index:50;backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);background:rgba(7,9,12,.72);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{font-family:"Inter Tight";font-weight:800;font-size:19px;letter-spacing:.18em;display:flex;align-items:center;gap:10px}
+.logo i{width:22px;height:22px;border:2px solid var(--accent);border-radius:6px;transform:rotate(45deg);display:inline-block;position:relative}
+.logo i:after{content:"";position:absolute;inset:4px;background:var(--accent);border-radius:2px}
+.links{display:flex;gap:32px;font-size:13px;color:var(--muted)}
+.links a:hover{color:var(--text)}
+.cart-btn{position:relative;display:flex;align-items:center;gap:8px;font-size:13px;padding:9px 14px;border:1px solid var(--line2);border-radius:999px;transition:.3s}
+.cart-btn:hover{border-color:var(--text)}
+.cart-count{min-width:20px;height:20px;border-radius:99px;background:var(--accent);color:var(--accent-ink);font-size:11px;font-weight:700;display:grid;place-items:center;padding:0 6px}
+@media(max-width:820px){.links{display:none}}
+
+/* hero */
+.hero{position:relative;height:min(92vh,860px);min-height:560px;overflow:hidden;display:flex;align-items:flex-end}
+.hero-bg{position:absolute;inset:0;background:url(assets/hero.webp) 70% 40%/cover;transform:scale(1.18);animation:kenburns 22s var(--ease) forwards;filter:saturate(.8) contrast(1.1) brightness(.72)}
+@keyframes kenburns{to{transform:scale(1.02) translateY(-1%)}}
+.hero:before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(7,9,12,.55) 0%,rgba(7,9,12,0) 30%,rgba(7,9,12,.35) 60%,var(--bg) 100%),radial-gradient(120% 80% at 50% 40%,transparent 40%,rgba(0,0,0,.7) 100%)}
+.hero:after{content:"";position:absolute;left:-30%;top:0;width:60%;height:100%;z-index:2;background:linear-gradient(100deg,transparent 30%,rgba(191,227,255,.10) 50%,transparent 70%);animation:sweep 7s 1.2s var(--ease) infinite}
+@keyframes sweep{0%{transform:translateX(-30%)}60%,100%{transform:translateX(260%)}}
+#snow{position:absolute;inset:0;z-index:3;pointer-events:none}
+.letterbox{position:absolute;left:0;right:0;height:9vh;background:#000;z-index:4;transition:transform 1.6s var(--ease)}
+.letterbox.t{top:0}.letterbox.b{bottom:0}
+.loaded .letterbox.t{transform:translateY(-100%)}.loaded .letterbox.b{transform:translateY(100%)}
+.hero-content{position:relative;z-index:5;padding-bottom:72px;width:100%}
+.hero h1{font-size:clamp(44px,8.4vw,118px);font-weight:700;max-width:12ch}
+.hero h1 span{display:block;overflow:hidden}
+.hero h1 span em{display:block;font-style:normal;transform:translateY(110%);transition:transform 1.3s var(--ease)}
+.hero h1 span:nth-child(2) em{transition-delay:.12s;color:transparent;-webkit-text-stroke:1.2px rgba(255,255,255,.85)}
+.loaded .hero h1 span em{transform:none}
+.hero-row{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;margin-top:28px}
+.hero p{max-width:440px;color:#b9c2cc;font-size:16px}
+.fade{opacity:0;transform:translateY(18px);transition:1.1s var(--ease)}
+.loaded .fade{opacity:1;transform:none}
+.loaded .d1{transition-delay:.5s}.loaded .d2{transition-delay:.7s}.loaded .d3{transition-delay:.9s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:54px;padding:0 28px;border-radius:999px;font-weight:600;font-size:14px;letter-spacing:.01em;transition:transform .35s var(--ease),box-shadow .35s,background .3s}
+.btn-primary{background:var(--accent);color:var(--accent-ink);box-shadow:0 0 0 0 rgba(198,255,61,.4)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 40px -10px rgba(198,255,61,.55)}
+.btn-ghost{border:1px solid var(--line2)}
+.btn-ghost:hover{border-color:#fff}
+.hero-meta{display:flex;gap:28px;margin-top:40px;padding-top:24px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+.hero-meta b{display:block;color:var(--text);font-size:20px;font-family:"Inter Tight";font-weight:600}
+.scroll-cue{position:absolute;right:24px;bottom:28px;z-index:5;font-size:10px;letter-spacing:.3em;color:var(--muted);writing-mode:vertical-rl;display:flex;align-items:center;gap:12px}
+.scroll-cue:after{content:"";width:1px;height:56px;background:linear-gradient(var(--text),transparent);animation:cue 2s infinite}
+@keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+@media(max-width:640px){.scroll-cue{display:none}.hero-content{padding-bottom:40px}.hero-meta{gap:18px}}
+
+/* strip */
+.strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg2)}
+.strip .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
+.strip div.i{padding:22px 0;display:flex;gap:12px;align-items:center;font-size:13px;color:var(--muted)}
+.strip div.i svg{flex:none;color:var(--accent)}
+.strip div.i b{color:var(--text);font-weight:600;display:block}
+@media(max-width:820px){.strip .wrap{grid-template-columns:1fr 1fr}}
+
+/* product */
+section{padding:120px 0}
+.product{display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:start}
+.gallery{position:sticky;top:96px}
+.stage{position:relative;border-radius:var(--radius);overflow:hidden;background:#0b0e12;aspect-ratio:1/1;border:1px solid var(--line)}
+.stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.04);transition:opacity .7s var(--ease),transform 1.4s var(--ease)}
+.stage img.on{opacity:1;transform:none}
+.stage .tag{position:absolute;left:16px;top:16px;z-index:2;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);padding:7px 12px;border-radius:99px;border:1px solid var(--line2)}
+.thumbs{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:12px}
+.thumbs button{border-radius:10px;overflow:hidden;border:1px solid var(--line);aspect-ratio:1;opacity:.5;transition:.3s}
+.thumbs button.on,.thumbs button:hover{opacity:1;border-color:var(--text)}
+.thumbs img{width:100%;height:100%;object-fit:cover}
+.info h2{font-size:clamp(32px,3.6vw,46px);font-weight:700;margin:14px 0 14px}
+.sub{color:var(--muted);max-width:46ch}
+.price-row{display:flex;align-items:baseline;gap:14px;margin:28px 0 6px}
+.price{font-family:"Inter Tight";font-size:38px;font-weight:600;letter-spacing:-.02em}
+.compare{color:var(--dim);text-decoration:line-through;font-size:17px}
+.save{font-size:11px;font-weight:700;letter-spacing:.08em;background:rgba(198,255,61,.12);color:var(--accent);padding:5px 10px;border-radius:99px}
+.tax{font-size:12px;color:var(--dim)}
+.label{display:flex;justify-content:space-between;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:32px 0 12px}
+.label span{text-transform:none;letter-spacing:0;color:var(--text);font-weight:500}
+.variants{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.variant{position:relative;border:1px solid var(--line2);border-radius:12px;padding:12px 10px 12px;text-align:left;transition:.3s var(--ease);background:linear-gradient(180deg,rgba(255,255,255,.03),transparent)}
+.variant:hover{border-color:rgba(255,255,255,.4)}
+.variant.on{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent),0 10px 30px -14px rgba(198,255,61,.5)}
+.variant .car{height:64px;border-radius:8px;background:#f4f5f2 center/cover no-repeat;margin-bottom:10px;filter:grayscale(.15)}
+.variant b{display:block;font-size:14px;font-weight:600}
+.variant small{color:var(--muted);font-size:12px}
+.variant .vp{display:block;margin-top:6px;font-family:"Inter Tight";font-weight:600;font-size:15px}
+.fit{margin-top:12px;font-size:13px;color:var(--muted);display:flex;gap:8px;align-items:center}
+.fit svg{color:var(--accent)}
+.buy{display:grid;grid-template-columns:auto 1fr;gap:10px;margin-top:28px}
+.qty{display:flex;align-items:center;border:1px solid var(--line2);border-radius:999px;height:54px}
+.qty button{width:44px;height:100%;font-size:18px;color:var(--muted)}
+.qty button:hover{color:var(--text)}
+.qty output{width:28px;text-align:center;font-weight:600}
+.buy .btn{width:100%}
+.btn-dark{grid-column:1/-1;background:#fff;color:#000}
+.btn-dark:hover{transform:translateY(-2px)}
+.stock{display:flex;align-items:center;gap:10px;margin-top:18px;font-size:13px;color:var(--muted)}
+.stock i{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 0 rgba(198,255,61,.6);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 10px rgba(198,255,61,0)}100%{box-shadow:0 0 0 0 rgba(198,255,61,0)}}
+.acc{margin-top:32px;border-top:1px solid var(--line)}
+.acc details{border-bottom:1px solid var(--line)}
+.acc summary{list-style:none;cursor:pointer;padding:18px 0;font-weight:500;display:flex;justify-content:space-between}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary:after{content:"+";color:var(--muted);transition:.3s}
+.acc details[open] summary:after{transform:rotate(45deg)}
+.acc p,.acc ul{color:var(--muted);font-size:14px;padding:0 0 18px}
+.acc ul{list-style:none;display:grid;gap:6px}
+.acc li:before{content:"— ";color:var(--dim)}
+.pay{display:flex;gap:6px;margin-top:18px;flex-wrap:wrap}
+.pay span{font-size:10px;font-weight:700;letter-spacing:.06em;border:1px solid var(--line2);border-radius:5px;padding:5px 8px;color:var(--muted)}
+@media(max-width:960px){.product{grid-template-columns:1fr;gap:40px}.gallery{position:static}}
+
+/* before/after */
+.ba-head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;margin-bottom:40px}
+.ba-head h2,.sec-title{font-size:clamp(34px,5vw,64px);font-weight:700;max-width:16ch}
+.ba-head p{max-width:380px;color:var(--muted)}
+.ba{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:714/302;border:1px solid var(--line);user-select:none;touch-action:pan-y;cursor:ew-resize;box-shadow:0 60px 120px -40px rgba(0,0,0,.9)}
+.ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.ba .top{clip-path:inset(0 calc(100% - var(--x,50%)) 0 0)}
+.ba .handle{position:absolute;top:0;bottom:0;left:var(--x,50%);width:2px;background:#fff;transform:translateX(-1px);box-shadow:0 0 24px rgba(255,255,255,.6)}
+.ba .knob{position:absolute;top:50%;left:50%;width:54px;height:54px;border-radius:50%;transform:translate(-50%,-50%);background:rgba(255,255,255,.14);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.7);display:grid;place-items:center}
+.ba .pill{position:absolute;bottom:18px;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:8px 14px;border-radius:99px;background:rgba(0,0,0,.55);backdrop-filter:blur(8px);border:1px solid var(--line2)}
+.ba .pill.l{left:18px}.ba .pill.r{right:18px;color:var(--accent)}
+.ba .temp{position:absolute;top:18px;left:18px;font-family:"Inter Tight";font-size:13px;color:var(--ice);display:flex;gap:8px;align-items:center;background:rgba(0,0,0,.5);padding:7px 12px;border-radius:99px;border:1px solid var(--line2)}
+.ba-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:24px}
+.ba-stats div{background:var(--bg);padding:24px}
+.ba-stats b{font-family:"Inter Tight";font-size:32px;font-weight:600;display:block}
+.ba-stats span{font-size:13px;color:var(--muted)}
+@media(max-width:640px){.ba{aspect-ratio:4/3}.ba-stats{grid-template-columns:1fr}}
+
+/* features */
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px}
+.card{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);background:var(--panel);min-height:440px;display:flex;flex-direction:column;justify-content:flex-end}
+.card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.6s var(--ease);filter:brightness(.75)}
+.card:hover img{transform:scale(1.06)}
+.card:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 35%,rgba(7,9,12,.96))}
+.card .c{position:relative;z-index:2;padding:26px}
+.card .n{font-size:11px;letter-spacing:.2em;color:var(--accent);font-weight:700}
+.card h3{font-size:24px;margin:8px 0 8px;font-weight:600}
+.card p{color:#a9b3bf;font-size:14px}
+@media(max-width:900px){.features{grid-template-columns:1fr}.card{min-height:380px}}
+
+/* layers */
+.layers{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.layer-list{margin-top:36px;display:grid;gap:0;border-top:1px solid var(--line)}
+.layer{display:grid;grid-template-columns:48px 1fr auto;gap:16px;padding:22px 0;border-bottom:1px solid var(--line);align-items:center}
+.layer .k{font-family:"Inter Tight";color:var(--dim);font-size:13px}
+.layer b{font-weight:600;font-size:17px;display:block}
+.layer span{color:var(--muted);font-size:14px}
+.layer em{font-style:normal;font-size:11px;letter-spacing:.14em;color:var(--accent);font-weight:700;text-transform:uppercase}
+.layer-img{border-radius:18px;overflow:hidden;border:1px solid var(--line);aspect-ratio:1}
+.layer-img img{width:100%;height:100%;object-fit:cover}
+@media(max-width:900px){.layers{grid-template-columns:1fr;gap:40px}}
+
+/* compare table */
+.table{margin-top:48px;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+.trow{display:grid;grid-template-columns:1.4fr repeat(3,1fr);border-bottom:1px solid var(--line)}
+.trow:last-child{border-bottom:0}
+.trow>div{padding:18px 20px;font-size:14px;color:var(--muted)}
+.trow>div:first-child{color:var(--text)}
+.trow.h>div{font-family:"Inter Tight";font-weight:600;color:var(--text);font-size:16px;background:var(--bg2)}
+.trow.h small{display:block;font-family:Inter;color:var(--accent);font-size:13px;font-weight:600;margin-top:2px}
+@media(max-width:700px){.trow{grid-template-columns:1.1fr repeat(3,1fr)}.trow>div{padding:14px 10px;font-size:12px}.trow.h>div{font-size:13px}}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px}
+.step{border:1px solid var(--line);border-radius:var(--radius);padding:28px;background:linear-gradient(180deg,var(--panel),var(--bg))}
+.step b{font-family:"Inter Tight";font-size:48px;font-weight:600;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.35);display:block;line-height:1;margin-bottom:24px}
+.step h3{font-size:18px;font-weight:600;margin-bottom:6px}
+.step p{font-size:14px;color:var(--muted)}
+@media(max-width:900px){.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.steps{grid-template-columns:1fr}}
+
+/* cta */
+.cta{position:relative;overflow:hidden;border-radius:22px;border:1px solid var(--line);padding:96px 48px;text-align:center;background:url(assets/hero.webp) center/cover}
+.cta:before{content:"";position:absolute;inset:0;background:radial-gradient(70% 90% at 50% 50%,rgba(7,9,12,.6),rgba(7,9,12,.95))}
+.cta>*{position:relative}
+.cta h2{font-size:clamp(34px,5.6vw,72px);font-weight:700;max-width:14ch;margin:14px auto 18px}
+.cta p{color:#aab4bf;max-width:44ch;margin:0 auto 32px}
+@media(max-width:640px){.cta{padding:64px 22px}}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:72px 0 32px;margin-top:40px}
+.fgrid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px}
+.fgrid h4{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;font-weight:600}
+.fgrid a{display:block;color:#c3cad3;font-size:14px;padding:4px 0}
+.fgrid a:hover{color:#fff}
+.news{display:flex;margin-top:20px;border:1px solid var(--line2);border-radius:999px;padding:4px;max-width:360px}
+.news input{flex:1;min-width:0;background:none;border:0;color:var(--text);padding:0 16px;font:inherit;outline:none}
+.news button{background:#fff;color:#000;border-radius:999px;padding:10px 18px;font-weight:600;font-size:13px}
+.legal{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:56px;padding-top:24px;border-top:1px solid var(--line);font-size:12px;color:var(--dim)}
+@media(max-width:820px){.fgrid{grid-template-columns:1fr 1fr}}
+
+/* cart drawer */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);z-index:98;opacity:0;pointer-events:none;transition:.4s}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:#0c1015;border-left:1px solid var(--line);z-index:99;transform:translateX(100%);visibility:hidden;transition:transform .55s var(--ease),visibility 0s .55s;display:flex;flex-direction:column}
+.cart-open .scrim{opacity:1;pointer-events:auto}.cart-open .drawer{transform:none;visibility:visible;transition:transform .55s var(--ease)}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:22px 24px;border-bottom:1px solid var(--line)}
+.dh h3{font-size:18px}
+.ship{padding:16px 24px;border-bottom:1px solid var(--line);font-size:13px;color:var(--muted)}
+.bar{height:4px;background:var(--line);border-radius:4px;margin-top:10px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .6s var(--ease)}
+.items{flex:1;overflow:auto;padding:8px 24px}
+.item{display:grid;grid-template-columns:72px 1fr auto;gap:14px;padding:16px 0;border-bottom:1px solid var(--line);align-items:center}
+.item img{width:72px;height:72px;border-radius:10px;object-fit:cover}
+.item b{font-size:14px;font-weight:600;display:block}
+.item small{color:var(--muted);font-size:12px}
+.item .rm{font-size:12px;color:var(--dim);text-decoration:underline;margin-top:4px}
+.empty{color:var(--muted);text-align:center;padding:60px 0;font-size:14px}
+.df{padding:20px 24px;border-top:1px solid var(--line)}
+.df .tot{display:flex;justify-content:space-between;font-size:16px;font-weight:600;margin-bottom:4px}
+.df small{color:var(--dim);font-size:12px;display:block;margin-bottom:16px}
+.df .btn{width:100%}
+
+/* sticky mobile buy */
+.sticky{position:fixed;left:12px;right:12px;bottom:12px;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 10px 10px 18px;border-radius:999px;background:rgba(17,22,29,.86);backdrop-filter:blur(16px);border:1px solid var(--line2);transform:translateY(140%);transition:transform .5s var(--ease)}
+.sticky.show{transform:none}
+.sticky .btn{height:44px;padding:0 20px}
+.sticky small{display:block;color:var(--muted);font-size:11px}
+.toast{position:fixed;left:50%;top:84px;transform:translate(-50%,-20px);opacity:0;z-index:100;background:#fff;color:#000;padding:12px 18px;border-radius:99px;font-size:13px;font-weight:600;transition:.4s var(--ease);pointer-events:none}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(40px);transition:opacity 1.1s var(--ease),transform 1.1s var(--ease)}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.rv,.fade{opacity:1;transform:none}.hero h1 span em{transform:none}.letterbox{display:none}}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="announce"><div class="track" id="marquee">
+  <span><b>Free EU shipping</b> on orders over €60</span><span>30-day no-questions returns</span><span><b>2-year</b> material warranty</span><span>Ships within 24h from our EU warehouse</span>
+  <span><b>Free EU shipping</b> on orders over €60</span><span>30-day no-questions returns</span><span><b>2-year</b> material warranty</span><span>Ships within 24h from our EU warehouse</span>
+</div></div>
+
+<header><div class="wrap nav">
+  <a href="#" class="logo"><i></i>NORDVEIL</a>
+  <nav class="links"><a href="#shop">Shop</a><a href="#compare">Before / After</a><a href="#tech">Technology</a><a href="#fit">Fit guide</a><a href="#faq">FAQ</a></nav>
+  <button class="cart-btn" id="openCart" aria-label="Open cart">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 7h12l-1 13H7L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+    Cart <span class="cart-count" id="count">0</span>
+  </button>
+</div></header>
+
+<section class="hero" style="padding:0">
+  <div class="hero-bg"></div>
+  <canvas id="snow"></canvas>
+  <div class="letterbox t"></div><div class="letterbox b"></div>
+  <div class="wrap hero-content">
+    <div class="eyebrow fade d1">Winter Collection · 2026 Edition</div>
+    <h1><span><em>Wake up</em></span><span><em>to clear glass.</em></span></h1>
+    <div class="hero-row">
+      <p class="fade d2">A 3-layer composite shield for windshield, side windows and mirrors. Fitted in 30 seconds. Removed in 5. No scraping, ever again.</p>
+      <div class="fade d3" style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="#shop" class="btn btn-primary">Shop now — from €49</a>
+        <a href="#compare" class="btn btn-ghost">See the difference</a>
+      </div>
+    </div>
+    <div class="hero-meta fade d3">
+      <div><b>−30°C</b>tested frost resistance</div>
+      <div><b>3 layers</b>composite fabric</div>
+      <div><b>30 s</b>to install</div>
+    </div>
+  </div>
+  <div class="scroll-cue">SCROLL</div>
+</section>
+
+<div class="strip"><div class="wrap">
+  <div class="i"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7z"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg><div><b>Free shipping</b>EU orders over €60</div></div>
+  <div class="i"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="m9 12 2 2 4-4"/></svg><div><b>2-year warranty</b>On all materials</div></div>
+  <div class="i"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg><div><b>30-day returns</b>No questions asked</div></div>
+  <div class="i"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><div><b>Secure checkout</b>SSL · 3-D Secure</div></div>
+</div></div>
+
+<!-- PRODUCT -->
+<section id="shop"><div class="wrap product">
+  <div class="gallery rv">
+    <div class="stage" id="stage">
+      <span class="tag">New season</span>
+      <img src="assets/protection.webp" class="on" alt="Cover fitted on a car showing windshield, side window and mirror protection">
+      <img src="assets/coverage.webp" alt="Full coverage of windshield, side windows and mirrors">
+      <img src="assets/night.webp" alt="Reflective warning strips on the mirror covers at night">
+      <img src="assets/layers.webp" alt="Three-layer composite fabric: nano-coating, Oxford layer, PVC layer">
+      <img src="assets/after.webp" alt="Interior view with the cover installed">
+    </div>
+    <div class="thumbs" id="thumbs">
+      <button class="on"><img src="assets/protection.webp" alt=""></button>
+      <button><img src="assets/coverage.webp" alt=""></button>
+      <button><img src="assets/night.webp" alt=""></button>
+      <button><img src="assets/layers.webp" alt=""></button>
+      <button><img src="assets/after.webp" alt=""></button>
+    </div>
+  </div>
+
+  <div class="info rv">
+    <div class="eyebrow">Nordveil · Shield Pro</div>
+    <h2>All-Season Windshield &amp; Mirror Cover</h2>
+    <p class="sub">Windshield, both side windows and both mirrors — covered in one piece. Frost, snow, sleet and summer UV stay on the outside.</p>
+
+    <div class="price-row">
+      <span class="price" id="price">€79</span>
+      <span class="compare" id="compare">€109</span>
+      <span class="save" id="save">SAVE 28%</span>
+    </div>
+    <div class="tax">Tax included. Shipping calculated at checkout.</div>
+
+    <div class="label">Vehicle type <span id="vname">Sedan</span></div>
+    <div class="variants" id="variants"></div>
+    <div class="fit"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 12 5 5 9-10"/></svg><span id="fitText"></span></div>
+
+    <div class="buy">
+      <div class="qty"><button id="minus" aria-label="Decrease">−</button><output id="qty">1</output><button id="plus" aria-label="Increase">+</button></div>
+      <button class="btn btn-primary" id="add">Add to cart — <span id="btnPrice">€79</span></button>
+      <button class="btn btn-dark" id="buyNow">Buy it now</button>
+    </div>
+    <div class="stock"><i></i>In stock — ships within 24 hours</div>
+    <div class="pay"><span>VISA</span><span>MASTERCARD</span><span>AMEX</span><span>PAYPAL</span><span>APPLE PAY</span><span>GOOGLE PAY</span><span>KLARNA</span></div>
+
+    <div class="acc" id="faq">
+      <details open><summary>What's in the box</summary><ul><li>1 × windshield cover with integrated side-window panels</li><li>2 × elasticated mirror covers with reflective strips</li><li>4 × door-flap anchors + 2 × elastic wheel hooks</li><li>1 × compact storage pouch</li></ul></details>
+      <details><summary>Materials &amp; technology</summary><p>Three bonded layers: a nano-coated outer shell that sheds snow and blocks UV, a woven Oxford core that isolates temperature, and a non-slip, wear-resistant PVC inner face that grips the glass without scratching.</p></details>
+      <details><summary>Will it fit my car?</summary><p>Choose your vehicle type above. Each size is cut for its body style; the elastic hooks and door flaps take up the difference within the range shown. Unsure? Measure your windshield width at the base and check the fit guide below.</p></details>
+      <details><summary>Shipping &amp; returns</summary><p>Orders placed before 14:00 CET ship the same day. Delivery in 2–5 business days across the EU. Return within 30 days for a full refund.</p></details>
+    </div>
+  </div>
+</div></section>
+
+<!-- BEFORE AFTER -->
+<section id="compare" style="padding-top:40px"><div class="wrap">
+  <div class="ba-head rv">
+    <div><div class="eyebrow">Drag to compare</div><h2 class="sec-title" style="margin-top:14px">The same morning. Two very different starts.</h2></div>
+    <p>Left: a night at −12°C without protection — frozen glass, zero visibility. Right: the same car with Nordveil fitted — peel it off and drive.</p>
+  </div>
+  <div class="ba rv" id="ba">
+    <img src="assets/after.webp" alt="With the cover: clear windscreen">
+    <img src="assets/before.webp" class="top" alt="Without the cover: frozen windscreen">
+    <div class="temp"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M4.9 4.9l14.2 14.2M2 12h20M4.9 19.1 19.1 4.9"/></svg>−12°C · 06:40</div>
+    <div class="handle"><div class="knob"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="m9 6-6 6 6 6M15 6l6 6-6 6"/></svg></div></div>
+    <span class="pill l">Without cover</span><span class="pill r">With Nordveil</span>
+  </div>
+  <div class="ba-stats rv">
+    <div><b>0 min</b><span>Scraping &amp; defrosting</span></div>
+    <div><b>5 s</b><span>To remove and fold away</span></div>
+    <div><b>100%</b><span>Windshield, side glass &amp; mirrors</span></div>
+  </div>
+</div></section>
+
+<!-- FEATURES -->
+<section style="padding-top:40px"><div class="wrap">
+  <div class="eyebrow rv">Engineered for every season</div>
+  <h2 class="sec-title rv" style="margin-top:14px">Total coverage. Zero compromise.</h2>
+  <div class="features">
+    <div class="card rv"><img src="assets/coverage-clean.webp" alt=""><div class="c"><div class="n">01</div><h3>Oversized coverage</h3><p>Windshield, side glass and mirrors in a single piece — no exposed edges for frost to creep in.</p></div></div>
+    <div class="card rv"><img src="assets/hero.webp" alt=""><div class="c"><div class="n">02</div><h3>Reflective at night</h3><p>High-visibility strips on each mirror cover keep your parked car visible to passing traffic.</p></div></div>
+    <div class="card rv"><img src="assets/cover-top.webp" alt=""><div class="c"><div class="n">03</div><h3>Summer ready</h3><p>Flip the season: the same nano-coated shell blocks UV and keeps your dashboard cooler in the sun.</p></div></div>
+  </div>
+</div></section>
+
+<!-- LAYERS -->
+<section id="tech" style="padding-top:40px"><div class="wrap layers">
+  <div class="rv">
+    <div class="eyebrow">Material technology</div>
+    <h2 class="sec-title" style="margin-top:14px">Three layers. Not thick foam.</h2>
+    <p style="color:var(--muted);margin-top:16px;max-width:46ch">Insulation comes from structure, not bulk — so it folds into a pouch the size of a book.</p>
+    <div class="layer-list">
+      <div class="layer"><span class="k">L1</span><div><b>Nano-coating</b><span>Sun &amp; snow shield, UV block</span></div><em>Outer</em></div>
+      <div class="layer"><span class="k">L2</span><div><b>Oxford layer</b><span>Isolates heat and cold</span></div><em>Core</em></div>
+      <div class="layer"><span class="k">L3</span><div><b>Non-slip PVC</b><span>Wear resistant, grips without scratching</span></div><em>Inner</em></div>
+    </div>
+  </div>
+  <div class="layer-img rv"><img src="assets/layers.webp" alt="Three-layer composite fabric diagram"></div>
+</div></section>
+
+<!-- FIT GUIDE -->
+<section id="fit" style="padding-top:40px"><div class="wrap">
+  <div class="eyebrow rv">Fit guide</div>
+  <h2 class="sec-title rv" style="margin-top:14px">Cut for your body style.</h2>
+  <div class="table rv">
+    <div class="trow h"><div>Size</div><div>Hatchback<small>€49</small></div><div>Sedan<small>€79</small></div><div>SUV<small>€119</small></div></div>
+    <div class="trow"><div>Cover dimensions</div><div>147 × 116 cm</div><div>164 × 124 cm</div><div>183 × 138 cm</div></div>
+    <div class="trow"><div>Windshield base width</div><div>up to 135 cm</div><div>up to 150 cm</div><div>up to 168 cm</div></div>
+    <div class="trow"><div>Side-window panels</div><div>Standard</div><div>Extended</div><div>Extended + tall</div></div>
+    <div class="trow"><div>Mirror covers</div><div>2 × standard</div><div>2 × standard</div><div>2 × large</div></div>
+    <div class="trow"><div>Fabric weight</div><div>780 g</div><div>920 g</div><div>1.15 kg</div></div>
+  </div>
+</div></section>
+
+<!-- STEPS -->
+<section style="padding-top:40px"><div class="wrap">
+  <div class="eyebrow rv">How it works</div>
+  <h2 class="sec-title rv" style="margin-top:14px">Thirty seconds, tonight.</h2>
+  <div class="steps">
+    <div class="step rv"><b>01</b><h3>Unfold</h3><p>Lay the cover over the windshield, inner PVC side facing the glass.</p></div>
+    <div class="step rv"><b>02</b><h3>Tuck</h3><p>Close the front doors on the side flaps to lock it in place.</p></div>
+    <div class="step rv"><b>03</b><h3>Hook</h3><p>Slip the mirror covers on and clip the elastic hooks to the wheels.</p></div>
+    <div class="step rv"><b>04</b><h3>Drive</h3><p>Morning: peel off, shake, fold into the pouch. Go.</p></div>
+  </div>
+</div></section>
+
+<section style="padding-top:20px"><div class="wrap">
+  <div class="cta rv">
+    <div class="eyebrow">Limited winter stock</div>
+    <h2>Stop scraping. Start driving.</h2>
+    <p>Choose your size, fit it tonight, and wake up to clear glass tomorrow.</p>
+    <a href="#shop" class="btn btn-primary">Shop Shield Pro — from €49</a>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="fgrid">
+    <div><a href="#" class="logo" style="padding:0"><i></i>NORDVEIL</a><p style="color:var(--muted);font-size:14px;margin-top:16px;max-width:34ch">Car protection designed for northern winters and southern summers.</p>
+      <form class="news" onsubmit="event.preventDefault();toast('Thanks — you\'re on the list.');this.reset()"><input type="email" required placeholder="Email for 10% off" aria-label="Email"><button>Subscribe</button></form></div>
+    <div><h4>Shop</h4><a href="#shop">Shield Pro</a><a href="#fit">Fit guide</a><a href="#shop">Gift cards</a></div>
+    <div><h4>Support</h4><a href="#faq">FAQ</a><a href="#faq">Shipping</a><a href="#faq">Returns</a><a href="#">Contact</a></div>
+    <div><h4>Company</h4><a href="#">About</a><a href="#">Warranty</a><a href="#">Privacy</a><a href="#">Terms</a></div>
+  </div>
+  <div class="legal"><span>© 2026 Nordveil. All rights reserved.</span><span>Prices in EUR incl. VAT</span></div>
+</div></footer>
+
+<div class="sticky" id="sticky"><div><b id="sName">Shield Pro · Sedan</b><small id="sPrice">€79</small></div><button class="btn btn-primary" id="sAdd">Add to cart</button></div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" aria-label="Cart">
+  <div class="dh"><h3>Your cart</h3><button id="closeCart" aria-label="Close cart"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+  <div class="ship" id="ship"></div>
+  <div class="items" id="items"></div>
+  <div class="df"><div class="tot"><span>Subtotal</span><span id="sub">€0</span></div><small>Taxes included. Shipping calculated at checkout.</small><button class="btn btn-primary" onclick="toast('Demo store — checkout is not connected yet.')">Checkout</button></div>
+</aside>
+<div class="toast" id="toast"></div>
+
+<script>
+const V=[
+  {id:'hatch',name:'Hatchback',fit:'Compact & hatchback cars, windshield up to 135 cm',price:49,compare:69,img:'assets/car-hatch.webp'},
+  {id:'sedan',name:'Sedan',fit:'Sedans, saloons & estates, windshield up to 150 cm',price:79,compare:109,img:'assets/car-sedan.webp'},
+  {id:'suv',name:'SUV',fit:'SUVs, crossovers & vans, windshield up to 168 cm',price:119,compare:159,img:'assets/car-suv.webp'}
+];
+const $=s=>document.querySelector(s), eur=n=>'€'+n.toFixed(0);
+let sel=V[1], qty=1, cart=[];
+try{cart=JSON.parse(localStorage.getItem('nv_cart')||'[]')}catch(e){}
+
+const vEl=$('#variants');
+V.forEach(v=>{const b=document.createElement('button');b.className='variant';b.dataset.id=v.id;
+  b.innerHTML=`<div class="car" style="background-image:url(${v.img})"></div><b>${v.name}</b><span class="vp">${eur(v.price)}</span>`;
+  b.onclick=()=>{sel=v;render()};vEl.appendChild(b)});
+function render(){
+  document.querySelectorAll('.variant').forEach(b=>b.classList.toggle('on',b.dataset.id===sel.id));
+  $('#price').textContent=eur(sel.price);$('#compare').textContent=eur(sel.compare);
+  $('#save').textContent='SAVE '+Math.round((1-sel.price/sel.compare)*100)+'%';
+  $('#vname').textContent=sel.name;$('#fitText').textContent=sel.fit;
+  $('#btnPrice').textContent=eur(sel.price*qty);$('#qty').textContent=qty;
+  $('#sName').textContent='Shield Pro · '+sel.name;$('#sPrice').textContent=eur(sel.price);
+}
+$('#minus').onclick=()=>{qty=Math.max(1,qty-1);render()};
+$('#plus').onclick=()=>{qty=Math.min(9,qty+1);render()};
+function add(n){const f=cart.find(i=>i.id===sel.id);f?f.q+=n:cart.push({id:sel.id,q:n});save();openCart()}
+$('#add').onclick=()=>add(qty);$('#sAdd').onclick=()=>add(1);
+$('#buyNow').onclick=()=>{add(qty)};
+function save(){try{localStorage.setItem('nv_cart',JSON.stringify(cart))}catch(e){}drawCart()}
+function drawCart(){
+  const n=cart.reduce((a,i)=>a+i.q,0), t=cart.reduce((a,i)=>a+i.q*V.find(v=>v.id===i.id).price,0);
+  $('#count').textContent=n;$('#sub').textContent=eur(t);
+  const left=Math.max(0,60-t);
+  $('#ship').innerHTML=(left?`You're <b style="color:#fff">${eur(left)}</b> away from free shipping`:`<b style="color:var(--accent)">You've unlocked free shipping</b>`)+`<div class="bar"><i style="width:${Math.min(100,t/60*100)}%"></i></div>`;
+  $('#items').innerHTML=cart.length?cart.map(i=>{const v=V.find(x=>x.id===i.id);return `<div class="item"><img src="assets/protection.webp" alt=""><div><b>Shield Pro</b><small>${v.name} · Qty ${i.q}</small><br><button class="rm" data-id="${v.id}">Remove</button></div><b>${eur(v.price*i.q)}</b></div>`}).join(''):'<div class="empty">Your cart is empty.</div>';
+  document.querySelectorAll('.rm').forEach(b=>b.onclick=()=>{cart=cart.filter(i=>i.id!==b.dataset.id);save()});
+}
+const openCart=()=>document.body.classList.add('cart-open'), closeCart=()=>document.body.classList.remove('cart-open');
+$('#openCart').onclick=openCart;$('#closeCart').onclick=closeCart;$('#scrim').onclick=closeCart;
+addEventListener('keydown',e=>e.key==='Escape'&&closeCart());
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),2600)}
+
+// gallery
+const imgs=[...document.querySelectorAll('#stage img')], th=[...document.querySelectorAll('#thumbs button')];
+th.forEach((b,i)=>b.onclick=()=>{imgs.forEach((im,j)=>im.classList.toggle('on',i===j));th.forEach((t,j)=>t.classList.toggle('on',i===j))});
+
+// before/after
+const ba=$('#ba');let drag=false;
+const setX=e=>{const r=ba.getBoundingClientRect();const x=Math.min(100,Math.max(0,((e.clientX??e.touches[0].clientX)-r.left)/r.width*100));ba.style.setProperty('--x',x+'%')};
+ba.addEventListener('pointerdown',e=>{drag=true;setX(e);ba.setPointerCapture(e.pointerId)});
+ba.addEventListener('pointermove',e=>drag&&setX(e));
+ba.addEventListener('pointerup',()=>drag=false);
+// intro sweep when it enters view
+let swept=false;
+
+// reveal
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);
+  if(e.target===ba&&!swept){swept=true;let t0=performance.now();const an=t=>{const p=Math.min(1,(t-t0)/1800);const x=50+Math.sin(p*Math.PI*2)*28*(1-p);if(!drag)ba.style.setProperty('--x',x+'%');p<1&&requestAnimationFrame(an)};requestAnimationFrame(an)}}}),{threshold:.15});
+document.querySelectorAll('.rv').forEach((el,i)=>{el.style.transitionDelay=(i%3)*0.08+'s';io.observe(el)});
+
+// sticky bar
+const buyBtn=$('#add');
+new IntersectionObserver(([e])=>$('#sticky').classList.toggle('show',!e.isIntersecting&&e.boundingClientRect.top<0),{threshold:0}).observe(buyBtn);
+
+// snow
+const c=$('#snow'),x=c.getContext('2d');let W,H,F=[];
+function size(){W=c.width=c.offsetWidth*devicePixelRatio;H=c.height=c.offsetHeight*devicePixelRatio;F=Array.from({length:Math.min(220,W/8)},()=>({x:Math.random()*W,y:Math.random()*H,r:(Math.random()*1.8+.4)*devicePixelRatio,s:Math.random()*.6+.25,d:Math.random()*Math.PI*2,o:Math.random()*.6+.25}))}
+size();addEventListener('resize',size);
+const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+(function loop(){x.clearRect(0,0,W,H);for(const f of F){f.y+=f.s*devicePixelRatio*(f.r/devicePixelRatio);f.d+=.01;f.x+=Math.sin(f.d)*.4;if(f.y>H){f.y=-5;f.x=Math.random()*W}
+  x.beginPath();x.arc(f.x,f.y,f.r,0,7);x.fillStyle=`rgba(235,244,255,${f.o})`;x.fill()}if(!still)requestAnimationFrame(loop)})();
+
+render();drawCart();
+addEventListener('load',()=>document.body.classList.add('loaded'));
+setTimeout(()=>document.body.classList.add('loaded'),1200);
+</script>
+</body>
+</html>
