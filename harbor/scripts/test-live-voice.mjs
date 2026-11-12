@@ -46,7 +46,7 @@ const spoken = got => got.filter(m => m.type === "text").map(m => m.token).join(
 try {
   // 1) TwiML
   const tw = await fetch(`http://localhost:${port}/twiml`, { method: "POST", headers: { host: "voice.example.com" } }).then(r => r.text());
-  ok("TwiML connects ConversationRelay with barge-in + ElevenLabs", /<ConversationRelay[^>]*interruptible="any"/.test(tw) && tw.includes('ttsProvider="ElevenLabs"') && tw.includes('ignorebackchannel="true"') && tw.includes('turnDetection="true"'));
+  ok("TwiML connects ConversationRelay with barge-in + natural voice", /<ConversationRelay[^>]*interruptible="any"/.test(tw) && tw.includes('ttsProvider="Google" voice="en-US-Chirp3-HD-Aoede"') && tw.includes('ignorebackchannel="true"') && tw.includes('turnDetection="true"'));
   ok("TwiML hands off to /handoff after the session", /action="https:\/\/[^"]+\/handoff"/.test(tw));
 
   // 2) Streaming reply
@@ -149,6 +149,9 @@ try {
   const mport = memberSrv.address().port;
   const mtw = await fetch(`http://localhost:${mport}/twiml`, { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: "To=%2B15550123&From=%2B15550100" }).then(r => r.text());
   ok("Member number gets its own greeting", mtw.includes("thanks for calling Lagoon Bay Waterpark"));
+  ok("Phone line uses the business's chosen voice (woman = Aoede)", mtw.includes('voice="en-US-Chirp3-HD-Aoede"'));
+  const { relayTwiml: rt } = await import("../api/_lib/relay-twiml.js");
+  ok("Man's voice on the phone = Charon", rt("wss://x/relay", "https://x/handoff", { voiceGender: "male" }).includes('voice="en-US-Chirp3-HD-Charon"'));
   const mws = new WebSocket(`ws://localhost:${mport}/relay`); const mgot = [];
   mws.on("message", d => mgot.push(JSON.parse(d)));
   await new Promise(r => mws.on("open", r));

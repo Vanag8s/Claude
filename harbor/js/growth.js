@@ -19,7 +19,7 @@
     if (!$('#callConsent').checked) { msg.textContent = 'Please tick the box so we may call you.'; msg.classList.add('bad'); return; }
     busy(btn, true);
     try {
-      const r = await post('/api/demo-call', { phone, consent: true, website: cf.website.value });
+      const r = await post('/api/demo-call', { phone, consent: true, website: cf.website.value, voice: window.harborVoices?.gender || 'female' });
       if (r.ok) {
         msg.textContent = '📞 Calling you now… pick up and pretend you\'re a customer. Try interrupting it!';
         msg.classList.add('ok'); window.hTrack?.('demo_call_placed');

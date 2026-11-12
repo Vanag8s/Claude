@@ -37,6 +37,7 @@ export function normalizeProfile(p = {}) {
     transfer_note: clip(p.transfer_note, 300),
     phone_number: clip(p.phone_number, 20).replace(/[^\d+]/g, ""),
     owner_phone: clip(p.owner_phone, 20).replace(/[^\d+]/g, ""),
+    voice_gender: p.voice_gender === "male" ? "male" : "female",
     vip_numbers: list(p.vip_numbers, 30, 20),
   };
 }

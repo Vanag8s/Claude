@@ -1,0 +1,6 @@
+{
+  "_note": "Paste Stripe Payment Links here (Stripe Dashboard → Payment Links → New, one per plan and billing period). Leave empty to send people to the sign-up form instead.",
+  "shore": { "monthly": "", "yearly": "" },
+  "tide": { "monthly": "", "yearly": "" },
+  "ocean": { "monthly": "", "yearly": "" }
+}

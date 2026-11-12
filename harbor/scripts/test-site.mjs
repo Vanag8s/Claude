@@ -92,7 +92,7 @@ try {
     window.__voice = { cancels: 0, spoken: [] };
     class FakeSR { constructor() { window.__rec = this; } start() { this.on = true; } abort() { this.on = false; } stop() { this.on = false; } }
     window.webkitSpeechRecognition = FakeSR; window.SpeechRecognition = FakeSR;
-    const synth = { speaking: false, pending: false, getVoices: () => [], speak(u) { this.speaking = true; window.__voice.spoken.push(u.text); window.__utt = u; }, cancel() { this.speaking = false; window.__voice.cancels++; } };
+    const synth = { speaking: false, pending: false, getVoices: () => [{ name: 'Samantha', lang: 'en-US', voiceURI: 'sam', localService: true }, { name: 'Microsoft Guy Online (Natural)', lang: 'en-US', voiceURI: 'guy', localService: false }, { name: 'Microsoft Aria Online (Natural)', lang: 'en-US', voiceURI: 'aria', localService: false }], speak(u) { this.speaking = true; window.__voice.spoken.push(u.text); window.__voice.used = u.voice?.name; window.__utt = u; }, cancel() { this.speaking = false; window.__voice.cancels++; } };
     Object.defineProperty(window, 'speechSynthesis', { value: synth });
     window.SpeechSynthesisUtterance = class { constructor(t) { this.text = t; } };
     window.__hear = (t, final) => window.__rec.onresult({ results: [Object.assign([{ transcript: t }], { isFinal: final })] });
@@ -109,6 +109,16 @@ try {
   ok('Caller can interrupt: speech stops instantly', (await vp.evaluate(() => window.__voice.cancels)) === 1);
   await vp.evaluate(() => window.__hear("how much does it cost", true)); await vp.waitForTimeout(1900);
   ok('Answers the interrupting question out loud', (await vp.evaluate(() => window.__voice.spoken.at(-1))).includes('149'));
+  await vp.click('#botMic'); // mic off again
+  await vp.click('.vpick [data-g=male]'); await vp.waitForTimeout(150);
+  ok("Man's voice plays the most natural male voice", (await vp.evaluate(() => window.__voice.used)) === 'Microsoft Guy Online (Natural)' && (await vp.getAttribute('.vpick [data-g=male]', 'aria-pressed')) === 'true');
+  await vp.click('.vpick [data-g=female]'); await vp.waitForTimeout(150);
+  ok("Woman's voice plays the most natural female voice", (await vp.evaluate(() => window.__voice.used)) === 'Microsoft Aria Online (Natural)');
+  await vp.check('.vpick [data-aloud]');
+  const before = await vp.evaluate(() => window.__voice.spoken.length);
+  await vp.fill('#botInput', 'How much does it cost?'); await vp.press('#botInput', 'Enter'); await vp.waitForTimeout(1900);
+  ok('Read replies aloud works without the mic', (await vp.evaluate(() => window.__voice.spoken.length)) > before && (await vp.evaluate(() => window.__voice.spoken.at(-1))).includes('149'));
+  ok('Voice choice is remembered', (await vp.evaluate(() => JSON.parse(localStorage.getItem('harbor_voice')).gender)) === 'female');
   ok('No JS errors in voice mode', verr.length === 0); if (verr.length) console.log(verr);
   await vctx.close();
 
@@ -165,6 +175,16 @@ try {
   ok('Receptionist answers as their business', chatProfile?.company === 'Bright Smile Dental' && (await cp.locator('.msg--ai').last().textContent()).includes('Thursday'));
   ok('No JS errors in concierge', cerr.length === 0); if (cerr.length) console.log(cerr);
   await cctx.close();
+
+  // Stripe payment links on membership buttons
+  const sctx = await b.newContext(); const sp = await sctx.newPage();
+  await sp.route('**/config/plans.json', r => r.fulfill({ json: { tide: { monthly: 'https://buy.stripe.com/test_tide_m', yearly: 'https://buy.stripe.com/test_tide_y' }, shore: { monthly: 'https://evil.example/pay', yearly: '' }, ocean: { monthly: '', yearly: '' } } }));
+  await sp.goto(base + '/', { waitUntil: 'networkidle' }); await sp.waitForTimeout(300);
+  ok('Membership button goes to the Stripe payment link', (await sp.getAttribute('[data-plan=tide]', 'href')) === 'https://buy.stripe.com/test_tide_m');
+  await sp.click('.toggle [data-billing=annual]');
+  ok('Yearly toggle switches to the yearly link', (await sp.getAttribute('[data-plan=tide]', 'href')) === 'https://buy.stripe.com/test_tide_y');
+  ok('Non-Stripe links are ignored (sign-up form instead)', (await sp.getAttribute('[data-plan=shore]', 'href')) === '#join');
+  await sctx.close();
 
   // Industry page
   const ip = await (await b.newContext()).newPage(); const ierr = []; ip.on('pageerror', e => ierr.push(e.message));

@@ -154,6 +154,18 @@
     const k = b.dataset.billing === 'annual' ? 'a' : 'm';
     $$('.plan__price b').forEach(p => (p.textContent = '$' + (+p.dataset[k]).toLocaleString('en-US')));
   }));
+  /* ---------- Payment links (Stripe) ---------- */
+  let billing = 'monthly', links = null;
+  const applyLinks = () => {
+    if (!links) return;
+    $$('[data-plan]').forEach(a => {
+      const url = links[a.dataset.plan]?.[billing];
+      if (url && /^https:\/\/(buy\.stripe\.com|checkout\.stripe\.com)\//.test(url)) { a.href = url; a.rel = 'noopener'; a.dataset.pay = '1'; }
+      else { a.href = '#join'; delete a.dataset.pay; }
+    });
+  };
+  fetch('/config/plans.json').then(r => (r.ok ? r.json() : null)).then(j => { links = j; applyLinks(); }).catch(() => {});
+  $$('.toggle button').forEach(b => b.addEventListener('click', () => { billing = b.dataset.billing === 'annual' ? 'yearly' : 'monthly'; applyLinks(); }));
   $$('[data-plan]').forEach(a => a.addEventListener('click', () => { $('#planField').value = a.dataset.plan; const sel = $('#planSelect'); if (sel) sel.value = a.dataset.plan; }));
 
   /* ---------- Lead form: validation + submit ---------- */

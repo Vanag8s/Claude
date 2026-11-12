@@ -27,6 +27,8 @@ process.env.DEMO_FROM_NUMBER = "+15550199"; process.env.LIVE_VOICE_URL = "https:
 let r = await run(demoCall, { phone: "555-010-1234", consent: true }, { twilioClient });
 ok("Places a real outbound demo call", r.code === 200 && calls[0]?.to === "+15550101234" && calls[0].timeLimit === 180);
 ok("Demo call connects to the live voice server in demo mode", calls[0].twiml.includes("wss://voice.example.com/relay") && calls[0].twiml.includes('value="demo"'));
+r = await run(demoCall, { phone: "555-010-4321", consent: true, voice: "male" }, { twilioClient });
+ok("Demo call uses the voice the visitor picked", calls.at(-1).twiml.includes("Chirp3-HD-Charon"));
 r = await run(demoCall, { phone: "555-010-1234" }, { twilioClient });
 ok("Requires consent before calling", r.code === 422);
 r = await run(demoCall, { phone: "+44 20 7946 0000", consent: true }, { twilioClient });
@@ -37,7 +39,7 @@ await run(demoCall, { phone: "555-010-7777", consent: true }, { twilioClient }, 
 r = await run(demoCall, { phone: "555-010-6666", consent: true }, { twilioClient }, "9.9.9.9");
 ok("Rate-limits repeated demo calls", r.code === 429);
 r = await run(demoCall, { phone: "555-010-1234", consent: true, website: "bot" }, { twilioClient });
-ok("Honeypot silently drops bots", r.code === 200 && calls.length === 4);
+ok("Honeypot silently drops bots", r.code === 200 && calls.length === 5);
 
 // ---- SSRF guard ----
 const blocked = async u => { try { await fetchPublicPage(u, { fetchImpl: async () => { throw new Error("should not fetch"); } }); return false; } catch (e) { return !/should not fetch/.test(e.message); } };

@@ -40,7 +40,7 @@ export default async function handler(req, res, deps = {}) {
     const call = await client.calls.create({
       to,
       from: DEMO_FROM_NUMBER,
-      twiml: relayTwiml(base.replace(/^http/, "ws") + "/relay", base + "/handoff", { demo: true }),
+      twiml: relayTwiml(base.replace(/^http/, "ws") + "/relay", base + "/handoff", { demo: true, voiceGender: b.voice === "male" ? "male" : "female" }),
       timeLimit: 180,                 // demo calls end after 3 minutes
       machineDetection: "Enable",     // don't waste a demo on voicemail
     });

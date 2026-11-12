@@ -36,10 +36,22 @@
     "voice": "",
     "stt_provider": "Deepgram",
     "speech_model": "nova-3-general",
-    "_note": "voice: empty = Twilio's default ElevenLabs voice, or paste an ElevenLabs voice ID. multilingual: true = Harbor detects and replies in the caller's language (Deepgram + ElevenLabs required). language: fixed language when multilingual is false, e.g. en-US, es-US.",
+    "_note": "voice_gender picks a voice from 'voices' (Google Chirp3 HD: Aoede = woman, Charon = man). Set 'voice' to override with a specific ElevenLabs/Google/Amazon voice. multilingual: true switches to auto language detection (requires ElevenLabs + Deepgram).",
     "multilingual": false,
-    "language": "en-US"
+    "language": "en-US",
+    "voices": {
+      "female": {
+        "tts_provider": "Google",
+        "voice": "en-US-Chirp3-HD-Aoede"
+      },
+      "male": {
+        "tts_provider": "Google",
+        "voice": "en-US-Chirp3-HD-Charon"
+      }
+    },
+    "voice_gender": "female"
   },
   "vip_numbers": [],
-  "_vip_note": "Numbers that skip the AI and ring OWNER_PHONE directly (family, suppliers, key clients), in +1555... format."
+  "_vip_note": "Numbers that skip the AI and ring OWNER_PHONE directly (family, suppliers, key clients), in +1555... format.",
+  "voice_male": "Polly.Matthew-Neural"
 }

@@ -14,7 +14,15 @@ export const greetingFor = ({ demo = false } = {}) => demo
  * @param {string} [actionUrl]  where Twilio posts after the session ends (/handoff)
  * @param {{demo?: boolean, from?: string}} [opts]
  */
-export function relayTwiml(wsUrl, actionUrl, { demo = false, greeting = null } = {}) {
+/** Which TTS provider + voice to use for a woman's or man's voice. */
+export function phoneVoice(gender) {
+  if (lv.voice) return { ttsProvider: lv.tts_provider || "ElevenLabs", voice: lv.voice };
+  const g = gender === "male" ? "male" : gender === "female" ? "female" : (lv.voice_gender || "female");
+  const v = lv.voices?.[g];
+  return v ? { ttsProvider: v.tts_provider, voice: v.voice } : { ttsProvider: lv.tts_provider || "ElevenLabs" };
+}
+
+export function relayTwiml(wsUrl, actionUrl, { demo = false, greeting = null, voiceGender = null } = {}) {
   const vr = new twilio.twiml.VoiceResponse();
   const connect = vr.connect(actionUrl ? { action: actionUrl, method: "POST" } : {});
   const multi = !!lv.multilingual;
@@ -29,8 +37,7 @@ export function relayTwiml(wsUrl, actionUrl, { demo = false, greeting = null } =
     echoPromptFiltering: true,          // don't transcribe Harbor's own voice
     preemptible: true,
     // Auto language detection ("multi") requires Deepgram STT + ElevenLabs TTS.
-    ttsProvider: multi ? "ElevenLabs" : (lv.tts_provider || "ElevenLabs"),
-    ...(lv.voice ? { voice: lv.voice } : {}),
+    ...(multi ? { ttsProvider: "ElevenLabs", ...(lv.voice ? { voice: lv.voice } : {}) } : phoneVoice(voiceGender)),
     elevenlabsTextNormalization: "on",
     transcriptionProvider: multi ? "Deepgram" : (lv.stt_provider || "Deepgram"),
     speechModel: lv.speech_model || "nova-3-general",

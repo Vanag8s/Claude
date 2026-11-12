@@ -26,6 +26,7 @@
       about: g('about2') || ($('about').value.trim() && !g('company') ? $('about').value.trim() : ''),
       sales: { goal: g('sales.goal'), upsells: g('sales.upsells'), offers: g('sales.offers'), objections: g('sales.objections') },
       phone_number: g('phone_number'), owner_phone: g('owner_phone'), transfer_note: g('transfer_note'),
+      voice_gender: window.harborVoices?.gender || 'female',
     };
   }
   function fillProfile(p) {
@@ -34,6 +35,7 @@
     set('about2', p.about);
     ['goal', 'upsells', 'offers', 'objections'].forEach(k => set('sales.' + k, p.sales?.[k]));
     form.querySelectorAll('input[name=mode]').forEach(r => (r.checked = r.value === (p.mode || 'receptionist')));
+    if (p.voice_gender && window.harborVoices && window.harborVoices.gender !== p.voice_gender) window.harborVoices.setGender(p.voice_gender);
     rowsEl.offerings.replaceChildren(); (p.offerings || []).forEach(o => addRow('offerings', o)); if (!p.offerings?.length) addRow('offerings');
     rowsEl.faq.replaceChildren(); (p.faq || []).forEach(x => addRow('faq', x)); if (!p.faq?.length) addRow('faq');
     changed(true);
@@ -149,7 +151,7 @@
   }
 
   // Voice test: talk to it and interrupt it
-  const voice = { on: false, speak: () => {} };
+  const voice = { on: false, speak: text => { if (window.harborVoices?.aloud) window.harborVoices.speak(text); } };
   const mic = $('testMic');
   if (SR && 'speechSynthesis' in window) {
     mic.hidden = false;
@@ -158,12 +160,9 @@
     const norm = t => t.toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(Boolean);
     const echo = t => { if (!speaking) return false; const s = new Set(norm(speaking)), w = norm(t); return w.length && w.filter(x => s.has(x)).length / w.length > 0.6; };
     voice.speak = text => {
-      if (!voice.on) return;
-      const u = new SpeechSynthesisUtterance(text.replace(/[\u{1F300}-\u{1FAFF}☀-➿]/gu, ''));
-      const v = speechSynthesis.getVoices().filter(x => x.lang.startsWith('en')).find(x => /natural|neural|samantha|google us|aria|jenny|ava/i.test(x.name)); if (v) u.voice = v;
-      u.rate = 1.05; speaking += ' ' + text; mic.classList.add('is-speaking');
-      u.onend = () => { if (!speechSynthesis.speaking) { speaking = ''; mic.classList.remove('is-speaking'); } };
-      speechSynthesis.speak(u);
+      if (!voice.on && !window.harborVoices?.aloud) return;
+      speaking += ' ' + text; mic.classList.add('is-speaking');
+      window.harborVoices?.speak(text, { onend: () => { if (!speechSynthesis.speaking) { speaking = ''; mic.classList.remove('is-speaking'); } } });
     };
     rec.onresult = e => {
       const r = e.results[e.results.length - 1], t = r[0].transcript.trim();

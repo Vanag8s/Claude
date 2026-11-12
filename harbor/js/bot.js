@@ -421,15 +421,11 @@
   /* ---------- Voice: talk to Harbor, interrupt it, and let it hear your tone ---------- */
   const mic = $('botMic');
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  // "Read replies aloud" works even where the mic isn't available.
+  voice.speak = text => { if (window.harborVoices?.aloud) window.harborVoices.speak(text); };
   if (SR && 'speechSynthesis' in window && mic) {
     mic.hidden = false;
     const rec = new SR(); rec.lang = 'en-US'; rec.interimResults = true; rec.maxAlternatives = 1; rec.continuous = true;
-    let pickVoice;
-    const choose = () => {
-      const vs = speechSynthesis.getVoices().filter(v => v.lang.startsWith('en'));
-      pickVoice = vs.find(v => /natural|neural|samantha|google us|aria|jenny|ava|serena/i.test(v.name)) || vs[0];
-    };
-    choose(); speechSynthesis.onvoiceschanged = choose;
     let listening = false, speakingText = '';
     const norm = t => t.toLowerCase().replace(/[^a-z0-9 ]/g, ' ').split(/\s+/).filter(Boolean);
     const isEcho = t => {   // ignore the mic hearing Harbor's own voice
@@ -442,17 +438,15 @@
       try { rec.start(); listening = true; mic.classList.add('is-live'); input.placeholder = 'Listening… talk any time, even over Harbor'; } catch {}
     };
     voice.speak = text => {
-      if (!voice.on) return;
-      const clean = text.replace(/[\u{1F300}-\u{1FAFF}☀-➿]/gu, '').replace(/\$(\d+)–\$(\d+)/g, '$$$1 to $$$2');
-      const u = new SpeechSynthesisUtterance(clean);
-      if (pickVoice) u.voice = pickVoice;
+      if (!voice.on && !window.harborVoices?.aloud) return;
       // Mirror the visitor: a touch quicker if they're rushed, gentler if they're worried.
       const tone = state.last?.tone?.label;
-      u.rate = tone === 'rushed' ? 1.15 : tone === 'worried' || tone === 'frustrated' ? 0.97 : 1.05;
-      speakingText += ' ' + clean;
+      const rate = tone === 'rushed' ? 1.15 : tone === 'worried' || tone === 'frustrated' ? 0.97 : 1.05;
+      speakingText += ' ' + text;
       mic.classList.add('is-speaking');
-      u.onend = u.onerror = () => { if (!speechSynthesis.speaking && !speechSynthesis.pending) { speakingText = ''; mic.classList.remove('is-speaking'); } };
-      speechSynthesis.speak(u);
+      const done = () => { if (!speechSynthesis.speaking && !speechSynthesis.pending) { speakingText = ''; mic.classList.remove('is-speaking'); } };
+      if (window.harborVoices) window.harborVoices.speak(text, { rate, onend: done });
+      else { const u = new SpeechSynthesisUtterance(text); u.rate = rate; u.onend = u.onerror = done; speechSynthesis.speak(u); }
       listen();
     };
     rec.onresult = e => {

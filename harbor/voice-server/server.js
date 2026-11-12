@@ -287,7 +287,7 @@ export function createServer({ client, summarize, lookup, log = console.log, ski
         const owner = p?.owner_phone || ownerPhone;
         const vip = p ? (p.vip_numbers || []).some(n => n.replace(/\D/g, "") === String(params.From || "").replace(/\D/g, "")) && owner : isVip(params.From);
         if (vip) return res.end(vipTwiml(params.To, owner));
-        res.end(relayTwiml(host.replace(/^http/, "ws") + "/relay", host + "/handoff", p ? { greeting: memberGreeting(p) } : {}));
+        res.end(relayTwiml(host.replace(/^http/, "ws") + "/relay", host + "/handoff", p ? { greeting: memberGreeting(p), voiceGender: p.voice_gender } : {}));
       });
       return;
     }
