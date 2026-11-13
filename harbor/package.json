@@ -13,7 +13,8 @@
     "test:api": "node scripts/test-api.mjs",
     "test:setup": "node scripts/test-setup.mjs",
     "test:ai": "node scripts/test-ai.mjs",
-    "twilio:connect": "node scripts/connect-twilio.mjs"
+    "twilio:connect": "node scripts/connect-twilio.mjs",
+    "ring-me": "node scripts/ring-me.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.8.0",
