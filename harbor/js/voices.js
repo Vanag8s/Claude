@@ -2,7 +2,10 @@
    and have replies read aloud. Picks the most natural voice the device offers
    (Edge's "Natural" voices and Safari/Chrome premium voices sound best). */
 (() => {
-  if (!('speechSynthesis' in window)) { window.harborVoices = null; return; }
+  if (!('speechSynthesis' in window)) {
+    window.speechSynthesis = { getVoices: () => [], speak() {}, cancel() {}, speaking: false, pending: false };
+    window.SpeechSynthesisUtterance = window.SpeechSynthesisUtterance || function (t) { this.text = t; };
+  }
   const FEMALE = /(female|woman|samantha|victoria|karen|moira|tessa|serena|fiona|allison|ava|susan|zira|aria|jenny|michelle|emma|sonia|libby|natasha|clara|salli|joanna|kendra|kimberly|ivy|ona|agne|ingrid|amelie|anna|helena|elena|sara|paulina|monica|luciana|joana|zuzana|alice|nora|ellen|kate|catherine|hazel|heera|neerja|google us english$)/i;
   const MALE = /(\bmale\b|\bman\b|daniel|alex\b|fred|tom\b|oliver|aaron|arthur|david|mark|guy|ryan|christopher|eric|roger|steffan|thomas|william|matthew|justin|joey|brian|rishi|leonas|george|james|liam|jorge|diego|thomas|yuri|maged|rocko|reed|eddy|grandpa|ralph|google uk english male)/i;
   const QUALITY = /(natural|neural|online|premium|enhanced|siri|google)/i;
@@ -52,9 +55,10 @@
     speak,
     sample(company = 'Harbor') {
       speechSynthesis.cancel();
-      return speak(pref.gender === 'male'
-        ? `Hi, thanks for calling ${company}. This is Harbor, the virtual assistant. How can I help you today?`
-        : `Hi there, thanks for calling ${company}! This is Harbor, the virtual assistant. How can I help?`);
+      document.querySelectorAll('audio').forEach(a => a.pause());
+      const a = new Audio(`assets/audio/greeting-${pref.gender === 'male' ? 'man' : 'woman'}.mp3`);
+      a.play().catch(() => speak(`Hi there, thanks for calling ${company}! This is Harbor, the virtual assistant. How can I help you today?`));
+      return a;
     },
     onChange(f) { listeners.push(f); },
   };
@@ -85,6 +89,15 @@
     window.harborVoices.onChange(render); render();
   }
   window.harborVoices.aloud = false;
+  // Keep the "Hear a real call" player in the chosen voice
+  const syncCall = () => {
+    const a = document.getElementById('callAudio'); if (!a) return;
+    const g = pref.gender === 'male' ? 'man' : 'woman';
+    if (!a.src.endsWith(`call-${g}.mp3`)) { a.pause(); a.src = `assets/audio/call-${g}.mp3`; }
+    const t = document.getElementById('callVoice'); if (t) t.textContent = `Harbor's voice: ${g}. Switch above to hear the ${g === 'man' ? "woman's" : "man's"} voice.`;
+  };
+  window.harborVoices.onChange(syncCall);
+  document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', syncCall) : syncCall();
   const init = () => document.querySelectorAll('[data-voice-picker]').forEach(mount);
   document.readyState === 'loading' ? document.addEventListener('DOMContentLoaded', init) : init();
 })();

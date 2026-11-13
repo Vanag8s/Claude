@@ -95,6 +95,7 @@ try {
     const synth = { speaking: false, pending: false, getVoices: () => [{ name: 'Samantha', lang: 'en-US', voiceURI: 'sam', localService: true }, { name: 'Microsoft Guy Online (Natural)', lang: 'en-US', voiceURI: 'guy', localService: false }, { name: 'Microsoft Aria Online (Natural)', lang: 'en-US', voiceURI: 'aria', localService: false }], speak(u) { this.speaking = true; window.__voice.spoken.push(u.text); window.__voice.used = u.voice?.name; window.__utt = u; }, cancel() { this.speaking = false; window.__voice.cancels++; } };
     Object.defineProperty(window, 'speechSynthesis', { value: synth });
     window.SpeechSynthesisUtterance = class { constructor(t) { this.text = t; } };
+    window.__played = []; const _play = HTMLMediaElement.prototype.play; HTMLMediaElement.prototype.play = function () { window.__played.push(this.src); return Promise.resolve(); };
     window.__hear = (t, final) => window.__rec.onresult({ results: [Object.assign([{ transcript: t }], { isFinal: final })] });
   });
   const vp = await vctx.newPage(); const verr = []; vp.on('pageerror', e => verr.push(e.message));
@@ -111,9 +112,9 @@ try {
   ok('Answers the interrupting question out loud', (await vp.evaluate(() => window.__voice.spoken.at(-1))).includes('149'));
   await vp.click('#botMic'); // mic off again
   await vp.click('.vpick [data-g=male]'); await vp.waitForTimeout(150);
-  ok("Man's voice plays the most natural male voice", (await vp.evaluate(() => window.__voice.used)) === 'Microsoft Guy Online (Natural)' && (await vp.getAttribute('.vpick [data-g=male]', 'aria-pressed')) === 'true');
+  ok("Man's voice: plays the recorded greeting + switches the call player", (await vp.evaluate(() => window.__played?.at(-1) || '')).endsWith('greeting-man.mp3') && (await vp.getAttribute('#callAudio', 'src')).endsWith('call-man.mp3') && (await vp.evaluate(() => window.harborVoices.voice.name)) === 'Microsoft Guy Online (Natural)');
   await vp.click('.vpick [data-g=female]'); await vp.waitForTimeout(150);
-  ok("Woman's voice plays the most natural female voice", (await vp.evaluate(() => window.__voice.used)) === 'Microsoft Aria Online (Natural)');
+  ok("Woman's voice: recorded greeting + most natural female device voice", (await vp.evaluate(() => window.__played?.at(-1) || '')).endsWith('greeting-woman.mp3') && (await vp.evaluate(() => window.harborVoices.voice.name)) === 'Microsoft Aria Online (Natural)');
   await vp.check('.vpick [data-aloud]');
   const before = await vp.evaluate(() => window.__voice.spoken.length);
   await vp.fill('#botInput', 'How much does it cost?'); await vp.press('#botInput', 'Enter'); await vp.waitForTimeout(1900);

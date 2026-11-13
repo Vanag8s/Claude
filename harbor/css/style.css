@@ -478,3 +478,10 @@ details a{color:var(--sea)}
 .vpick__more summary::after{content:none}
 .vpick__more select{margin-top:8px;width:100%;max-width:420px;padding:9px 12px;border-radius:12px;border:1px solid var(--line);background:var(--paper);font:14px var(--sans);color:var(--ink)}
 .vpick__note{margin:6px 0 0;font-size:13px;color:var(--muted)}
+
+/* Real call player */
+.hearcall{margin:18px 0 0;padding:18px;border-radius:var(--r);background:var(--paper);box-shadow:var(--shadow);display:grid;gap:10px}
+.hearcall figcaption b{display:block;font:600 18px var(--serif)}
+.hearcall figcaption span{color:var(--ink-2);font-size:14.5px}
+.hearcall audio{width:100%}
+.hearcall small{color:var(--muted);font-size:13px}
