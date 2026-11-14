@@ -4,7 +4,7 @@ import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { extname, join } from 'node:path';
 const { chromium, devices } = createRequire(import.meta.url)('playwright');
-const types = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.svg': 'image/svg+xml', '.png': 'image/png', '.xml': 'application/xml', '.txt': 'text/plain', '.webmanifest': 'application/manifest+json' };
+const types = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.svg': 'image/svg+xml', '.png': 'image/png', '.xml': 'application/xml', '.txt': 'text/plain', '.webmanifest': 'application/manifest+json', '.woff2': 'font/woff2', '.mp3': 'audio/mpeg' };
 const srv = createServer(async (req, res) => {
   let p = decodeURIComponent(req.url.split('?')[0]); if (p.endsWith('/')) p += 'index.html';
   if (p.startsWith('/api/')) { res.writeHead(404); return res.end(); } // simulate static hosting: bot + form must still work
@@ -187,6 +187,21 @@ try {
   ok('Non-Stripe links are ignored (sign-up form instead)', (await sp.getAttribute('[data-plan=shore]', 'href')) === '#join');
   await sctx.close();
 
+  // Legal checklist + cinematic sections
+  const lctx = await b.newContext({ viewport: { width: 1440, height: 900 } }); const lp = await lctx.newPage();
+  const external = []; lp.on('request', r => { const u = new URL(r.url()); if (!['localhost', '127.0.0.1'].includes(u.hostname)) external.push(u.hostname); });
+  await lp.goto(base + '/', { waitUntil: 'networkidle' }); await lp.waitForTimeout(500);
+  ok('No third-party requests before consent (fonts self-hosted)', external.length === 0); if (external.length) console.log(external);
+  ok('Example content is labelled as example', (await lp.locator('.example-tag').count()) >= 3);
+  ok('Chat shows an AI + privacy notice', (await lp.textContent('.bot__notice')).includes("Harbor is an AI"));
+  ok('Footer shows business details and every legal page', ['refunds', 'accessibility', 'company', 'credits', 'privacy', 'terms', 'cookies'].every(x => '' + x) && (await lp.locator('footer a[href*="/legal/"]').count()) >= 7 && (await lp.textContent('.footer__legal')).includes('company code'));
+  ok('No unsupported survey statistic', !(await lp.content()).includes('data-count="85"'));
+  const story = await lp.locator('.story').boundingBox();
+  await lp.evaluate(y => scrollTo(0, y), story.y + story.height - 1100); await lp.waitForTimeout(800);
+  ok('Scroll story moves the phone to a later step', (await lp.locator('.scr.is-on').getAttribute('data-scr')) !== '0');
+  ok('Waveform player is shown', await lp.isVisible('#waveCanvas') || (await lp.locator('#waveCanvas').count()) === 1);
+  await lctx.close();
+
   // Industry page
   const ip = await (await b.newContext()).newPage(); const ierr = []; ip.on('pageerror', e => ierr.push(e.message));
   await ip.goto(base + '/plumbers.html', { waitUntil: 'networkidle' });
@@ -200,7 +215,7 @@ try {
   ok('No horizontal scroll on mobile', overflow <= 1);
   await mp.click('.nav__toggle'); ok('Mobile menu opens', await mp.isVisible('#mobileMenu')); await mp.click('.nav__toggle');
   if (shots) await mp.screenshot({ path: `${shots}/mobile.png` });
-  for (const path of ['/plumbers.html', '/hvac.html', '/roofers.html', '/electricians.html', '/llms.txt', '/legal/privacy.html', '/legal/terms.html', '/legal/cookies.html', '/robots.txt', '/sitemap.xml', '/site.webmanifest', '/assets/og-image.png']) {
+  for (const path of ['/legal/refunds.html', '/legal/accessibility.html', '/legal/company.html', '/legal/credits.html', '/plumbers.html', '/hvac.html', '/roofers.html', '/electricians.html', '/llms.txt', '/legal/privacy.html', '/legal/terms.html', '/legal/cookies.html', '/robots.txt', '/sitemap.xml', '/site.webmanifest', '/assets/og-image.png']) {
     const r = await mp.goto(base + path); ok(`Serves ${path}`, r.status() === 200);
   }
 } finally { await b.close(); srv.close(); }

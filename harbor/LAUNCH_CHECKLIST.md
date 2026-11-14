@@ -36,3 +36,30 @@ grep -rl "harbor-ai.example" . --exclude-dir=node_modules | xargs sed -i 's/harb
 # 5. Run the checks
 npm run check:links && npm run test:site && npm run test:voice
 ```
+
+---
+
+# "So your site doesn't get sued": the second 20
+
+| # | Item | How it's covered | Status |
+|---|---|---|---|
+| 1 | Privacy policy | `legal/privacy.html`: controller vs. processor, a table of each data type with its purpose and GDPR legal basis, AI disclosure, processors, transfers outside the EU, retention, rights, Lithuanian supervisory authority | ✅ fill in the [brackets], lawyer review |
+| 2 | Terms & conditions | `legal/terms.html`: business customers, the service and its AI limits, your responsibilities, billing, availability, liability, governing law | ✅ fill in the [brackets], lawyer review |
+| 3 | Cookie policy | `legal/cookies.html`: every stored item, with its name, purpose and how long it's kept | ✅ |
+| 4 | Cookie consent | Banner with Accept / Essential only; nothing optional loads before you accept; "Cookie settings" link in the footer | ✅ |
+| 5 | Refund policy | `legal/refunds.html`: cancel any time, the exact conditions of the 30-day promise, yearly plans, EU consumers' 14-day withdrawal right | ✅ |
+| 6 | Form consent | Consent checkboxes on the sign-up and demo-call forms, a notice under the chat, a notice on "Build my Harbor" | ✅ |
+| 7 | Only necessary data | Forms ask only what's needed; the voice feature sends measurements, never audio | ✅ |
+| 8 | Analytics tracking | GA4 loads only after "Accept all", with anonymized IPs | ✅ add your GA ID |
+| 9 | Third-party embeds | Fonts **self-hosted** (no Google request); no videos, maps or social widgets; tested: 0 outside requests before consent | ✅ |
+| 10 | Accessibility | `legal/accessibility.html` (WCAG 2.1 AA target), skip link, labels, focus outlines, reduced motion | ✅ |
+| 11 | Alt text | Every image has alt text; decorative images use alt="" | ✅ |
+| 12 | Color contrast | Buttons and text recolored to pass AA (4.5:1): coral #bf4e33, gray #56636e, teal #1f7f73 | ✅ |
+| 13 | Keyboard-friendly forms | Every control reachable by Tab, visible focus, Enter submits | ✅ |
+| 14 | Clear button labels | Buttons say what they do; icon buttons have names screen readers can read ("Start over", "Play the sample call") | ✅ |
+| 15 | Remove fake reviews | No testimonials. Sample calls and messages are marked "Example"; credits explain the voices are generated | ✅ |
+| 16 | Unsupported claims | Removed the "85%" survey figure, "never double-books", direct calendar-integration and "CCPA ready" claims; comparison prices marked as typical ranges | ✅ |
+| 17 | Business details | `legal/company.html` + the footer: name, company code, address, VAT, contact | ⚠️ fill in your details |
+| 18 | Image copyright | All photos CC0, fonts under the Open Font License, voices generated with Kokoro (Apache 2.0); sources listed in `legal/credits.html` | ✅ |
+| 19 | Applicable local laws | GDPR, ePrivacy (cookies), EU AI Act (says it's an AI), call recording notice, Lithuanian authority, consumer withdrawal right | ✅ lawyer review |
+| 20 | Other legal risks | Liability cap, "not an emergency service", acceptable use (no spam calls), DPA for members. **Check the "Harbor" name for trademarks** before you invest in branding | ⚠️ trademark check |

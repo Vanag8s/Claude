@@ -20,3 +20,11 @@
 .industry__cta{text-align:center;padding:60px 24px;border-radius:28px;background:var(--foam);box-shadow:var(--shadow)}
 .industry__cta .lead{margin-inline:auto}
 @media (max-width:900px){.industry__hero,.industry__cols{grid-template-columns:1fr}}
+
+.fill{background:#fff1c9;color:#6b4a00;padding:0 4px;border-radius:4px}
+.ltable{width:100%;border-collapse:collapse;margin:12px 0 18px;font-size:15px;background:var(--paper);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+.ltable th,.ltable td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line);color:var(--ink-2)}
+.ltable thead th{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.ltable tbody th{color:var(--ink);font-weight:600;width:34%}
+.legal .ltable{display:block;overflow-x:auto}
+.legal ul{padding-left:20px}

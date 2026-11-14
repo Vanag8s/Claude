@@ -6,7 +6,7 @@ import { extname, join, normalize } from "node:path";
 
 const root = new URL("..", import.meta.url).pathname;
 const PORT = Number(process.env.PORT || 4173);
-const types = { ".html": "text/html; charset=utf-8", ".css": "text/css", ".js": "text/javascript", ".svg": "image/svg+xml", ".png": "image/png", ".xml": "application/xml", ".txt": "text/plain", ".webmanifest": "application/manifest+json", ".json": "application/json" };
+const types = { ".html": "text/html; charset=utf-8", ".css": "text/css", ".js": "text/javascript", ".svg": "image/svg+xml", ".png": "image/png", ".xml": "application/xml", ".txt": "text/plain", ".webmanifest": "application/manifest+json", ".json": "application/json", ".woff2": "font/woff2", ".mp3": "audio/mpeg" };
 const handlers = {};
 
 function vercelRes(res) {

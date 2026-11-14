@@ -30,10 +30,10 @@
   <link rel="manifest" href="/site.webmanifest">
 
   <!-- Performance: preconnect + non-blocking fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=DM+Sans:wght@400;500;600;700&family=Caveat:wght@500&display=swap" media="print" onload="this.media='all'">
+<link rel="preload" href="/assets/fonts/fraunces-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/fonts.css">
   <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/cinematic.css">
 
   <script type="application/ld+json">
   {
@@ -59,9 +59,7 @@
   <a class="skip" href="#main">Skip to content</a>
 
   <!-- Intro: a wave washes over the screen -->
-  <div class="tidein" aria-hidden="true">
-    <svg viewBox="0 0 1440 320" preserveAspectRatio="none"><path d="M0,160 C240,240 480,80 720,140 C960,200 1200,120 1440,170 L1440,0 L0,0 Z"/></svg>
-  </div>
+  <div class="letterbox" aria-hidden="true"><span></span><span></span></div>
 
   <header class="nav" id="nav">
     <a href="/" class="brand" aria-label="Harbor home">
@@ -89,7 +87,10 @@
     <!-- HERO: a living beach -->
     <section class="hero hero--photo" aria-labelledby="hero-title">
       <div class="hero__photo" aria-hidden="true">
-        <img src="/assets/photos/hero.jpg" alt="" width="1280" height="720" fetchpriority="high" decoding="async" onerror="this.remove()">
+        <img src="/assets/photos/hero.jpg" alt="" width="1280" height="720" fetchpriority="high" decoding="async" data-parallax="0.18" onerror="this.remove()">
+        <div class="flare"></div>
+        <div class="grain"></div>
+        <div class="glow" id="heroGlow"></div>
         <div class="hero__shade"></div>
       </div>
 
@@ -107,6 +108,7 @@
 
         <!-- Live call, like a phone notification on the sand -->
         <figure class="callcard reveal" aria-label="Example of Harbor answering a call at 9:47 PM">
+          <span class="example-tag">Example call</span>
           <div class="callcard__top">
             <div class="callcard__ring"><span></span></div>
             <div>
@@ -134,7 +136,7 @@
     <!-- REAL BUSINESSES -->
     <section class="section people" aria-labelledby="people-title">
       <div class="wrap people__grid">
-        <figure class="photo reveal"><img src="/assets/photos/barber.jpg" alt="A barber trimming a client's hair with clippers" loading="lazy" width="1280" height="853"></figure>
+        <figure class="photo photo--wipe reveal"><img data-parallax="0.06" src="/assets/photos/barber.jpg" alt="A barber trimming a client's hair with clippers" loading="lazy" width="1280" height="853"></figure>
         <div>
           <p class="eyebrow reveal">Made for busy hands</p>
           <h2 id="people-title" class="split">You can't answer the phone<br><em>mid-haircut.</em></h2>
@@ -155,11 +157,41 @@
         <p class="eyebrow reveal">The quiet leak</p>
         <h2 id="problem-title" class="split">A missed call doesn't leave a message.<br><em>It calls your competitor.</em></h2>
         <div class="stats">
-          <article class="stat reveal"><b data-count="85" data-suffix="%">0</b><p>of people who reach voicemail don't leave a message. They just try the next business.</p></article>
+          <article class="stat reveal"><b data-count="2" data-suffix=" rings">0</b><p>is how fast Harbor picks up, so a caller never has time to hang up and try someone else.</p></article>
           <article class="stat reveal"><b data-count="24" data-suffix="/7">0</b><p>is when your customers call: lunch breaks, evenings, weekends, while you're with another client.</p></article>
           <article class="stat reveal"><b data-count="1" data-prefix="" data-suffix=" call">0</b><p>is often all it takes. One saved customer usually pays for a whole month of Harbor.</p></article>
         </div>
-        <p class="footnote reveal">Figures reflect widely cited small-business surveys. Your own numbers will tell the real story.</p>
+        <p class="footnote reveal">Every business is different. The <a href="#roi">calculator</a> below shows your own numbers.</p>
+      </div>
+    </section>
+
+    <!-- STORY: ONE CALL, SECOND BY SECOND -->
+    <section class="story" aria-labelledby="story-title">
+      <div class="wrap story__grid">
+        <div class="story__steps">
+          <p class="eyebrow">One call, second by second</p>
+          <h2 id="story-title" class="split">9:47 PM. You're closed.<br><em>The phone rings anyway.</em></h2>
+          <ol class="story__list">
+            <li class="story__step" data-step="0"><span class="story__time">0:00</span><h3>The phone rings</h3><p>A parent is planning Saturday. Your team has gone home.</p></li>
+            <li class="story__step" data-step="1"><span class="story__time">0:01</span><h3>Harbor answers</h3><p>In a warm voice, on the first ring or two. It says it's the virtual assistant.</p></li>
+            <li class="story__step" data-step="2"><span class="story__time">0:12</span><h3>Real answers</h3><p>Opening hours, prices, the rule for 14-year-olds, all from what you taught it.</p></li>
+            <li class="story__step" data-step="3"><span class="story__time">0:48</span><h3>The booking</h3><p>It recommends the family ticket and saves it under the caller's name.</p></li>
+            <li class="story__step" data-step="4"><span class="story__time">1:05</span><h3>You get a text</h3><p>Before the caller has put the phone down, you know exactly what happened.</p></li>
+          </ol>
+        </div>
+        <div class="story__stage" aria-hidden="true">
+          <div class="device">
+            <div class="device__notch"></div>
+            <div class="device__screen" id="storyScreen">
+              <div class="scr scr--ring is-on" data-scr="0"><div class="scr__avatar">📞</div><b>Incoming call</b><small>+370 6•• ••• 21</small><div class="pulse-ring"></div></div>
+              <div class="scr scr--talk" data-scr="1"><small class="scr__label">Harbor · live call</small><p class="bub bub--ai">Hi, thanks for calling Lagoon Bay Waterpark! This is Harbor, the virtual assistant. How can I help?</p><div class="bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+              <div class="scr scr--talk" data-scr="2"><small class="scr__label">Harbor · live call</small><p class="bub bub--cx">Can my 14-year-old come without me?</p><p class="bub bub--ai">He can! Kids aged 14 and 15 can visit without an adult with a student ID.</p></div>
+              <div class="scr scr--talk" data-scr="3"><small class="scr__label">Harbor · live call</small><p class="bub bub--ai">For two adults and two kids, the family ticket is $79. Shall I save one for Saturday?</p><p class="bub bub--cx">Yes please!</p><div class="booked">✓ Family ticket · Saturday</div></div>
+              <div class="scr scr--sms" data-scr="4"><small class="scr__label">Messages · now</small><p class="bub bub--sms"><b>Harbor</b>New sale: Jonas, 1 × family ticket, Saturday. Confirmation sent to the caller.</p></div>
+            </div>
+          </div>
+          <span class="example-tag example-tag--device">Example</span>
+        </div>
       </div>
     </section>
 
@@ -180,7 +212,12 @@
           <div class="reveal" data-voice-picker data-company="Harbor"></div>
           <figure class="hearcall reveal">
             <figcaption><b>🎧 Hear a real call</b><span>A parent calls a waterpark: opening hours, can a 14-year-old come alone, the price, "that's too expensive", and Harbor closes the sale. About a minute.</span></figcaption>
-            <audio id="callAudio" controls preload="none" src="assets/audio/call-woman.mp3"></audio>
+            <div class="wave-player" id="wavePlayer">
+              <button type="button" class="wave-player__btn" id="waveBtn" aria-label="Play the sample call">▶</button>
+              <canvas class="wave-player__canvas" id="waveCanvas" aria-hidden="true"></canvas>
+              <span class="wave-player__time" id="waveTime">1:05</span>
+            </div>
+            <audio id="callAudio" controls preload="none" src="assets/audio/call-woman.mp3" class="wave-player__native"></audio>
             <small id="callVoice">Harbor's voice: woman. Switch above to hear the man's voice.</small>
           </figure>
 
@@ -205,6 +242,7 @@
           </div>
           <div class="bot__sense" id="botSense" hidden aria-live="polite"></div>
           <div class="bot__log" id="botLog" aria-live="polite"></div>
+          <p class="bot__notice">Harbor is an AI. What you type is processed to reply. Please don't share sensitive information. <a href="/legal/privacy.html">Privacy</a></p>
           <form class="bot__form" id="botForm" autocomplete="off">
             <button type="button" class="bot__mic" id="botMic" aria-label="Talk to Harbor with your voice" aria-pressed="false" hidden><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-2.08A7 7 0 0 0 19 12h-2Z"/></svg></button>
             <label for="botInput" class="sr-only">Message Harbor</label>
@@ -241,6 +279,7 @@
           <input id="buildUrl" name="url" type="text" inputmode="url" autocomplete="url" placeholder="yourbusiness.com" required>
           <button class="btn btn--primary btn--lg" type="submit" data-track="build_submit">Build my Harbor</button>
         </form>
+        <p class="build__fine reveal">Harbor reads only the public pages of the website you enter. Nothing is saved until you sign up.</p>
         <p class="build__msg" id="buildMsg" role="status" aria-live="polite"></p>
         <div class="build__out" id="buildOut" hidden>
           <div class="build__steps" aria-hidden="true"><span>✓ Website read</span><span>✓ Services learned</span><span>✓ Script written</span></div>
@@ -272,6 +311,7 @@
           <ul class="checks reveal"><li>Who called, what they needed, what happened next</li><li>🚨 Urgent calls flagged, or put straight through to you</li><li>A full transcript of every conversation</li><li>Anyone who hung up gets a friendly text back</li></ul>
         </div>
         <div class="phone reveal" aria-label="Example of the text messages a member receives">
+          <span class="example-tag example-tag--phone">Example messages</span>
           <div class="phone__notch"></div>
           <div class="phone__time">7:42 PM</div>
           <div class="sms sms--in"><small>Harbor</small>🚨 URGENT · Maria Lopez (+1 555-0148): cracked tooth, in pain. <b>Booked</b> tomorrow 8:30 AM, first slot.</div>
@@ -288,13 +328,13 @@
         <p class="eyebrow reveal">Everything a great front desk does</p>
         <h2 id="features-title" class="split">Warm like a person.<br><em>Tireless like the sea.</em></h2>
         <div class="grid">
-          <article class="card reveal"><span class="card__icon" aria-hidden="true">🗣️</span><h3>Sounds human</h3><p>A natural voice that replies instantly, lets callers interrupt, and doesn't get thrown by an "uh-huh".</p></article>
-          <article class="card reveal"><span class="card__icon" aria-hidden="true">💛</span><h3>Reads the room</h3><p>Picks up when a caller is stressed, rushed or upset, and slows down, keeps it short or gets them to you.</p></article>
-          <article class="card reveal"><span class="card__icon" aria-hidden="true">📅</span><h3>Books appointments</h3><p>Works with Google Calendar, Outlook and popular booking tools. Never double-books.</p></article>
+          <article class="card reveal"><span class="card__icon" aria-hidden="true">🗣️</span><h3>A natural voice</h3><p>Warm and quick to reply. Callers can interrupt it, and an "uh-huh" doesn't throw it off. It always says it's a virtual assistant.</p></article>
+          <article class="card reveal"><span class="card__icon" aria-hidden="true">💛</span><h3>Reads the room</h3><p>Harbor is built to notice when a caller sounds stressed, rushed or upset, and to keep it short, slow down or put them through to you.</p></article>
+          <article class="card reveal"><span class="card__icon" aria-hidden="true">📅</span><h3>Books appointments</h3><p>Takes bookings in the time slots you choose and sends them to your calendar or booking tool through Zapier or Make.</p></article>
           <article class="card reveal"><span class="card__icon" aria-hidden="true">💬</span><h3>Missed-call text-back</h3><p>If someone hangs up early, Harbor texts them within a minute and turns it into a booking.</p></article>
           <article class="card reveal"><span class="card__icon" aria-hidden="true">🧠</span><h3>Knows your business</h3><p>Your services, prices, hours and policies. It never makes up an answer: it takes a message instead.</p></article>
           <article class="card reveal"><span class="card__icon" aria-hidden="true">🚨</span><h3>Puts urgent calls through</h3><p>Emergencies and VIP callers ring straight through to your phone.</p></article>
-          <article class="card reveal"><span class="card__icon" aria-hidden="true">🌎</span><h3>Speaks their language</h3><p>Harbor can detect the caller's language and reply in it.</p></article>
+          <article class="card reveal"><span class="card__icon" aria-hidden="true">🌎</span><h3>Speaks their language</h3><p>Harbor can reply in the caller's language. Which languages sound best depends on the voice; we test yours with you.</p></article>
           <article class="card reveal"><span class="card__icon" aria-hidden="true">📈</span><h3>Shows its worth</h3><p>A weekly note: calls answered, bookings made, and an estimate of what it earned you.</p></article>
         </div>
       </div>
@@ -354,13 +394,13 @@
             </tbody>
           </table>
         </div>
-        <p class="footnote reveal">Typical market ranges; check providers in your area.</p>
+        <p class="footnote reveal">Typical price ranges from public price lists, for comparison only. Check providers in your area.</p>
       </div>
     </section>
 
     <!-- PHOTO BREAK -->
     <section class="breaker" aria-labelledby="breaker-title">
-      <img src="/assets/photos/surf.jpg" alt="Surfers waiting for waves at sunrise near a pier" loading="lazy" width="1280" height="853">
+      <img src="/assets/photos/surf.jpg" alt="Surfers waiting for waves at sunrise near a pier" loading="lazy" width="1280" height="853" data-parallax="0.12">
       <div class="breaker__text wrap">
         <h2 id="breaker-title" class="reveal">Out on the water?<br><em>Harbor's got the phones.</em></h2>
         <p class="reveal">Take the afternoon. Every call still gets a warm hello, an answer and a booking.</p>
@@ -401,7 +441,7 @@
           <div class="guarantee__seal" aria-hidden="true">30<small>DAYS</small></div>
           <div>
             <h3>The "pays off or it's free" promise</h3>
-            <p>If Harbor doesn't catch at least <strong>30 calls you would have missed</strong> in your first 30 days, your first month is on us. No contracts, cancel any time, and setup is included.</p>
+            <p>If Harbor doesn't catch at least <strong>30 calls you would have missed</strong> in your first 30 days, your first month is on us. No contracts, cancel any time, and setup is included. <a href="/legal/refunds.html">See the exact conditions</a>.</p>
           </div>
         </div>
       </div>
@@ -414,10 +454,10 @@
         <h2 id="trust-title" class="split">Your callers, your data,<br><em>your rules.</em></h2>
         <div class="grid grid--3">
           <article class="card reveal"><span class="card__icon" aria-hidden="true">🤝</span><h3>Always honest</h3><p>Harbor says it's a virtual assistant in its first sentence. It's the law in many places, and it builds trust.</p></article>
-          <article class="card reveal"><span class="card__icon" aria-hidden="true">🔒</span><h3>Private by default</h3><p>Encrypted in transit and at rest. Your call data is never sold and never used to train public AI models.</p></article>
+          <article class="card reveal"><span class="card__icon" aria-hidden="true">🔒</span><h3>Private by default</h3><p>Encrypted in transit. Never sold. We use paid AI services that don't train their models on your calls.</p></article>
           <article class="card reveal"><span class="card__icon" aria-hidden="true">🧭</span><h3>You set the guardrails</h3><p>It only quotes what you approve and hands over to you whenever it isn't sure.</p></article>
           <article class="card reveal"><span class="card__icon" aria-hidden="true">📄</span><h3>Every word on record</h3><p>A full transcript and summary of every call, so you always know what was said.</p></article>
-          <article class="card reveal"><span class="card__icon" aria-hidden="true">🇪🇺</span><h3>GDPR &amp; CCPA ready</h3><p>Data-processing agreement, delete-on-request and clear retention limits. See our <a href="/legal/privacy.html">Privacy Policy</a>.</p></article>
+          <article class="card reveal"><span class="card__icon" aria-hidden="true">🇪🇺</span><h3>Built for GDPR</h3><p>Data processing agreement on request, deletion on request and clear retention limits. See our <a href="/legal/privacy.html">Privacy Policy</a>.</p></article>
           <article class="card reveal"><span class="card__icon" aria-hidden="true">🌊</span><h3>No lock-in</h3><p>Monthly membership, keep your number, cancel any time. Prices are right here, not hidden behind a sign-up.</p></article>
         </div>
       </div>
@@ -516,11 +556,11 @@
       <nav aria-label="Footer">
         <a href="/plumbers.html">For plumbers</a><a href="/hvac.html">For HVAC</a><a href="/roofers.html">For roofers</a><a href="/electricians.html">For electricians</a>
         <a href="#how">How it works</a><a href="#membership">Membership</a><a href="#faq">FAQ</a>
-        <a href="/setup.html">Member setup</a><a href="/legal/privacy.html">Privacy Policy</a><a href="/legal/terms.html">Terms of Service</a><a href="/legal/cookies.html">Cookie Policy</a>
+        <a href="/setup.html">Member setup</a><a href="/legal/privacy.html">Privacy Policy</a><a href="/legal/terms.html">Terms of Service</a><a href="/legal/refunds.html">Refund Policy</a><a href="/legal/cookies.html">Cookie Policy</a><a href="/legal/accessibility.html">Accessibility</a><a href="/legal/company.html">Company details</a><a href="/legal/credits.html">Credits</a>
         <button type="button" class="linkish" id="cookieSettings">Cookie settings</button>
       </nav>
     </div>
-    <p class="footer__legal wrap">© <span id="yr">2026</span> Harbor. All rights reserved.</p>
+    <p class="footer__legal wrap">© <span id="yr">2026</span> Harbor is a service of <mark class="fill">[Company name]</mark>, company code <mark class="fill">[code]</mark>, <mark class="fill">[registered address]</mark>. Contact: <mark class="fill">[email]</mark>. Harbor is an AI system and tells callers so.</p>
   </footer>
 
   <!-- Cookie consent -->
@@ -538,6 +578,7 @@
 
   <script src="/js/analytics.js" defer></script>
   <script src="/js/main.js" defer></script>
+  <script src="/js/cinematic.js" defer></script>
   <script src="/js/voices.js" defer></script>
   <script src="/js/tone.js" defer></script>
   <script src="/js/bot.js" defer></script>

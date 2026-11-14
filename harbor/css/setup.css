@@ -15,7 +15,7 @@
 .setup textarea:focus,.setup input:focus{outline:none;border-color:var(--sea-2);box-shadow:0 0 0 4px rgba(42,157,143,.15)}
 .dictate{position:relative}
 .dictate .btn{position:absolute;right:10px;bottom:12px}
-.dictate .btn.is-live{background:var(--sea-2);color:#fff;border-color:transparent}
+.dictate .btn.is-live{background:var(--sea-on);color:#fff;border-color:transparent}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;align-items:end}
 .row2 .btn{height:48px}
 .pform label{display:block;font-weight:600;font-size:14px;margin-top:14px}
