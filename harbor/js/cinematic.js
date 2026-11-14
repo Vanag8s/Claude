@@ -113,3 +113,78 @@
     tick();
   }
 })();
+
+/* ---------- Premium layer: tabs, product tour, particles ---------- */
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Accessible tabs (click, arrow keys, Home/End)
+  function tabs(list, onChange) {
+    if (!list) return null;
+    const btns = [...list.querySelectorAll('[role=tab]')];
+    const select = (btn, focus) => {
+      btns.forEach(b => {
+        const on = b === btn;
+        b.classList.toggle('is-on', on); b.setAttribute('aria-selected', on); b.tabIndex = on ? 0 : -1;
+        const panel = document.getElementById(b.getAttribute('aria-controls'));
+        if (panel) { panel.hidden = !on; panel.classList.toggle('is-on', on); }
+      });
+      if (focus) btn.focus();
+      onChange?.(btn);
+    };
+    btns.forEach((b, i) => {
+      b.addEventListener('click', () => select(b));
+      b.addEventListener('keydown', e => {
+        const k = e.key, n = btns.length;
+        const j = k === 'ArrowRight' || k === 'ArrowDown' ? (i + 1) % n : k === 'ArrowLeft' || k === 'ArrowUp' ? (i - 1 + n) % n : k === 'Home' ? 0 : k === 'End' ? n - 1 : -1;
+        if (j >= 0) { e.preventDefault(); select(btns[j], true); }
+      });
+    });
+    return { btns, select };
+  }
+
+  tabs(document.querySelector('.ind__tabs'), b => window.hTrack?.('industry_tab', { id: b.id.replace('ind-tab-', '') }));
+
+  // Product tour: advances by itself until the visitor takes over
+  const tour = document.querySelector('.tour');
+  const TITLES = { 'tour-tab-teach': 'Setup · Northside Realty', 'tour-tab-answer': 'Live call · Northside Realty', 'tour-tab-sell': 'Live call · Core Fitness (Sales mode)', 'tour-tab-report': 'After the call' };
+  const t = tabs(document.querySelector('.tour__tabs'), b => { const el = document.getElementById('tourTitle'); if (el) el.textContent = TITLES[b.id] || ''; });
+  if (tour && t && !reduce) {
+    let auto = true, visible = false, timer;
+    const stop = () => { auto = false; tour.classList.add('is-paused'); clearInterval(timer); };
+    t.btns.forEach(b => { b.addEventListener('pointerdown', stop); b.addEventListener('keydown', stop); });
+    tour.querySelector('.tour__screen')?.addEventListener('pointerenter', stop);
+    new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting; clearInterval(timer);
+      if (visible && auto) timer = setInterval(() => { const i = t.btns.findIndex(b => b.classList.contains('is-on')); t.select(t.btns[(i + 1) % t.btns.length]); }, 7000);
+    }, { threshold: 0.4 }).observe(tour);
+  } else if (tour) tour.classList.add('is-paused');
+
+  // Hero particles: slow drifting motes, paused when off-screen
+  const cv = document.getElementById('particles');
+  if (cv && !reduce) {
+    const ctx = cv.getContext('2d'); let w, h, dpr, on = true;
+    const N = innerWidth < 760 ? 26 : 56;
+    const pts = Array.from({ length: N }, () => ({ x: Math.random(), y: Math.random(), r: 0.6 + Math.random() * 1.8, vx: (Math.random() - 0.5) * 0.00012, vy: -0.00006 - Math.random() * 0.00014, a: 0.15 + Math.random() * 0.5, sand: Math.random() < 0.4, ph: Math.random() * 6.28 }));
+    const size = () => { dpr = Math.min(devicePixelRatio || 1, 1.5); w = cv.width = cv.offsetWidth * dpr; h = cv.height = cv.offsetHeight * dpr; };
+    size(); addEventListener('resize', size);
+    new IntersectionObserver(([e]) => (on = e.isIntersecting)).observe(cv);
+    let last = performance.now();
+    const draw = now => {
+      requestAnimationFrame(draw);
+      if (!on || document.hidden) { last = now; return; }
+      const dt = Math.min(now - last, 50); last = now;
+      ctx.clearRect(0, 0, w, h);
+      for (const p of pts) {
+        p.x += p.vx * dt; p.y += p.vy * dt; p.ph += dt * 0.001;
+        if (p.y < -0.02) { p.y = 1.02; p.x = Math.random(); }
+        if (p.x < -0.02) p.x = 1.02; if (p.x > 1.02) p.x = -0.02;
+        const tw = 0.6 + 0.4 * Math.sin(p.ph);
+        ctx.beginPath(); ctx.arc(p.x * w, p.y * h, p.r * dpr, 0, 6.283);
+        ctx.fillStyle = p.sand ? `rgba(216,198,165,${p.a * tw})` : `rgba(160,185,212,${p.a * tw})`;
+        ctx.fill();
+      }
+    };
+    requestAnimationFrame(draw);
+  }
+})();

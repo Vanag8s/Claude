@@ -6,11 +6,12 @@
 <meta name="description" content="Tell Harbor about your business: hours, prices, rules and what to sell. Then test your AI receptionist before it answers your phone.">
 <meta name="robots" content="noindex">
 <link rel="canonical" href="https://harbor-ai.example/setup.html">
-<meta name="theme-color" content="#f4e9d8">
+<meta name="theme-color" content="#101D30">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml"><link rel="manifest" href="/site.webmanifest">
 <link rel="preload" href="/assets/fonts/fraunces-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/css/fonts.css">
 <link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/setup.css">
+<link rel="stylesheet" href="/css/theme.css">
 </head>
 <body class="setup-page">
 <a class="skip" href="#main">Skip to content</a>
@@ -93,6 +94,14 @@
               <label>Owner / staff phone (transfers &amp; alerts)<input name="owner_phone" placeholder="+15550111" inputmode="tel"></label>
             </div>
             <label>When to put callers through to a person<input name="transfer_note" placeholder="e.g. group bookings over 30 people"></label>
+            <label>AI quality <small>(higher quality costs more per call)</small>
+              <select name="ai_quality">
+                <option value="auto">Automatic: fast for Receptionist, best for Sales (recommended)</option>
+                <option value="fast">Fast &amp; low cost: simple questions and bookings</option>
+                <option value="balanced">Balanced</option>
+                <option value="best">Best: selling and difficult conversations</option>
+              </select>
+            </label>
           </div>
         </form>
       </section>

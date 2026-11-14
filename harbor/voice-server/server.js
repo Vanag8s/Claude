@@ -10,7 +10,7 @@
 import http from "node:http";
 import { WebSocketServer } from "ws";
 import Anthropic from "@anthropic-ai/sdk";
-import { getAI } from "../api/_lib/ai.js";
+import { getAI, modelFor } from "../api/_lib/ai.js";
 import twilio from "twilio";
 import { business, SYSTEM, LIVE_VOICE_STYLE, TOOLS } from "../api/_lib/receptionist.js";
 import { makeBooker } from "../api/_lib/booking.js";
@@ -137,10 +137,8 @@ export class CallSession {
       for (let round = 0; round < 4; round++) {
         const stream = this.client.beta.messages.stream(
           {
-            model: "claude-opus-5-5",
+            ...(this.member ? modelFor(this.member.profile) : { model: "claude-opus-5-5", betas: ["server-side-fallback-2026-07-01"], fallbacks: "default" }),
             max_tokens: 2048,
-            betas: ["server-side-fallback-2026-07-01"],
-            fallbacks: "default",
             output_config: { effort: "low" },
             system: [{ type: "text", text: this.member
               ? buildSystem(this.member.profile, { channel: "voice" }) + "\n" + LIVE_VOICE_STYLE + "\n- Each caller message may start with a (caller language: xx) tag; reply in that language."

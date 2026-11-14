@@ -145,3 +145,14 @@ export function compatClient({ baseURL, apiKey, model, fetchImpl = (...a) => fet
   const messages = { create, stream: streamFn };
   return { messages, beta: { messages } };
 }
+
+/* ---------------- Which Claude model answers for a business ----------------
+   ai_quality on the profile: "auto" (default) | "fast" | "balanced" | "best"
+   auto = fast for Receptionist mode, best for Sales mode. */
+export const MODELS = { fast: "claude-haiku-5-5", balanced: "claude-sonnet-5-5", best: "claude-opus-5-5" };
+export function modelFor(profile = {}) {
+  const q = ["fast", "balanced", "best"].includes(profile.ai_quality) ? profile.ai_quality : (profile.mode === "sales" ? "best" : "fast");
+  const model = process.env[`AI_MODEL_${q.toUpperCase()}`] || MODELS[q];
+  // Server-side refusal fallback isn't available on Haiku, so only request it on the other models.
+  return model.includes("haiku") ? { model } : { model, betas: ["server-side-fallback-2026-07-01"], fallbacks: "default" };
+}

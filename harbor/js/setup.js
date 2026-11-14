@@ -26,12 +26,13 @@
       about: g('about2') || ($('about').value.trim() && !g('company') ? $('about').value.trim() : ''),
       sales: { goal: g('sales.goal'), upsells: g('sales.upsells'), offers: g('sales.offers'), objections: g('sales.objections') },
       phone_number: g('phone_number'), owner_phone: g('owner_phone'), transfer_note: g('transfer_note'),
-      voice_gender: window.harborVoices?.gender || 'female',
+      voice_gender: window.harborVoices?.gender || 'female', ai_quality: g('ai_quality') || 'auto',
     };
   }
   function fillProfile(p) {
     const set = (k, v) => { const el = form.elements[k]; if (el) el.value = v || ''; };
     ['company', 'type', 'language', 'personality', 'hours', 'location', 'contact', 'rules', 'phone_number', 'owner_phone', 'transfer_note'].forEach(k => set(k, p[k]));
+    set('ai_quality', p.ai_quality || 'auto');
     set('about2', p.about);
     ['goal', 'upsells', 'offers', 'objections'].forEach(k => set('sales.' + k, p.sales?.[k]));
     form.querySelectorAll('input[name=mode]').forEach(r => (r.checked = r.value === (p.mode || 'receptionist')));

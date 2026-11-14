@@ -68,8 +68,8 @@
     el.classList.add('vpick');
     el.innerHTML = `
       <div class="vpick__seg" role="group" aria-label="Harbor's voice">
-        <button type="button" data-g="female" aria-pressed="false">👩 Woman</button>
-        <button type="button" data-g="male" aria-pressed="false">👨 Man</button>
+        <button type="button" data-g="female" aria-pressed="false">Woman</button>
+        <button type="button" data-g="male" aria-pressed="false">Man</button>
       </div>
       <button type="button" class="vpick__hear" aria-label="Hear Harbor's voice">▶ Hear it</button>
       <label class="vpick__aloud"><input type="checkbox" data-aloud> Read replies aloud</label>

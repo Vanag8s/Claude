@@ -6,7 +6,7 @@
   <title>Harbor — The AI Receptionist That Never Misses a Call | Monthly Membership</title>
   <meta name="description" content="Harbor answers every call in a warm, natural voice, books appointments, answers questions and texts you the details, 24/7. One monthly membership for small, growing and large businesses.">
   <link rel="canonical" href="https://harbor-ai.example/">
-  <meta name="theme-color" content="#f4e9d8">
+  <meta name="theme-color" content="#101D30">
   <meta name="robots" content="index,follow,max-image-preview:large">
 
   <!-- Social share -->
@@ -30,10 +30,11 @@
   <link rel="manifest" href="/site.webmanifest">
 
   <!-- Performance: preconnect + non-blocking fonts -->
-<link rel="preload" href="/assets/fonts/fraunces-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/inter-tight-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/css/fonts.css">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/css/cinematic.css">
+  <link rel="stylesheet" href="/css/theme.css">
 
   <script type="application/ld+json">
   {
@@ -84,44 +85,51 @@
   </div>
 
   <main id="main">
-    <!-- HERO: a living beach -->
-    <section class="hero hero--photo" aria-labelledby="hero-title">
+    <!-- HERO -->
+    <section class="hero hero--dark on-dark" aria-labelledby="hero-title">
       <div class="hero__photo" aria-hidden="true">
         <img src="/assets/photos/hero.jpg" alt="" width="1280" height="720" fetchpriority="high" decoding="async" data-parallax="0.18" onerror="this.remove()">
-        <div class="flare"></div>
+        <div class="hero__veil"></div>
+        <div class="aurora"><i></i><i></i><i></i></div>
+        <canvas id="particles"></canvas>
         <div class="grain"></div>
         <div class="glow" id="heroGlow"></div>
-        <div class="hero__shade"></div>
       </div>
-
       <div class="hero__inner">
         <div class="hero__copy">
-          <p class="eyebrow reveal"><span class="pulse"></span> Your AI receptionist, always on shore</p>
-          <h1 id="hero-title" class="split">Every call answered,<br><em>like the tide.</em></h1>
-          <p class="lead reveal">Harbor picks up every call in a warm, natural voice, answers questions, books appointments and texts you the details, day and night. One simple monthly membership, whether you're a one-person shop or a busy team.</p>
+          <p class="eyebrow reveal"><span class="pulse"></span> The AI receptionist for growing businesses</p>
+          <h1 id="hero-title" class="split">Your Business.<br><em>Smarter With AI.</em></h1>
+          <p class="lead reveal">Harbor answers every call in a natural voice, books appointments and texts you the details, so you never lose a customer to voicemail.</p>
           <div class="hero__ctas reveal">
-            <a href="#talk" class="btn btn--primary btn--lg" data-track="hero_talk">Talk to Harbor now</a>
-            <a href="#membership" class="btn btn--ghost btn--lg" data-track="hero_plans">See memberships</a>
+            <a href="#membership" class="btn btn--primary btn--lg btn--sheen" data-track="hero_start">Get started</a>
+            <a href="#features" class="btn btn--ghost btn--lg" data-track="hero_features">Explore features</a>
           </div>
-          <p class="hero__note reveal"><span class="hand">no contracts · live in 48 hours · first month free if it doesn't pay off</span></p>
+          <ul class="hero__facts reveal" aria-label="Key facts">
+            <li><b>24/7</b> answering</li><li><b>48 h</b> to go live</li><li><b>No</b> contract</li>
+          </ul>
         </div>
 
-        <!-- Live call, like a phone notification on the sand -->
-        <figure class="callcard reveal" aria-label="Example of Harbor answering a call at 9:47 PM">
-          <span class="example-tag">Example call</span>
-          <div class="callcard__top">
-            <div class="callcard__ring"><span></span></div>
-            <div>
-              <strong>Incoming call · 9:47 PM</strong>
-              <small>Harbor answered in 1.4 seconds</small>
+        <!-- Product preview: a live call, as Harbor handles it -->
+        <div class="preview reveal">
+          <figure class="console callcard" aria-label="Example of Harbor answering a call at 9:47 PM">
+            <div class="console__bar"><i></i><i></i><i></i><span>Harbor · live call</span><span class="example-tag example-tag--inline">Example</span></div>
+            <div class="callcard__top">
+              <div class="callcard__ring"><span></span></div>
+              <div>
+                <strong>Incoming call · 9:47 PM</strong>
+                <small>Harbor answered in 1.4 seconds</small>
+              </div>
+              <div class="bars bars--mini" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
             </div>
-          </div>
-          <ol class="callcard__log" id="callLog" aria-live="off"></ol>
-          <div class="callcard__booked" id="callBooked" hidden>
-            <span aria-hidden="true">📅</span>
-            <div><strong>Booked · Tue 9:30 AM</strong><small>You got a text with the details</small></div>
-          </div>
-        </figure>
+            <ol class="callcard__log" id="callLog" aria-live="off"></ol>
+            <div class="callcard__booked" id="callBooked" hidden>
+              <span aria-hidden="true">✓</span>
+              <div><strong>Booked · Tue 9:30 AM</strong><small>You got a text with the details</small></div>
+            </div>
+          </figure>
+          <div class="float float--a" aria-hidden="true"><small>Text to owner</small><b>New booking · Tue 9:30</b></div>
+          <div class="float float--b" aria-hidden="true"><small>Missed calls today</small><b>0</b></div>
+        </div>
       </div>
     </section>
 
@@ -133,20 +141,74 @@
       </div>
     </section>
 
-    <!-- REAL BUSINESSES -->
-    <section class="section people" aria-labelledby="people-title">
-      <div class="wrap people__grid">
-        <figure class="photo photo--wipe reveal"><img data-parallax="0.06" src="/assets/photos/barber.jpg" alt="A barber trimming a client's hair with clippers" loading="lazy" width="1280" height="853"></figure>
-        <div>
-          <p class="eyebrow reveal">Made for busy hands</p>
-          <h2 id="people-title" class="split">You can't answer the phone<br><em>mid-haircut.</em></h2>
-          <ul class="moments reveal">
-            <li><b>Mid-haircut</b><span>Harbor fills tomorrow's chair.</span></li>
-            <li><b>Mid-appointment</b><span>Harbor books the next patient while you work.</span></li>
-            <li><b>Under a car</b><span>Harbor takes the job details and texts you.</span></li>
-            <li><b>On another call</b><span>Harbor picks up line two.</span></li>
-            <li><b>After closing</b><span>Harbor keeps answering, all night.</span></li>
-          </ul>
+    <!-- INDUSTRIES -->
+    <section class="section ind" id="industries" aria-labelledby="ind-title">
+      <div class="wrap">
+        <p class="eyebrow reveal">Built for every front desk</p>
+        <h2 id="ind-title" class="split">One AI receptionist.<br><em>Every business.</em></h2>
+        <p class="lead reveal">Harbor learns your services, prices and rules, then answers the way your best receptionist would. Pick your industry to hear how a call goes.</p>
+        <div class="ind__tabs reveal" role="tablist" aria-label="Industries"><button type="button" role="tab" id="ind-tab-beauty" aria-controls="ind-beauty" aria-selected="true" tabindex="0" class="ind__tab is-on">Barbershops &amp; Beauty</button><button type="button" role="tab" id="ind-tab-realestate" aria-controls="ind-realestate" aria-selected="false" tabindex="-1" class="ind__tab">Real Estate</button><button type="button" role="tab" id="ind-tab-restaurant" aria-controls="ind-restaurant" aria-selected="false" tabindex="-1" class="ind__tab">Restaurants &amp; Cafés</button><button type="button" role="tab" id="ind-tab-fitness" aria-controls="ind-fitness" aria-selected="false" tabindex="-1" class="ind__tab">Fitness &amp; Gyms</button><button type="button" role="tab" id="ind-tab-cars" aria-controls="ind-cars" aria-selected="false" tabindex="-1" class="ind__tab">Car Dealerships</button></div>
+        <div class="ind__stage reveal">
+          <div class="ind__panel is-on" role="tabpanel" id="ind-beauty" aria-labelledby="ind-tab-beauty">
+            <figure class="ind__photo"><img src="/assets/photos/barber.jpg" alt="A barber trimming a client's hair with clippers" loading="lazy" width="1280" height="853" onerror="this.remove()"><figcaption>Barbershops &amp; Beauty</figcaption></figure>
+            <div class="ind__body">
+              <h3>What Harbor does for barbershops &amp; beauty</h3>
+              <ul class="checks"><li>Books, moves and cancels appointments</li><li>Answers prices and "do you take walk-ins?"</li><li>Fills last-minute gaps from a waiting list</li><li>Texts the client a confirmation</li></ul>
+              <div class="ind__demo">
+                <span class="example-tag example-tag--inline">Example call</span>
+                <div class="ind__talk"><p class="bub bub--cx">Hi, do you have anything Saturday for a skin fade?</p><p class="bub bub--ai">We do! Saturday I have 11:30 or 2:15 with Marco. Which suits you?</p><p class="bub bub--cx">2:15 please.</p><p class="bub bub--ai">Done, you're booked for 2:15. I'm texting you the details now.</p></div>
+                <p class="ind__sms"><small>Text to the owner</small>New booking: Tom, skin fade, Sat 2:15 PM with Marco.</p>
+              </div>
+            </div>
+          </div>
+          <div class="ind__panel" role="tabpanel" id="ind-realestate" aria-labelledby="ind-tab-realestate" hidden>
+            <figure class="ind__photo"><img src="/assets/photos/ind-realestate.jpg" alt="A modern house with large windows" loading="lazy" width="1280" height="853" onerror="this.remove()"><figcaption>Real Estate</figcaption></figure>
+            <div class="ind__body">
+              <h3>What Harbor does for real estate</h3>
+              <ul class="checks"><li>Answers questions about listings, day and night</li><li>Books viewings straight into your diary</li><li>Asks budget, timing and financing, so you call back prepared</li><li>Sends urgent buyers through to the agent</li></ul>
+              <div class="ind__demo">
+                <span class="example-tag example-tag--inline">Example call</span>
+                <div class="ind__talk"><p class="bub bub--cx">Is the two-bedroom on Elm Street still available?</p><p class="bub bub--ai">It is. It's 78 square metres with a balcony, listed at 245,000. Would you like to see it?</p><p class="bub bub--cx">Yes, this week if possible.</p><p class="bub bub--ai">I can offer Thursday at 5:30 or Friday at noon. Which works better?</p></div>
+                <p class="ind__sms"><small>Text to the owner</small>Viewing booked: Rasa, Elm St 2-bed, Thu 5:30 PM. Budget up to 260k, mortgage pre-approved.</p>
+              </div>
+            </div>
+          </div>
+          <div class="ind__panel" role="tabpanel" id="ind-restaurant" aria-labelledby="ind-tab-restaurant" hidden>
+            <figure class="ind__photo"><img src="/assets/photos/ind-restaurant.jpg" alt="A warmly lit restaurant interior" loading="lazy" width="1280" height="853" onerror="this.remove()"><figcaption>Restaurants &amp; Cafés</figcaption></figure>
+            <div class="ind__body">
+              <h3>What Harbor does for restaurants &amp; cafés</h3>
+              <ul class="checks"><li>Takes table reservations during the rush</li><li>Answers opening hours, location and parking</li><li>Passes allergy questions and large groups to your team</li><li>Handles takeaway order enquiries</li></ul>
+              <div class="ind__demo">
+                <span class="example-tag example-tag--inline">Example call</span>
+                <div class="ind__talk"><p class="bub bub--cx">Can I get a table for six on Friday at eight?</p><p class="bub bub--ai">Friday at eight I can seat six at 7:45 or 8:30. Would either work?</p><p class="bub bub--cx">8:30 is fine. One of us is coeliac.</p><p class="bub bub--ai">Booked for 8:30. I've noted the coeliac guest, and the kitchen will confirm options with you.</p></div>
+                <p class="ind__sms"><small>Text to the owner</small>Reservation: Ignas, 6 guests, Fri 8:30 PM. Note: one coeliac guest, kitchen to confirm.</p>
+              </div>
+            </div>
+          </div>
+          <div class="ind__panel" role="tabpanel" id="ind-fitness" aria-labelledby="ind-tab-fitness" hidden>
+            <figure class="ind__photo"><img src="/assets/photos/ind-gym.jpg" alt="A modern gym with training equipment" loading="lazy" width="1280" height="853" onerror="this.remove()"><figcaption>Fitness &amp; Gyms</figcaption></figure>
+            <div class="ind__body">
+              <h3>What Harbor does for fitness &amp; gyms</h3>
+              <ul class="checks"><li>Explains memberships and prices</li><li>Books trial sessions and personal training</li><li>Answers class times and opening hours</li><li>Passes freeze and cancellation requests to staff</li></ul>
+              <div class="ind__demo">
+                <span class="example-tag example-tag--inline">Example call</span>
+                <div class="ind__talk"><p class="bub bub--cx">How much is a membership? And can I try it first?</p><p class="bub bub--ai">Monthly membership is 39, and yes, your first session is free. Want me to book a trial?</p><p class="bub bub--cx">Sure, tomorrow evening.</p><p class="bub bub--ai">You're in for tomorrow at 6 PM. Bring trainers and a water bottle!</p></div>
+                <p class="ind__sms"><small>Text to the owner</small>Trial booked: Greta, tomorrow 6 PM. Interested in monthly membership.</p>
+              </div>
+            </div>
+          </div>
+          <div class="ind__panel" role="tabpanel" id="ind-cars" aria-labelledby="ind-tab-cars" hidden>
+            <figure class="ind__photo"><img src="/assets/photos/ind-cars.jpg" alt="Cars on display in a showroom" loading="lazy" width="1280" height="853" onerror="this.remove()"><figcaption>Car Dealerships</figcaption></figure>
+            <div class="ind__body">
+              <h3>What Harbor does for car dealerships</h3>
+              <ul class="checks"><li>Books test drives and service appointments</li><li>Answers stock, price and opening-hour questions</li><li>Captures what the buyer wants and their trade-in</li><li>Sends hot leads to a salesperson right away</li></ul>
+              <div class="ind__demo">
+                <span class="example-tag example-tag--inline">Example call</span>
+                <div class="ind__talk"><p class="bub bub--cx">Do you still have the grey hybrid SUV from your website?</p><p class="bub bub--ai">Yes, it's here: 2023, 31,000 km, 28,900. Would you like to test drive it?</p><p class="bub bub--cx">Saturday morning. I'd trade in my old hatchback.</p><p class="bub bub--ai">Saturday at 10 is yours. I've noted the trade-in so the team can prepare an offer.</p></div>
+                <p class="ind__sms"><small>Text to the owner</small>Hot lead: Paulius, test drive Sat 10 AM, grey hybrid SUV. Trade-in: 2015 hatchback.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -166,7 +228,7 @@
     </section>
 
     <!-- STORY: ONE CALL, SECOND BY SECOND -->
-    <section class="story" aria-labelledby="story-title">
+    <section class="story on-dark" aria-labelledby="story-title">
       <div class="wrap story__grid">
         <div class="story__steps">
           <p class="eyebrow">One call, second by second</p>
@@ -195,23 +257,67 @@
       </div>
     </section>
 
+    <!-- PRODUCT TOUR -->
+    <section class="section tour on-dark" id="product" aria-labelledby="tour-title">
+      <div class="wrap">
+        <p class="eyebrow reveal">The product</p>
+        <h2 id="tour-title" class="split">See exactly<br><em>what you get.</em></h2>
+        <div class="tour__grid">
+          <div class="tour__tabs reveal" role="tablist" aria-label="Product tour" aria-orientation="vertical">
+            <button type="button" role="tab" class="tour__tab is-on" id="tour-tab-teach" aria-controls="tour-teach" aria-selected="true"><b>1 · Teach it</b><span>Write or say what callers ask. Harbor turns it into its knowledge.</span></button>
+            <button type="button" role="tab" class="tour__tab" id="tour-tab-answer" aria-controls="tour-answer" aria-selected="false" tabindex="-1"><b>2 · It answers</b><span>Every call, in a natural voice, from your own facts.</span></button>
+            <button type="button" role="tab" class="tour__tab" id="tour-tab-sell" aria-controls="tour-sell" aria-selected="false" tabindex="-1"><b>3 · It sells</b><span>In Sales mode it recommends, handles objections and records the sale.</span></button>
+            <button type="button" role="tab" class="tour__tab" id="tour-tab-report" aria-controls="tour-report" aria-selected="false" tabindex="-1"><b>4 · You stay informed</b><span>A text after every call, and bookings sent to your tools.</span></button>
+          </div>
+          <div class="tour__screen reveal">
+            <div class="console__bar"><i></i><i></i><i></i><span id="tourTitle">Setup · Northside Realty</span><span class="example-tag example-tag--inline">Example data</span></div>
+            <div class="tour__pane is-on" role="tabpanel" id="tour-teach" aria-labelledby="tour-tab-teach">
+              <div class="mock-field"><small>Business name</small><p>Northside Realty</p></div>
+              <div class="mock-row"><div class="mock-field"><small>Mode</small><p><span class="pill pill--on">Receptionist</span> <span class="pill">Sales</span></p></div><div class="mock-field"><small>Voice</small><p><span class="pill pill--on">Woman</span> <span class="pill">Man</span></p></div></div>
+              <div class="mock-field"><small>Opening hours</small><p>Mon–Fri 9:00–18:00, Sat 10:00–14:00</p></div>
+              <div class="mock-field"><small>Rules &amp; policies</small><p>Viewings by appointment only. Bring photo ID. Agents can't discuss offers by phone.</p></div>
+              <a class="btn btn--primary btn--sm" href="/setup.html">Open the real setup page</a>
+            </div>
+            <div class="tour__pane" role="tabpanel" id="tour-answer" aria-labelledby="tour-tab-answer" hidden>
+              <p class="bub bub--ai">Thanks for calling Northside Realty, this is Harbor, the virtual assistant. How can I help?</p>
+              <p class="bub bub--cx">Can I view the Elm Street flat on Saturday?</p>
+              <p class="bub bub--ai">Saturday we're open 10 to 2. I have 11:00 or 12:30 free. Please bring photo ID.</p>
+              <p class="bub bub--cx">11 works.</p>
+              <div class="booked">✓ Viewing · Sat 11:00</div>
+            </div>
+            <div class="tour__pane" role="tabpanel" id="tour-sell" aria-labelledby="tour-tab-sell" hidden>
+              <p class="bub bub--cx">Your monthly pass is a bit expensive.</p>
+              <p class="bub bub--ai">I understand. If you train more than twice a week, the yearly plan works out cheaper per visit. Shall I set that up, or start with a free trial session?</p>
+              <p class="bub bub--cx">Let's do the trial first.</p>
+              <div class="mock-action"><b>Lead captured</b>Greta · trial session · interested in yearly plan</div>
+            </div>
+            <div class="tour__pane" role="tabpanel" id="tour-report" aria-labelledby="tour-tab-report" hidden>
+              <p class="bub bub--sms"><b>Harbor</b>Viewing booked: Rasa, Elm St flat, Sat 11:00. Bringing ID. Budget up to 260k.</p>
+              <p class="bub bub--sms"><b>Harbor</b>URGENT · Jonas (+370 6•• ••• 21): keys locked inside rental. Put through to the agent on call.</p>
+              <div class="mock-action"><b>Sent to your tools</b>Calendar event and a row in your sheet, through Zapier or Make</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- TALK TO HARBOR -->
     <section class="section talk" id="talk" aria-labelledby="talk-title">
       <div class="wrap demo__grid">
         <div>
           <p class="eyebrow reveal">Talk to Harbor</p>
           <h2 id="talk-title" class="split">Don't read about it.<br><em>Have a conversation.</em></h2>
-          <p class="lead reveal">Type or tap the 🎙 mic and just talk. Tell Harbor about your business and ask anything. Interrupt it, be skeptical, be in a rush. It listens to <em>how</em> you say things, not just what you say. When you're ready, it can act as <em>your</em> receptionist so you hear exactly what your callers would.</p>
+          <p class="lead reveal">Type, or tap the mic and just talk. Tell Harbor about your business and ask anything. Interrupt it, be skeptical, be in a rush. It listens to <em>how</em> you say things, not just what you say. When you're ready, it can act as <em>your</em> receptionist so you hear exactly what your callers would.</p>
           <ul class="chips reveal" aria-label="Conversation starters">
-            <li><button type="button" class="chip" data-ask="I run a small dental clinic and we miss a lot of calls during appointments.">🦷 I run a dental clinic</button></li>
-            <li><button type="button" class="chip" data-ask="Honestly I don't trust AI on the phone. Won't it sound like a robot?">🤨 Won't it sound robotic?</button></li>
-            <li><button type="button" class="chip" data-ask="How much does it cost?">💲 What does it cost?</button></li>
-            <li><button type="button" class="chip" data-ask="Can you pretend to be my receptionist so I can hear it?">🎭 Be my receptionist</button></li>
+            <li><button type="button" class="chip" data-ask="I run a small dental clinic and we miss a lot of calls during appointments.">I run a dental clinic</button></li>
+            <li><button type="button" class="chip" data-ask="Honestly I don't trust AI on the phone. Won't it sound like a robot?">Won't it sound robotic?</button></li>
+            <li><button type="button" class="chip" data-ask="How much does it cost?">What does it cost?</button></li>
+            <li><button type="button" class="chip" data-ask="Can you pretend to be my receptionist so I can hear it?">Be my receptionist</button></li>
           </ul>
           <label class="sense reveal"><input type="checkbox" id="showSense"> Show what Harbor senses (tone &amp; buying moment)</label>
           <div class="reveal" data-voice-picker data-company="Harbor"></div>
           <figure class="hearcall reveal">
-            <figcaption><b>🎧 Hear a real call</b><span>A parent calls a waterpark: opening hours, can a 14-year-old come alone, the price, "that's too expensive", and Harbor closes the sale. About a minute.</span></figcaption>
+            <figcaption><b>Hear a sample call</b><span>A parent calls a waterpark: opening hours, can a 14-year-old come alone, the price, "that's too expensive", and Harbor closes the sale. About a minute.</span></figcaption>
             <div class="wave-player" id="wavePlayer">
               <button type="button" class="wave-player__btn" id="waveBtn" aria-label="Play the sample call">▶</button>
               <canvas class="wave-player__canvas" id="waveCanvas" aria-hidden="true"></canvas>
@@ -222,7 +328,7 @@
           </figure>
 
           <form class="callme reveal" id="callMe" novalidate>
-            <div class="callme__head"><span class="callme__icon" aria-hidden="true">📞</span><div><strong>Rather hear it on the phone?</strong><small>Harbor will call you in about 10 seconds. Free, no sign-up, 3 minutes max.</small></div></div>
+            <div class="callme__head"><span class="callme__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span><div><strong>Rather hear it on the phone?</strong><small>Harbor will call you in about 10 seconds. Free, no sign-up, 3 minutes max.</small></div></div>
             <div class="callme__row">
               <label for="callPhone" class="sr-only">Your mobile number</label>
               <input id="callPhone" name="phone" type="tel" autocomplete="tel" placeholder="Your mobile number" required>
@@ -294,7 +400,7 @@
             <article class="pcard pcard--warn" id="pMissingCard"><h4>To finish setup we'd ask you</h4><ul id="pMissing"></ul></article>
           </div>
           <div class="build__ctas">
-            <button type="button" class="btn btn--primary btn--lg" id="pChat" data-track="build_chat">💬 Talk to your Harbor</button>
+            <button type="button" class="btn btn--primary btn--lg" id="pChat" data-track="build_chat">Talk to your Harbor</button>
             <a href="#membership" class="btn btn--ghost btn--lg" id="pLive" data-track="build_live">Make it answer my phone →</a>
           </div>
         </div>
@@ -308,7 +414,7 @@
           <p class="eyebrow reveal">After every call</p>
           <h2 id="after-title" class="split">You get the customer,<br><em>not a voicemail.</em></h2>
           <p class="lead reveal">Seconds after a call ends, Harbor texts you a one-line summary and sends the full write-up wherever you work: email, Google Sheets or your CRM. Urgent calls are flagged so you see them first.</p>
-          <ul class="checks reveal"><li>Who called, what they needed, what happened next</li><li>🚨 Urgent calls flagged, or put straight through to you</li><li>A full transcript of every conversation</li><li>Anyone who hung up gets a friendly text back</li></ul>
+          <ul class="checks reveal"><li>Who called, what they needed, what happened next</li><li>Urgent calls flagged, or put straight through to you</li><li>A full transcript of every conversation</li><li>Anyone who hung up gets a friendly text back</li></ul>
         </div>
         <div class="phone reveal" aria-label="Example of the text messages a member receives">
           <span class="example-tag example-tag--phone">Example messages</span>
@@ -322,20 +428,34 @@
       </div>
     </section>
 
+    <!-- GALLERY -->
+    <section class="gallery" aria-labelledby="gallery-title">
+      <div class="wrap">
+        <p class="eyebrow reveal">Wherever the phone rings</p>
+        <h2 id="gallery-title" class="split">Your work happens out there.<br><em>Harbor holds the line.</em></h2>
+      </div>
+      <div class="gallery__row">
+        <figure class="gallery__tile photo--wipe reveal"><img src="/assets/photos/g-house.jpg" alt="A family home at dusk with its lights on" loading="lazy" width="1280" height="853" data-parallax="0.05"><figcaption>Showing a property</figcaption></figure>
+        <figure class="gallery__tile photo--wipe reveal"><img src="/assets/photos/g-table.jpg" alt="A restaurant table set for dinner" loading="lazy" width="1280" height="853" data-parallax="0.08"><figcaption>In the dinner rush</figcaption></figure>
+        <figure class="gallery__tile photo--wipe reveal"><img src="/assets/photos/g-barbell.jpg" alt="A person lifting a barbell in a gym" loading="lazy" width="1280" height="853" data-parallax="0.05"><figcaption>Coaching a client</figcaption></figure>
+        <figure class="gallery__tile photo--wipe reveal"><img src="/assets/photos/g-interior.jpg" alt="A bright modern living room" loading="lazy" width="1280" height="853" data-parallax="0.08"><figcaption>At a viewing</figcaption></figure>
+      </div>
+    </section>
+
     <!-- FEATURES -->
-    <section class="section features" aria-labelledby="features-title">
+    <section class="section features" id="features" aria-labelledby="features-title">
       <div class="wrap">
         <p class="eyebrow reveal">Everything a great front desk does</p>
         <h2 id="features-title" class="split">Warm like a person.<br><em>Tireless like the sea.</em></h2>
         <div class="grid">
-          <article class="card reveal"><span class="card__icon" aria-hidden="true">🗣️</span><h3>A natural voice</h3><p>Warm and quick to reply. Callers can interrupt it, and an "uh-huh" doesn't throw it off. It always says it's a virtual assistant.</p></article>
-          <article class="card reveal"><span class="card__icon" aria-hidden="true">💛</span><h3>Reads the room</h3><p>Harbor is built to notice when a caller sounds stressed, rushed or upset, and to keep it short, slow down or put them through to you.</p></article>
-          <article class="card reveal"><span class="card__icon" aria-hidden="true">📅</span><h3>Books appointments</h3><p>Takes bookings in the time slots you choose and sends them to your calendar or booking tool through Zapier or Make.</p></article>
-          <article class="card reveal"><span class="card__icon" aria-hidden="true">💬</span><h3>Missed-call text-back</h3><p>If someone hangs up early, Harbor texts them within a minute and turns it into a booking.</p></article>
-          <article class="card reveal"><span class="card__icon" aria-hidden="true">🧠</span><h3>Knows your business</h3><p>Your services, prices, hours and policies. It never makes up an answer: it takes a message instead.</p></article>
-          <article class="card reveal"><span class="card__icon" aria-hidden="true">🚨</span><h3>Puts urgent calls through</h3><p>Emergencies and VIP callers ring straight through to your phone.</p></article>
-          <article class="card reveal"><span class="card__icon" aria-hidden="true">🌎</span><h3>Speaks their language</h3><p>Harbor can reply in the caller's language. Which languages sound best depends on the voice; we test yours with you.</p></article>
-          <article class="card reveal"><span class="card__icon" aria-hidden="true">📈</span><h3>Shows its worth</h3><p>A weekly note: calls answered, bookings made, and an estimate of what it earned you.</p></article>
+          <article class="card reveal"><span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v4M8 7v10M12 4v16M16 7v10M20 10v4"/></svg></span><h3>A natural voice</h3><p>Warm and quick to reply. Callers can interrupt it, and an "uh-huh" doesn't throw it off. It always says it's a virtual assistant.</p></article>
+          <article class="card reveal"><span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.5-7 10-7 10z"/></svg></span><h3>Reads the room</h3><p>Harbor is built to notice when a caller sounds stressed, rushed or upset, and to keep it short, slow down or put them through to you.</p></article>
+          <article class="card reveal"><span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16v14H4zM4 10h16M8 3v4M16 3v4"/></svg></span><h3>Books appointments</h3><p>Takes bookings in the time slots you choose and sends them to your calendar or booking tool through Zapier or Make.</p></article>
+          <article class="card reveal"><span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></svg></span><h3>Missed-call text-back</h3><p>If someone hangs up early, Harbor texts them within a minute and turns it into a booking.</p></article>
+          <article class="card reveal"><span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3zM5 17a3 3 0 0 1 3-3h10"/></svg></span><h3>Knows your business</h3><p>Your services, prices, hours and policies. It never makes up an answer: it takes a message instead.</p></article>
+          <article class="card reveal"><span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4l9 16H3zM12 10v4M12 17v.5"/></svg></span><h3>Puts urgent calls through</h3><p>Emergencies and VIP callers ring straight through to your phone.</p></article>
+          <article class="card reveal"><span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></span><h3>Speaks their language</h3><p>Harbor can reply in the caller's language. Which languages sound best depends on the voice; we test yours with you.</p></article>
+          <article class="card reveal"><span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V4M4 20h16M8 16v-5M12 16V8M16 16v-3"/></svg></span><h3>Shows its worth</h3><p>A weekly note: calls answered, bookings made, and an estimate of what it earned you.</p></article>
         </div>
       </div>
     </section>
@@ -399,7 +519,7 @@
     </section>
 
     <!-- PHOTO BREAK -->
-    <section class="breaker" aria-labelledby="breaker-title">
+    <section class="breaker on-dark" aria-labelledby="breaker-title">
       <img src="/assets/photos/surf.jpg" alt="Surfers waiting for waves at sunrise near a pier" loading="lazy" width="1280" height="853" data-parallax="0.12">
       <div class="breaker__text wrap">
         <h2 id="breaker-title" class="reveal">Out on the water?<br><em>Harbor's got the phones.</em></h2>
@@ -437,6 +557,15 @@
             <a href="#join" class="btn btn--ghost" data-plan="ocean" data-track="plan_ocean">Join Ocean</a>
           </article>
         </div>
+        <details class="plancompare reveal">
+          <summary>Compare all features</summary>
+          <div class="table-wrap" role="region" aria-label="Plan comparison" tabindex="0">
+            <table class="ctable ctable--plans">
+              <thead><tr><th scope="col">Feature</th><th scope="col">Shore</th><th scope="col" class="hl">Tide</th><th scope="col">Ocean</th></tr></thead>
+              <tbody><tr><th scope="row">Calls included each month</th><td>150</td><td class="hl">600</td><td>Unlimited</td></tr><tr><th scope="row">Natural-voice answering, 24/7</th><td><span class="yes" aria-label="Included">✓</span></td><td class="hl"><span class="yes" aria-label="Included">✓</span></td><td><span class="yes" aria-label="Included">✓</span></td></tr><tr><th scope="row">Bookings and messages</th><td><span class="yes" aria-label="Included">✓</span></td><td class="hl"><span class="yes" aria-label="Included">✓</span></td><td><span class="yes" aria-label="Included">✓</span></td></tr><tr><th scope="row">Missed-call text-back</th><td><span class="yes" aria-label="Included">✓</span></td><td class="hl"><span class="yes" aria-label="Included">✓</span></td><td><span class="yes" aria-label="Included">✓</span></td></tr><tr><th scope="row">Summary after every call</th><td><span class="yes" aria-label="Included">✓</span></td><td class="hl"><span class="yes" aria-label="Included">✓</span></td><td><span class="yes" aria-label="Included">✓</span></td></tr><tr><th scope="row">Live transfer of urgent calls</th><td><span class="no" aria-label="Not included">–</span></td><td class="hl"><span class="yes" aria-label="Included">✓</span></td><td><span class="yes" aria-label="Included">✓</span></td></tr><tr><th scope="row">Calendar and booking-tool sync (Zapier or Make)</th><td><span class="no" aria-label="Not included">–</span></td><td class="hl"><span class="yes" aria-label="Included">✓</span></td><td><span class="yes" aria-label="Included">✓</span></td></tr><tr><th scope="row">Multiple languages</th><td><span class="no" aria-label="Not included">–</span></td><td class="hl"><span class="yes" aria-label="Included">✓</span></td><td><span class="yes" aria-label="Included">✓</span></td></tr><tr><th scope="row">VIP numbers ring you directly</th><td><span class="no" aria-label="Not included">–</span></td><td class="hl"><span class="yes" aria-label="Included">✓</span></td><td><span class="yes" aria-label="Included">✓</span></td></tr><tr><th scope="row">Multiple locations and numbers</th><td><span class="no" aria-label="Not included">–</span></td><td class="hl"><span class="no" aria-label="Not included">–</span></td><td><span class="yes" aria-label="Included">✓</span></td></tr><tr><th scope="row">CRM integrations</th><td><span class="no" aria-label="Not included">–</span></td><td class="hl"><span class="no" aria-label="Not included">–</span></td><td><span class="yes" aria-label="Included">✓</span></td></tr><tr><th scope="row">Custom voice and scripts</th><td><span class="no" aria-label="Not included">–</span></td><td class="hl"><span class="no" aria-label="Not included">–</span></td><td><span class="yes" aria-label="Included">✓</span></td></tr><tr><th scope="row">Dedicated success manager</th><td><span class="no" aria-label="Not included">–</span></td><td class="hl"><span class="no" aria-label="Not included">–</span></td><td><span class="yes" aria-label="Included">✓</span></td></tr></tbody>
+            </table>
+          </div>
+        </details>
         <div class="guarantee reveal">
           <div class="guarantee__seal" aria-hidden="true">30<small>DAYS</small></div>
           <div>
@@ -448,17 +577,17 @@
     </section>
 
     <!-- TRUST -->
-    <section class="section trust" aria-labelledby="trust-title">
+    <section class="section trust on-dark" aria-labelledby="trust-title">
       <div class="wrap">
         <p class="eyebrow reveal">Built to be trusted</p>
         <h2 id="trust-title" class="split">Your callers, your data,<br><em>your rules.</em></h2>
         <div class="grid grid--3">
-          <article class="card reveal"><span class="card__icon" aria-hidden="true">🤝</span><h3>Always honest</h3><p>Harbor says it's a virtual assistant in its first sentence. It's the law in many places, and it builds trust.</p></article>
-          <article class="card reveal"><span class="card__icon" aria-hidden="true">🔒</span><h3>Private by default</h3><p>Encrypted in transit. Never sold. We use paid AI services that don't train their models on your calls.</p></article>
-          <article class="card reveal"><span class="card__icon" aria-hidden="true">🧭</span><h3>You set the guardrails</h3><p>It only quotes what you approve and hands over to you whenever it isn't sure.</p></article>
-          <article class="card reveal"><span class="card__icon" aria-hidden="true">📄</span><h3>Every word on record</h3><p>A full transcript and summary of every call, so you always know what was said.</p></article>
-          <article class="card reveal"><span class="card__icon" aria-hidden="true">🇪🇺</span><h3>Built for GDPR</h3><p>Data processing agreement on request, deletion on request and clear retention limits. See our <a href="/legal/privacy.html">Privacy Policy</a>.</p></article>
-          <article class="card reveal"><span class="card__icon" aria-hidden="true">🌊</span><h3>No lock-in</h3><p>Monthly membership, keep your number, cancel any time. Prices are right here, not hidden behind a sign-up.</p></article>
+          <article class="card reveal"><span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6zM9 12l2 2 4-4"/></svg></span><h3>Always honest</h3><p>Harbor says it's a virtual assistant in its first sentence. It's the law in many places, and it builds trust.</p></article>
+          <article class="card reveal"><span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11h12v9H6zM9 11V7a3 3 0 0 1 6 0v4"/></svg></span><h3>Private by default</h3><p>Encrypted in transit. Never sold. We use paid AI services that don't train their models on your calls.</p></article>
+          <article class="card reveal"><span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10M14 5v4M6 15v4"/></svg></span><h3>You set the guardrails</h3><p>It only quotes what you approve and hands over to you whenever it isn't sure.</p></article>
+          <article class="card reveal"><span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7zM14 3v4h4M10 12h5M10 16h5"/></svg></span><h3>Every word on record</h3><p>A full transcript and summary of every call, so you always know what was said.</p></article>
+          <article class="card reveal"><span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4h12l-2 4 2 4H5"/></svg></span><h3>Built for GDPR</h3><p>Data processing agreement on request, deletion on request and clear retention limits. See our <a href="/legal/privacy.html">Privacy Policy</a>.</p></article>
+          <article class="card reveal"><span class="card__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11h12v9H6zM9 11V7a3 3 0 0 1 5.5-1.5"/></svg></span><h3>No lock-in</h3><p>Monthly membership, keep your number, cancel any time. Prices are right here, not hidden behind a sign-up.</p></article>
         </div>
       </div>
     </section>
@@ -539,7 +668,7 @@
           <button class="btn btn--primary btn--lg btn--block" type="submit" data-track="form_submit">Start my membership</button>
           <p class="formnote">No payment today. We reply within one business day.</p>
           <div class="formdone" id="formDone" hidden role="status">
-            <b>Welcome aboard. 🌊</b>
+            <b>Welcome aboard.</b>
             <p>We'll be in touch within one business day to build your Harbor and set up a test call.</p>
           </div>
         </form>
@@ -547,25 +676,23 @@
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="wrap footer__grid">
-      <div>
+  <footer class="footer on-dark">
+    <div class="wrap footer__cols">
+      <div class="footer__brand">
         <a href="/" class="brand"><img src="/assets/favicon.svg" alt="" width="30" height="30"> Harbor</a>
-        <p>The AI receptionist that never misses a call.</p>
+        <p>The AI receptionist that answers every call, books appointments and keeps you informed.</p>
       </div>
-      <nav aria-label="Footer">
-        <a href="/plumbers.html">For plumbers</a><a href="/hvac.html">For HVAC</a><a href="/roofers.html">For roofers</a><a href="/electricians.html">For electricians</a>
-        <a href="#how">How it works</a><a href="#membership">Membership</a><a href="#faq">FAQ</a>
-        <a href="/setup.html">Member setup</a><a href="/legal/privacy.html">Privacy Policy</a><a href="/legal/terms.html">Terms of Service</a><a href="/legal/refunds.html">Refund Policy</a><a href="/legal/cookies.html">Cookie Policy</a><a href="/legal/accessibility.html">Accessibility</a><a href="/legal/company.html">Company details</a><a href="/legal/credits.html">Credits</a>
-        <button type="button" class="linkish" id="cookieSettings">Cookie settings</button>
-      </nav>
+      <nav aria-label="Product"><h2>Product</h2><a href="#features">Features</a><a href="#product">Product tour</a><a href="#talk">Talk to Harbor</a><a href="#membership">Pricing</a><a href="/setup.html">Member setup</a></nav>
+      <nav aria-label="Industries"><h2>Industries</h2><a href="#industries">Barbershops &amp; beauty</a><a href="#industries">Real estate</a><a href="#industries">Restaurants &amp; cafés</a><a href="#industries">Fitness &amp; gyms</a><a href="#industries">Car dealerships</a><a href="/plumbers.html">Trades</a></nav>
+      <nav aria-label="Company"><h2>Company</h2><a href="#join">Contact</a><a href="#faq">FAQ</a><a href="/legal/company.html">Company details</a><a href="/legal/accessibility.html">Accessibility</a><a href="/legal/credits.html">Credits</a></nav>
+      <nav aria-label="Legal"><h2>Legal</h2><a href="/legal/privacy.html">Privacy Policy</a><a href="/legal/terms.html">Terms of Service</a><a href="/legal/refunds.html">Refund Policy</a><a href="/legal/cookies.html">Cookie Policy</a><button type="button" class="linkish" id="cookieSettings">Cookie settings</button></nav>
     </div>
     <p class="footer__legal wrap">© <span id="yr">2026</span> Harbor is a service of <mark class="fill">[Company name]</mark>, company code <mark class="fill">[code]</mark>, <mark class="fill">[registered address]</mark>. Contact: <mark class="fill">[email]</mark>. Harbor is an AI system and tells callers so.</p>
   </footer>
 
   <!-- Cookie consent -->
   <div class="cookie" id="cookie" role="dialog" aria-labelledby="cookieTitle" aria-describedby="cookieDesc" hidden>
-    <h2 id="cookieTitle">A quick note on cookies 🐚</h2>
+    <h2 id="cookieTitle">A quick note on cookies</h2>
     <p id="cookieDesc">Essential cookies keep the site working. With your OK we also use analytics to see which pages help people most. <a href="/legal/cookies.html">Learn more</a></p>
     <div class="cookie__btns">
       <button type="button" class="btn btn--ghost btn--sm" data-consent="reject">Essential only</button>

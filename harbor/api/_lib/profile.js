@@ -38,6 +38,7 @@ export function normalizeProfile(p = {}) {
     phone_number: clip(p.phone_number, 20).replace(/[^\d+]/g, ""),
     owner_phone: clip(p.owner_phone, 20).replace(/[^\d+]/g, ""),
     voice_gender: p.voice_gender === "male" ? "male" : "female",
+    ai_quality: ["fast", "balanced", "best"].includes(p.ai_quality) ? p.ai_quality : "auto",
     vip_numbers: list(p.vip_numbers, 30, 20),
   };
 }

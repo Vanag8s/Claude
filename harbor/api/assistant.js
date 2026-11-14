@@ -1,7 +1,7 @@
 // A member business's receptionist, by chat. Used by the owner's test chat (a saved business or a draft profile).
 // Tools run in "test mode": bookings, messages and sales are returned to the page instead of being sent anywhere.
 import Anthropic from "@anthropic-ai/sdk";
-import { getAI } from "./_lib/ai.js";
+import { getAI, modelFor } from "./_lib/ai.js";
 import { buildSystem, toolsFor, normalizeProfile } from "./_lib/profile.js";
 import { getBusiness } from "./_lib/store.js";
 import { limited, clientIp } from "./_lib/ratelimit.js";
@@ -34,10 +34,8 @@ export default async function handler(req, res, deps = {}) {
     const c = deps.anthropic || (client ??= getAI());
     for (let round = 0; round < 4; round++) {
       const r = await c.beta.messages.create({
-        model: "claude-opus-5-5",
+        ...modelFor(profile),
         max_tokens: 2048,
-        betas: ["server-side-fallback-2026-07-01"],
-        fallbacks: "default",
         output_config: { effort: "low" },
         system: [{ type: "text", text: buildSystem(profile, { channel: req.body?.via === "voice" ? "voice" : "chat" }), cache_control: { type: "ephemeral" } }],
         tools,

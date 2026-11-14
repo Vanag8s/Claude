@@ -199,6 +199,14 @@ try {
   const story = await lp.locator('.story').boundingBox();
   await lp.evaluate(y => scrollTo(0, y), story.y + story.height - 1100); await lp.waitForTimeout(800);
   ok('Scroll story moves the phone to a later step', (await lp.locator('.scr.is-on').getAttribute('data-scr')) !== '0');
+  await lp.click('#ind-tab-realestate'); await lp.waitForTimeout(300);
+  ok('Industry tabs switch the example (real estate)', await lp.isVisible('#ind-realestate') && await lp.isHidden('#ind-beauty') && (await lp.textContent('#ind-realestate')).includes('Viewing booked'));
+  await lp.focus('#ind-tab-realestate'); await lp.keyboard.press('ArrowRight'); await lp.waitForTimeout(200);
+  ok('Industry tabs work with arrow keys', (await lp.getAttribute('#ind-tab-restaurant', 'aria-selected')) === 'true');
+  ok('Five industries, each with its own photo', (await lp.locator('.ind__tab').count()) === 5 && (await lp.locator('.ind__photo img').count()) === 5);
+  await lp.click('#tour-tab-sell'); await lp.waitForTimeout(300);
+  ok('Product tour switches screens', await lp.isVisible('#tour-sell') && (await lp.textContent('#tourTitle')).includes('Sales mode'));
+  ok('Plan comparison table lists all three plans', (await lp.locator('.ctable--plans thead th').count()) === 4);
   ok('Waveform player is shown', await lp.isVisible('#waveCanvas') || (await lp.locator('#waveCanvas').count()) === 1);
   await lctx.close();
 
