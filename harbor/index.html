@@ -60,7 +60,18 @@
   <a class="skip" href="#main">Skip to content</a>
 
   <!-- Intro: a wave washes over the screen -->
-  <div class="letterbox" aria-hidden="true"><span></span><span></span></div>
+  <div class="intro" id="intro" aria-hidden="true">
+    <div class="intro__half intro__half--top"></div><div class="intro__half intro__half--bottom"></div>
+    <div class="intro__center">
+      <svg class="intro__mark" viewBox="0 0 64 64" width="84" height="84"><circle class="intro__sun" cx="41" cy="22" r="8"/><path class="intro__wave" d="M8 38c6 0 6-5 12-5s6 5 12 5 6-5 12-5 6 5 12 5"/><path class="intro__wave intro__wave--2" d="M8 48c6 0 6-5 12-5s6 5 12 5 6-5 12-5 6 5 12 5"/></svg>
+      <div class="intro__word"><span>H</span><span>a</span><span>r</span><span>b</span><span>o</span><span>r</span></div>
+      <div class="intro__line"><i></i></div>
+    </div>
+  </div>
+  <script>(function(){var d=document.documentElement,seen=false;try{seen=sessionStorage.getItem('harbor_intro')==='1';sessionStorage.setItem('harbor_intro','1')}catch(e){}
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;window.__introMs=reduce?0:(seen?500:2500);d.classList.add(reduce?'intro-none':(seen?'intro-short':'intro-full'));
+  setTimeout(function(){d.classList.add('intro-done');var i=document.getElementById('intro');if(i)setTimeout(function(){i.remove()},1400)},window.__introMs);})();</script>
+  <div class="progress" aria-hidden="true"><i id="scrollBar"></i></div>
 
   <header class="nav" id="nav">
     <a href="/" class="brand" aria-label="Harbor home">
@@ -88,7 +99,12 @@
     <!-- HERO -->
     <section class="hero hero--dark on-dark" aria-labelledby="hero-title">
       <div class="hero__photo" aria-hidden="true">
-        <img src="/assets/photos/hero.jpg" alt="" width="1280" height="720" fetchpriority="high" decoding="async" data-parallax="0.18" onerror="this.remove()">
+        <div class="hero__slides" data-parallax="0.18">
+          <img class="hero__slide is-on" src="/assets/photos/hero.jpg" alt="" width="1280" height="720" fetchpriority="high" decoding="async" onerror="this.remove()">
+          <img class="hero__slide" src="/assets/photos/f-cafe.jpg" alt="" width="1100" height="733" loading="lazy" decoding="async" onerror="this.remove()">
+          <img class="hero__slide" src="/assets/photos/ind-restaurant.jpg" alt="" width="1280" height="720" loading="lazy" decoding="async" onerror="this.remove()">
+          <img class="hero__slide" src="/assets/photos/ind-cars.jpg" alt="" width="1280" height="1024" loading="lazy" decoding="async" onerror="this.remove()">
+        </div>
         <div class="hero__veil"></div>
         <div class="aurora"><i></i><i></i><i></i></div>
         <canvas id="particles"></canvas>
@@ -104,6 +120,7 @@
             <a href="#membership" class="btn btn--primary btn--lg btn--sheen" data-track="hero_start">Get started</a>
             <a href="#features" class="btn btn--ghost btn--lg" data-track="hero_features">Explore features</a>
           </div>
+          <p class="hero__scene reveal" aria-hidden="true"><i></i><span id="heroScene">Answering for the coast, 9:47 PM</span></p>
           <ul class="hero__facts reveal" aria-label="Key facts">
             <li><b>24/7</b> answering</li><li><b>48 h</b> to go live</li><li><b>No</b> contract</li>
           </ul>
@@ -147,9 +164,9 @@
         <p class="eyebrow reveal">Built for every front desk</p>
         <h2 id="ind-title" class="split">One AI receptionist.<br><em>Every business.</em></h2>
         <p class="lead reveal">Harbor learns your services, prices and rules, then answers the way your best receptionist would. Pick your industry to hear how a call goes.</p>
-        <div class="ind__tabs reveal" role="tablist" aria-label="Industries"><button type="button" role="tab" id="ind-tab-beauty" aria-controls="ind-beauty" aria-selected="true" tabindex="0" class="ind__tab is-on">Barbershops &amp; Beauty</button><button type="button" role="tab" id="ind-tab-realestate" aria-controls="ind-realestate" aria-selected="false" tabindex="-1" class="ind__tab">Real Estate</button><button type="button" role="tab" id="ind-tab-restaurant" aria-controls="ind-restaurant" aria-selected="false" tabindex="-1" class="ind__tab">Restaurants &amp; Cafés</button><button type="button" role="tab" id="ind-tab-fitness" aria-controls="ind-fitness" aria-selected="false" tabindex="-1" class="ind__tab">Fitness &amp; Gyms</button><button type="button" role="tab" id="ind-tab-cars" aria-controls="ind-cars" aria-selected="false" tabindex="-1" class="ind__tab">Car Dealerships</button></div>
+        <div class="ind__tabs reveal" role="tablist" aria-label="Industries"><button type="button" role="tab" id="ind-tab-beauty" style="--acc:#C58A7A" aria-controls="ind-beauty" aria-selected="true" tabindex="0" class="ind__tab is-on">Barbershops &amp; Beauty</button><button type="button" role="tab" id="ind-tab-realestate" style="--acc:#9DB08A" aria-controls="ind-realestate" aria-selected="false" tabindex="-1" class="ind__tab">Real Estate</button><button type="button" role="tab" id="ind-tab-restaurant" style="--acc:#D2A24C" aria-controls="ind-restaurant" aria-selected="false" tabindex="-1" class="ind__tab">Restaurants &amp; Cafés</button><button type="button" role="tab" id="ind-tab-fitness" style="--acc:#6FA8B8" aria-controls="ind-fitness" aria-selected="false" tabindex="-1" class="ind__tab">Fitness &amp; Gyms</button><button type="button" role="tab" id="ind-tab-cars" style="--acc:#A99AC4" aria-controls="ind-cars" aria-selected="false" tabindex="-1" class="ind__tab">Car Dealerships</button></div>
         <div class="ind__stage reveal">
-          <div class="ind__panel is-on" role="tabpanel" id="ind-beauty" aria-labelledby="ind-tab-beauty">
+          <div class="ind__panel is-on" role="tabpanel" id="ind-beauty" style="--acc:#C58A7A" aria-labelledby="ind-tab-beauty">
             <figure class="ind__photo"><img src="/assets/photos/barber.jpg" alt="A barber trimming a client's hair with clippers" loading="lazy" width="1280" height="853" onerror="this.remove()"><figcaption>Barbershops &amp; Beauty</figcaption></figure>
             <div class="ind__body">
               <h3>What Harbor does for barbershops &amp; beauty</h3>
@@ -161,7 +178,7 @@
               </div>
             </div>
           </div>
-          <div class="ind__panel" role="tabpanel" id="ind-realestate" aria-labelledby="ind-tab-realestate" hidden>
+          <div class="ind__panel" role="tabpanel" id="ind-realestate" style="--acc:#9DB08A" aria-labelledby="ind-tab-realestate" hidden>
             <figure class="ind__photo"><img src="/assets/photos/ind-realestate.jpg" alt="A modern house with large windows" loading="lazy" width="1280" height="853" onerror="this.remove()"><figcaption>Real Estate</figcaption></figure>
             <div class="ind__body">
               <h3>What Harbor does for real estate</h3>
@@ -173,7 +190,7 @@
               </div>
             </div>
           </div>
-          <div class="ind__panel" role="tabpanel" id="ind-restaurant" aria-labelledby="ind-tab-restaurant" hidden>
+          <div class="ind__panel" role="tabpanel" id="ind-restaurant" style="--acc:#D2A24C" aria-labelledby="ind-tab-restaurant" hidden>
             <figure class="ind__photo"><img src="/assets/photos/ind-restaurant.jpg" alt="A warmly lit restaurant interior" loading="lazy" width="1280" height="853" onerror="this.remove()"><figcaption>Restaurants &amp; Cafés</figcaption></figure>
             <div class="ind__body">
               <h3>What Harbor does for restaurants &amp; cafés</h3>
@@ -185,7 +202,7 @@
               </div>
             </div>
           </div>
-          <div class="ind__panel" role="tabpanel" id="ind-fitness" aria-labelledby="ind-tab-fitness" hidden>
+          <div class="ind__panel" role="tabpanel" id="ind-fitness" style="--acc:#6FA8B8" aria-labelledby="ind-tab-fitness" hidden>
             <figure class="ind__photo"><img src="/assets/photos/ind-gym.jpg" alt="A modern gym with training equipment" loading="lazy" width="1280" height="853" onerror="this.remove()"><figcaption>Fitness &amp; Gyms</figcaption></figure>
             <div class="ind__body">
               <h3>What Harbor does for fitness &amp; gyms</h3>
@@ -197,7 +214,7 @@
               </div>
             </div>
           </div>
-          <div class="ind__panel" role="tabpanel" id="ind-cars" aria-labelledby="ind-tab-cars" hidden>
+          <div class="ind__panel" role="tabpanel" id="ind-cars" style="--acc:#A99AC4" aria-labelledby="ind-tab-cars" hidden>
             <figure class="ind__photo"><img src="/assets/photos/ind-cars.jpg" alt="Cars on display in a showroom" loading="lazy" width="1280" height="853" onerror="this.remove()"><figcaption>Car Dealerships</figcaption></figure>
             <div class="ind__body">
               <h3>What Harbor does for car dealerships</h3>
@@ -258,7 +275,7 @@
     </section>
 
     <!-- PRODUCT TOUR -->
-    <section class="section tour on-dark" id="product" aria-labelledby="tour-title">
+    <section class="section tour on-dark band" id="product" aria-labelledby="tour-title">
       <div class="wrap">
         <p class="eyebrow reveal">The product</p>
         <h2 id="tour-title" class="split">See exactly<br><em>what you get.</em></h2>
@@ -434,11 +451,9 @@
         <p class="eyebrow reveal">Wherever the phone rings</p>
         <h2 id="gallery-title" class="split">Your work happens out there.<br><em>Harbor holds the line.</em></h2>
       </div>
-      <div class="gallery__row">
-        <figure class="gallery__tile photo--wipe reveal"><img src="/assets/photos/g-house.jpg" alt="A family home at dusk with its lights on" loading="lazy" width="1280" height="853" data-parallax="0.05"><figcaption>Showing a property</figcaption></figure>
-        <figure class="gallery__tile photo--wipe reveal"><img src="/assets/photos/g-table.jpg" alt="A restaurant table set for dinner" loading="lazy" width="1280" height="853" data-parallax="0.08"><figcaption>In the dinner rush</figcaption></figure>
-        <figure class="gallery__tile photo--wipe reveal"><img src="/assets/photos/g-barbell.jpg" alt="A person lifting a barbell in a gym" loading="lazy" width="1280" height="853" data-parallax="0.05"><figcaption>Coaching a client</figcaption></figure>
-        <figure class="gallery__tile photo--wipe reveal"><img src="/assets/photos/g-interior.jpg" alt="A bright modern living room" loading="lazy" width="1280" height="853" data-parallax="0.08"><figcaption>At a viewing</figcaption></figure>
+      <div class="film reveal">
+        <div class="film__row film__row--a"><div class="film__track"><figure class="film__tile"><img src="/assets/photos/g-house.jpg" alt="A family home at dusk with its lights on" loading="lazy" width="1100" height="733"><figcaption>Showing a property</figcaption></figure><figure class="film__tile"><img src="/assets/photos/f-latte.jpg" alt="A barista pouring latte art" loading="lazy" width="1100" height="733"><figcaption>Behind the counter</figcaption></figure><figure class="film__tile"><img src="/assets/photos/f-hair.jpg" alt="A stylist curling a client's hair" loading="lazy" width="1100" height="733"><figcaption>Mid-appointment</figcaption></figure><figure class="film__tile"><img src="/assets/photos/f-living.jpg" alt="A bright modern living room" loading="lazy" width="1100" height="733"><figcaption>At a viewing</figcaption></figure><figure class="film__tile"><img src="/assets/photos/f-plates.jpg" alt="A waiter carrying two plates" loading="lazy" width="1100" height="733"><figcaption>In the dinner rush</figcaption></figure><figure class="film__tile"><img src="/assets/photos/g-barbell.jpg" alt="A person lifting a barbell in a gym" loading="lazy" width="1100" height="733"><figcaption>Coaching a client</figcaption></figure><figure class="film__tile" aria-hidden="true"><img src="/assets/photos/g-house.jpg" alt="" data-alt="A family home at dusk with its lights on" loading="lazy" width="1100" height="733"><figcaption>Showing a property</figcaption></figure><figure class="film__tile" aria-hidden="true"><img src="/assets/photos/f-latte.jpg" alt="" data-alt="A barista pouring latte art" loading="lazy" width="1100" height="733"><figcaption>Behind the counter</figcaption></figure><figure class="film__tile" aria-hidden="true"><img src="/assets/photos/f-hair.jpg" alt="" data-alt="A stylist curling a client's hair" loading="lazy" width="1100" height="733"><figcaption>Mid-appointment</figcaption></figure><figure class="film__tile" aria-hidden="true"><img src="/assets/photos/f-living.jpg" alt="" data-alt="A bright modern living room" loading="lazy" width="1100" height="733"><figcaption>At a viewing</figcaption></figure><figure class="film__tile" aria-hidden="true"><img src="/assets/photos/f-plates.jpg" alt="" data-alt="A waiter carrying two plates" loading="lazy" width="1100" height="733"><figcaption>In the dinner rush</figcaption></figure><figure class="film__tile" aria-hidden="true"><img src="/assets/photos/g-barbell.jpg" alt="" data-alt="A person lifting a barbell in a gym" loading="lazy" width="1100" height="733"><figcaption>Coaching a client</figcaption></figure></div></div>
+        <div class="film__row film__row--b"><div class="film__track"><figure class="film__tile"><img src="/assets/photos/f-dining.jpg" alt="A restaurant dining room with set tables" loading="lazy" width="1100" height="733"><figcaption>Before service</figcaption></figure><figure class="film__tile"><img src="/assets/photos/f-tools.jpg" alt="Barber scissors and clippers on a wooden counter" loading="lazy" width="1100" height="733"><figcaption>Between clients</figcaption></figure><figure class="film__tile"><img src="/assets/photos/f-signing.jpg" alt="Two people signing a document" loading="lazy" width="1100" height="733"><figcaption>Closing a deal</figcaption></figure><figure class="film__tile"><img src="/assets/photos/f-cafe.jpg" alt="A dimly lit café interior" loading="lazy" width="1100" height="733"><figcaption>After hours</figcaption></figure><figure class="film__tile"><img src="/assets/photos/f-food.jpg" alt="Dishes of food on a dark table" loading="lazy" width="1100" height="733"><figcaption>On a full night</figcaption></figure><figure class="film__tile"><img src="/assets/photos/f-handshake.jpg" alt="Two people shaking hands over a desk" loading="lazy" width="1100" height="733"><figcaption>With a customer</figcaption></figure><figure class="film__tile" aria-hidden="true"><img src="/assets/photos/f-dining.jpg" alt="" data-alt="A restaurant dining room with set tables" loading="lazy" width="1100" height="733"><figcaption>Before service</figcaption></figure><figure class="film__tile" aria-hidden="true"><img src="/assets/photos/f-tools.jpg" alt="" data-alt="Barber scissors and clippers on a wooden counter" loading="lazy" width="1100" height="733"><figcaption>Between clients</figcaption></figure><figure class="film__tile" aria-hidden="true"><img src="/assets/photos/f-signing.jpg" alt="" data-alt="Two people signing a document" loading="lazy" width="1100" height="733"><figcaption>Closing a deal</figcaption></figure><figure class="film__tile" aria-hidden="true"><img src="/assets/photos/f-cafe.jpg" alt="" data-alt="A dimly lit café interior" loading="lazy" width="1100" height="733"><figcaption>After hours</figcaption></figure><figure class="film__tile" aria-hidden="true"><img src="/assets/photos/f-food.jpg" alt="" data-alt="Dishes of food on a dark table" loading="lazy" width="1100" height="733"><figcaption>On a full night</figcaption></figure><figure class="film__tile" aria-hidden="true"><img src="/assets/photos/f-handshake.jpg" alt="" data-alt="Two people shaking hands over a desk" loading="lazy" width="1100" height="733"><figcaption>With a customer</figcaption></figure></div></div>
       </div>
     </section>
 
@@ -577,7 +592,7 @@
     </section>
 
     <!-- TRUST -->
-    <section class="section trust on-dark" aria-labelledby="trust-title">
+    <section class="section trust on-dark band" aria-labelledby="trust-title">
       <div class="wrap">
         <p class="eyebrow reveal">Built to be trusted</p>
         <h2 id="trust-title" class="split">Your callers, your data,<br><em>your rules.</em></h2>

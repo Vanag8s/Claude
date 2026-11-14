@@ -207,6 +207,8 @@ try {
   await lp.click('#tour-tab-sell'); await lp.waitForTimeout(300);
   ok('Product tour switches screens', await lp.isVisible('#tour-sell') && (await lp.textContent('#tourTitle')).includes('Sales mode'));
   ok('Plan comparison table lists all three plans', (await lp.locator('.ctable--plans thead th').count()) === 4);
+  ok('Opening sequence plays once, then is removed', (await lp.locator('#intro').count()) === 0 && await lp.evaluate(() => document.documentElement.classList.contains('intro-done')));
+  ok('Hero has several scenes and a photo filmstrip', (await lp.locator('.hero__slide').count()) === 4 && (await lp.locator('.film__tile:not([aria-hidden])').count()) === 12);
   ok('Waveform player is shown', await lp.isVisible('#waveCanvas') || (await lp.locator('#waveCanvas').count()) === 1);
   await lctx.close();
 

@@ -326,3 +326,117 @@ summary::after{color:var(--navy)}
 .gallery__tile::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,29,48,0) 55%,rgba(16,29,48,.75) 100%)}
 .gallery__tile figcaption{position:absolute;left:20px;bottom:18px;z-index:1;color:#fff;font:400 24px/1.1 var(--accent-serif);font-style:italic}
 @media (max-width:900px){.gallery__row{grid-template-columns:1fr 1fr}.gallery__tile:nth-child(even){margin-top:28px}}
+
+/* ================= Cinematic pass 2: opening, scenes, filmstrip, accents ================= */
+:root{--copper:#D08F62;--copper-ink:#8A4F2D;--glass:#8FBFB0;--plum:#2A2140;--teal-deep:#12343B}
+
+/* ---------- Opening sequence ---------- */
+.intro{position:fixed;inset:0;z-index:300;pointer-events:none;display:grid;place-items:center}
+.intro-none .intro{display:none}
+.intro__half{position:absolute;left:0;right:0;height:50.5%;background:var(--navy);transition:transform 1.25s cubic-bezier(.76,0,.18,1)}
+.intro__half--top{top:0;background:linear-gradient(180deg,#0B1524,var(--navy))}
+.intro__half--bottom{bottom:0;background:linear-gradient(0deg,#0B1524,var(--navy))}
+.intro__half--top::after,.intro__half--bottom::after{content:"";position:absolute;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--copper),var(--sand-warm),transparent);opacity:.7}
+.intro__half--top::after{bottom:0}.intro__half--bottom::after{top:0}
+.intro-done .intro__half--top{transform:translateY(-101%)}
+.intro-done .intro__half--bottom{transform:translateY(101%)}
+.intro__center{position:relative;display:flex;flex-direction:column;align-items:center;gap:18px;transition:opacity .45s,transform .6s var(--ease)}
+.intro-done .intro__center{opacity:0;transform:scale(1.08)}
+.intro-short .intro__center{display:none}
+.intro__mark{overflow:visible}
+.intro__wave{fill:none;stroke:var(--offwhite);stroke-width:3.5;stroke-linecap:round;stroke-dasharray:70;stroke-dashoffset:70;animation:draw 1.1s .15s cubic-bezier(.6,0,.2,1) forwards}
+.intro__wave--2{stroke:var(--blue-soft);animation-delay:.4s}
+.intro__sun{fill:var(--copper);transform-origin:41px 22px;transform:scale(0);animation:sunpop .7s .75s cubic-bezier(.2,1.6,.4,1) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes sunpop{to{transform:scale(1)}}
+.intro__word{display:flex;font:600 44px/1 var(--serif);letter-spacing:.02em;color:#fff;overflow:hidden;padding:4px 0}
+.intro__word span{display:inline-block;transform:translateY(110%);animation:rise .7s cubic-bezier(.2,.8,.2,1) forwards}
+.intro__word span:nth-child(1){animation-delay:.75s}.intro__word span:nth-child(2){animation-delay:.81s}.intro__word span:nth-child(3){animation-delay:.87s}.intro__word span:nth-child(4){animation-delay:.93s}.intro__word span:nth-child(5){animation-delay:.99s}.intro__word span:nth-child(6){animation-delay:1.05s}
+@keyframes rise{to{transform:none}}
+.intro__line{width:180px;height:2px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden}
+.intro__line i{display:block;height:100%;background:linear-gradient(90deg,var(--copper),var(--sand-warm));transform-origin:left;transform:scaleX(0);animation:fill 1.9s .35s cubic-bezier(.5,0,.2,1) forwards}
+@keyframes fill{to{transform:scaleX(1)}}
+
+/* The page arrives as the doors open */
+.intro-full:not(.intro-done) .nav,.intro-short:not(.intro-done) .nav{opacity:0;transform:translate(-50%,-20px)}
+.nav{transition:background .4s,border-color .4s,box-shadow .4s,opacity .9s .5s,transform .9s .5s var(--ease)}
+.hero__slides{position:absolute;inset:-4% 0;transform-origin:50% 60%;transition:scale 3.4s cubic-bezier(.2,.7,.2,1),filter 2.4s}
+.intro-full:not(.intro-done) .hero__slides,.intro-short:not(.intro-done) .hero__slides{scale:1.22;filter:blur(8px) saturate(.6)}
+.intro-full:not(.intro-done) .preview,.intro-short:not(.intro-done) .preview{opacity:0;transform:translateY(60px) scale(.96)}
+.preview{transition:opacity 1.3s .9s var(--ease),transform 1.5s .9s var(--ease)}
+.js-motion .preview.reveal{filter:none}
+.float{opacity:1;transition:opacity .8s 2s}
+.intro-full:not(.intro-done) .float,.intro-short:not(.intro-done) .float{opacity:0}
+
+/* ---------- Hero scenes ---------- */
+.hero--dark .hero__photo .hero__slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:40% 65%;opacity:0;animation:none;transition:opacity 2.6s ease}
+.hero--dark .hero__photo .hero__slide.is-on{opacity:.55;animation:slowzoom 10s linear both}
+@keyframes slowzoom{from{transform:scale(1.02)}to{transform:scale(1.12) translate(-1%,-1%)}}
+.aurora i:nth-child(2){background:rgba(208,143,98,.28)}
+.aurora i:nth-child(3){background:rgba(31,92,99,.5)}
+.hero--dark h1 em{background:linear-gradient(100deg,var(--sand-warm) 10%,#F0D9B5 35%,var(--copper) 55%,var(--sand-warm) 80%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 7s ease-in-out infinite alternate;padding-right:.08em}
+@keyframes shimmer{to{background-position:100% 0}}
+.hero__scene{display:flex;align-items:center;gap:12px;margin:26px 0 0;font:500 13px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--pale)}
+.hero__scene i{width:34px;height:1px;background:var(--copper)}
+.hero__scene span{transition:opacity .8s}
+.hero__scene.is-changing span{opacity:0}
+.hero__facts{margin-top:18px}
+.on-dark .btn--primary{background:linear-gradient(120deg,var(--sand-warm),#E9CFA6 55%,var(--copper));box-shadow:0 16px 40px -14px rgba(208,143,98,.65)}
+.float--b b{color:var(--glass)}
+
+/* Scroll progress */
+.progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:120;pointer-events:none}
+.progress i{display:block;height:100%;width:100%;transform-origin:left;transform:scaleX(0);background:linear-gradient(90deg,var(--blue-soft),var(--sand-warm),var(--copper))}
+
+/* ---------- Accents ---------- */
+.eyebrow::before{content:"";width:28px;height:1px;background:currentColor;opacity:.6}
+.hero--dark .eyebrow::before{display:none}
+h1 em,h2 em{color:var(--copper-ink)}
+.on-dark h1 em,.on-dark h2 em,.story h2 em,.breaker h2 em{color:var(--copper)}
+.stat b{background:linear-gradient(120deg,var(--navy) 30%,var(--sea) 60%,var(--copper-ink));-webkit-background-clip:text;background-clip:text;color:transparent}
+.story__time,.story .eyebrow{color:var(--copper)}
+.story__step.is-active{border-left-color:var(--copper)}
+.tour__tab.is-on{border-color:var(--copper)}
+.tour__tab.is-on::after{background:linear-gradient(90deg,var(--sand-warm),var(--copper))}
+.plan__tag{background:linear-gradient(120deg,var(--sand-warm),var(--copper))}
+.plan--hot{background:linear-gradient(165deg,#1B3558,var(--navy) 60%,var(--teal-deep))}
+.plan--hot li::before{color:var(--glass)}
+.trust{background:linear-gradient(170deg,var(--navy) 40%,var(--teal-deep))}
+.tour{background:linear-gradient(160deg,var(--navy-2),#1B2B4E 55%,var(--plum))}
+.step__n{color:var(--copper-ink)}
+.card__icon{background:linear-gradient(140deg,var(--beige),#F1E3CF)}
+.trust .card__icon{background:rgba(143,191,176,.14);color:var(--glass)}
+.footer{background:linear-gradient(180deg,var(--navy),#0B1524)}
+.footer nav h2{color:var(--copper)}
+/* each industry carries its own tint */
+.ind__tab::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--acc,var(--sand-warm));margin-right:10px;vertical-align:middle}
+.ind__panel .ind__photo::after{background:linear-gradient(180deg,rgba(16,29,48,0) 50%,rgba(16,29,48,.78) 100%),linear-gradient(135deg,color-mix(in srgb,var(--acc) 26%,transparent),transparent 60%)}
+.ind__panel .ind__photo figcaption::after{content:"";display:block;width:54px;height:3px;border-radius:2px;background:var(--acc);margin-top:10px}
+.ind__panel .checks li::before{background:color-mix(in srgb,var(--acc) 40%,var(--offwhite))}
+.ind__panel .ind__sms{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 10%,var(--paper))}
+
+/* ---------- Filmstrip ---------- */
+.gallery{padding-bottom:clamp(60px,8vw,110px);overflow:hidden}
+.film{margin-top:46px;display:grid;gap:16px;transform:rotate(-1.6deg) scale(1.03)}
+.film__row{overflow:hidden}
+.film__track{display:flex;gap:16px;width:max-content;animation:filmA 70s linear infinite}
+.film__row--b .film__track{animation-name:filmB;animation-duration:85s}
+.film:hover .film__track{animation-play-state:paused}
+@keyframes filmA{to{transform:translateX(calc(-50% - 8px))}}
+@keyframes filmB{from{transform:translateX(calc(-50% - 8px))}to{transform:none}}
+.film__tile{margin:0;position:relative;flex:none;width:clamp(240px,26vw,380px);aspect-ratio:3/2;border-radius:18px;overflow:hidden;background:var(--navy-2)}
+.film__tile img{width:100%;height:100%;object-fit:cover;filter:saturate(.9) contrast(1.03);transition:transform 1.2s var(--ease),filter .6s}
+.film__tile:hover img{transform:scale(1.07);filter:none}
+.film__tile::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,29,48,0) 55%,rgba(16,29,48,.7))}
+.film__tile figcaption{position:absolute;left:16px;bottom:13px;z-index:1;color:#fff;font:400 21px/1.1 var(--accent-serif);font-style:italic}
+
+/* Dark bands open up as they arrive */
+.js-motion .band{clip-path:inset(0 5% round 44px);transition:clip-path 1.3s cubic-bezier(.7,0,.2,1)}
+.js-motion .band.is-open{clip-path:inset(0 0 round 0)}
+
+@media (max-width:760px){.intro__word{font-size:34px}.film{transform:none}.hero__scene{font-size:11.5px}}
+@media (prefers-reduced-motion:reduce){
+  .film__track,.hero--dark h1 em{animation:none}
+  .film__row{overflow-x:auto}
+  .hero--dark .hero__photo .hero__slide.is-on{animation:none}
+}

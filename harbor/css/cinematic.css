@@ -2,10 +2,10 @@
    Everything rests in a visible state; motion is added on top and turned off for reduced motion. */
 
 /* Opening: letterbox bars part to reveal the beach */
-.letterbox{position:fixed;inset:0;z-index:200;pointer-events:none}
-.letterbox span{position:absolute;left:0;right:0;height:50.5%;background:#0d1b26;animation:bars 1.5s .25s cubic-bezier(.7,0,.2,1) forwards}
-.letterbox span:first-child{top:0;transform-origin:top}
-.letterbox span:last-child{bottom:0;transform-origin:bottom}
+
+
+
+
 @keyframes bars{0%{transform:scaleY(1)}55%{transform:scaleY(.12)}100%{transform:scaleY(0);visibility:hidden}}
 .hero--photo .hero__photo img{animation:dolly 3.2s .2s cubic-bezier(.2,.7,.2,1) both}
 @keyframes dolly{from{transform:scale(1.18);filter:blur(6px) saturate(.8)}to{transform:scale(1.06);filter:none}}

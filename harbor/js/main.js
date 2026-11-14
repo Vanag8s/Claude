@@ -43,7 +43,7 @@
     io.observe(el);
   });
   // Hero is visible immediately (after curtain)
-  setTimeout(() => $$('.hero .reveal, .hero .split').forEach(el => el.classList.add('is-in')), reduce ? 0 : 1100);
+  setTimeout(() => $$('.hero .reveal, .hero .split').forEach(el => el.classList.add('is-in')), reduce ? 0 : (window.__introMs ?? 1100) + 250);
 
   function countUp(el) {
     const end = +el.dataset.count, pre = el.dataset.prefix ? el.dataset.prefix.replace('&lt;', '<') : '', suf = el.dataset.suffix || '';
